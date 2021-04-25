@@ -1,4 +1,4 @@
-name: Continious Integrations
+name: Continious Integration
 on: [push]
 jobs:
   router:
