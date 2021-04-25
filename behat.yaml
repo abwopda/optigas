@@ -1,0 +1,452 @@
+default:
+  suites:
+      create_company:
+        contexts:
+          - 'App\Features\CreateCompanyContext'
+        paths:
+          - '%paths.base%/features/create_company.feature'
+      update_company:
+        contexts:
+          - 'App\Features\UpdateCompanyContext'
+        paths:
+          - '%paths.base%/features/update_company.feature'
+      delete_company:
+        contexts:
+          - 'App\Features\DeleteCompanyContext'
+        paths:
+          - '%paths.base%/features/delete_company.feature'
+      view_company:
+        contexts:
+          - 'App\Features\ViewCompanyContext'
+        paths:
+          - '%paths.base%/features/view_tank.feature'
+      activate_company:
+        contexts:
+          - 'App\Features\ActivateCompanyContext'
+        paths:
+          - '%paths.base%/features/activate_company.feature'
+      inactivate_company:
+        contexts:
+          - 'App\Features\InactivateCompanyContext'
+        paths:
+          - '%paths.base%/features/inactivate_company.feature'
+      create_pos:
+        contexts:
+          - 'App\Features\CreatePosContext'
+        paths:
+          - '%paths.base%/features/create_pos.feature'
+      update_pos:
+        contexts:
+          - 'App\Features\UpdatePosContext'
+        paths:
+          - '%paths.base%/features/update_pos.feature'
+      delete_pos:
+        contexts:
+          - 'App\Features\DeletePosContext'
+        paths:
+          - '%paths.base%/features/delete_pos.feature'
+      view_pos:
+        contexts:
+          - 'App\Features\ViewPosContext'
+        paths:
+          - '%paths.base%/features/view_pos.feature'
+      activate_pos:
+        contexts:
+          - 'App\Features\ActivatePosContext'
+        paths:
+          - '%paths.base%/features/activate_pos.feature'
+      inactivate_pos:
+        contexts:
+          - 'App\Features\InactivatePosContext'
+        paths:
+          - '%paths.base%/features/inactivate_pos.feature'
+      create_product:
+        contexts:
+          - 'App\Features\CreateProductContext'
+        paths:
+          - '%paths.base%/features/create_product.feature'
+      update_product:
+        contexts:
+          - 'App\Features\UpdateProductContext'
+        paths:
+          - '%paths.base%/features/update_product.feature'
+      delete_product:
+        contexts:
+          - 'App\Features\DeleteProductContext'
+        paths:
+          - '%paths.base%/features/delete_product.feature'
+      view_product:
+        contexts:
+          - 'App\Features\ViewProductContext'
+        paths:
+          - '%paths.base%/features/view_product.feature'
+      activate_product:
+        contexts:
+          - 'App\Features\ActivateProductContext'
+        paths:
+          - '%paths.base%/features/activate_product.feature'
+      inactivate_product:
+        contexts:
+          - 'App\Features\InactivateProductContext'
+        paths:
+          - '%paths.base%/features/inactivate_product.feature'
+      create_productfamily:
+        contexts:
+          - 'App\Features\CreateProductFamilyContext'
+        paths:
+          - '%paths.base%/features/create_productfamily.feature'
+      update_productfamily:
+        contexts:
+          - 'App\Features\UpdateProductFamilyContext'
+        paths:
+          - '%paths.base%/features/update_productfamily.feature'
+      delete_productfamily:
+        contexts:
+          - 'App\Features\DeleteProductFamilyContext'
+        paths:
+          - '%paths.base%/features/delete_productfamily.feature'
+      view_productfamily:
+        contexts:
+          - 'App\Features\ViewProductFamilyContext'
+        paths:
+          - '%paths.base%/features/view_productfamily.feature'
+      activate_productfamily:
+        contexts:
+          - 'App\Features\ActivateProductFamilyContext'
+        paths:
+          - '%paths.base%/features/activate_productfamily.feature'
+      inactivate_productfamily:
+        contexts:
+          - 'App\Features\InactivateProductFamilyContext'
+        paths:
+          - '%paths.base%/features/inactivate_productfamily.feature'
+      create_pump:
+        contexts:
+          - 'App\Features\CreatePumpContext'
+        paths:
+          - '%paths.base%/features/create_pump.feature'
+      update_pump:
+        contexts:
+          - 'App\Features\UpdatePumpContext'
+        paths:
+          - '%paths.base%/features/update_pump.feature'
+      delete_pump:
+        contexts:
+          - 'App\Features\DeletePumpContext'
+        paths:
+          - '%paths.base%/features/delete_pump.feature'
+      view_pump:
+        contexts:
+          - 'App\Features\ViewPumpContext'
+        paths:
+          - '%paths.base%/features/view_pump.feature'
+      activate_pump:
+        contexts:
+          - 'App\Features\ActivatePumpContext'
+        paths:
+          - '%paths.base%/features/activate_pump.feature'
+      inactivate_pump:
+        contexts:
+          - 'App\Features\InactivatePumpContext'
+        paths:
+          - '%paths.base%/features/inactivate_pump.feature'
+      create_store:
+        contexts:
+          - 'App\Features\CreateStoreContext'
+        paths:
+          - '%paths.base%/features/create_store.feature'
+      update_store:
+        contexts:
+          - 'App\Features\UpdateStoreContext'
+        paths:
+          - '%paths.base%/features/update_store.feature'
+      delete_store:
+        contexts:
+          - 'App\Features\DeleteStoreContext'
+        paths:
+          - '%paths.base%/features/delete_store.feature'
+      view_store:
+        contexts:
+          - 'App\Features\ViewStoreContext'
+        paths:
+          - '%paths.base%/features/view_store.feature'
+      activate_store:
+        contexts:
+          - 'App\Features\ActivateStoreContext'
+        paths:
+          - '%paths.base%/features/activate_store.feature'
+      inactivate_store:
+        contexts:
+          - 'App\Features\InactivateStoreContext'
+        paths:
+          - '%paths.base%/features/inactivate_store.feature'
+      create_tank:
+        contexts:
+          - 'App\Features\CreateTankContext'
+        paths:
+          - '%paths.base%/features/create_tank.feature'
+      update_tank:
+        contexts:
+          - 'App\Features\UpdateTankContext'
+        paths:
+          - '%paths.base%/features/update_tank.feature'
+      delete_tank:
+        contexts:
+          - 'App\Features\DeleteTankContext'
+        paths:
+          - '%paths.base%/features/delete_tank.feature'
+      view_tank:
+        contexts:
+          - 'App\Features\ViewTankContext'
+        paths:
+          - '%paths.base%/features/view_tank.feature'
+      activate_tank:
+        contexts:
+          - 'App\Features\ActivateTankContext'
+        paths:
+          - '%paths.base%/features/activate_tank.feature'
+      inactivate_tank:
+        contexts:
+          - 'App\Features\InactivateTankContext'
+        paths:
+          - '%paths.base%/features/inactivate_tank.feature'
+      create_unit:
+        contexts:
+          - 'App\Features\CreateUnitContext'
+        paths:
+          - '%paths.base%/features/create_unit.feature'
+      update_unit:
+        contexts:
+          - 'App\Features\UpdateUnitContext'
+        paths:
+          - '%paths.base%/features/update_unit.feature'
+      delete_unit:
+        contexts:
+          - 'App\Features\DeleteUnitContext'
+        paths:
+          - '%paths.base%/features/delete_unit.feature'
+      view_unit:
+        contexts:
+          - 'App\Features\ViewUnitContext'
+        paths:
+          - '%paths.base%/features/view_unit.feature'
+      activate_unit:
+        contexts:
+          - 'App\Features\ActivateUnitContext'
+        paths:
+          - '%paths.base%/features/activate_unit.feature'
+      inactivate_unit:
+        contexts:
+          - 'App\Features\InactivateUnitContext'
+        paths:
+          - '%paths.base%/features/inactivate_unit.feature'
+      create_consumption:
+        contexts:
+          - 'App\Features\CreateConsumptionContext'
+        paths:
+          - '%paths.base%/features/create_consumption.feature'
+      update_consumption:
+        contexts:
+          - 'App\Features\UpdateConsumptionContext'
+        paths:
+          - '%paths.base%/features/update_consumption.feature'
+      delete_consumption:
+        contexts:
+          - 'App\Features\DeleteConsumptionContext'
+        paths:
+          - '%paths.base%/features/delete_consumption.feature'
+      view_consumption:
+        contexts:
+          - 'App\Features\ViewConsumptionContext'
+        paths:
+          - '%paths.base%/features/view_consumption.feature'
+      validate_consumption:
+        contexts:
+          - 'App\Features\ValidateConsumptionContext'
+        paths:
+          - '%paths.base%/features/validate_consumption.feature'
+      invalidate_consumption:
+        contexts:
+          - 'App\Features\InvalidateConsumptionContext'
+        paths:
+          - '%paths.base%/features/invalidate_consumption.feature'
+      create_delivery:
+        contexts:
+          - 'App\Features\CreateDeliveryContext'
+        paths:
+          - '%paths.base%/features/create_delivery.feature'
+      update_delivery:
+        contexts:
+          - 'App\Features\UpdateDeliveryContext'
+        paths:
+          - '%paths.base%/features/update_delivery.feature'
+      delete_delivery:
+        contexts:
+          - 'App\Features\DeleteDeliveryContext'
+        paths:
+          - '%paths.base%/features/delete_delivery.feature'
+      view_delivery:
+        contexts:
+          - 'App\Features\ViewDeliveryContext'
+        paths:
+          - '%paths.base%/features/view_delivery.feature'
+      validate_delivery:
+        contexts:
+          - 'App\Features\ValidateDeliveryContext'
+        paths:
+          - '%paths.base%/features/validate_delivery.feature'
+      invalidate_delivery:
+        contexts:
+          - 'App\Features\InvalidateDeliveryContext'
+        paths:
+          - '%paths.base%/features/invalidate_delivery.feature'
+      create_invoice:
+        contexts:
+          - 'App\Features\CreateInvoiceContext'
+        paths:
+          - '%paths.base%/features/create_invoice.feature'
+      update_invoice:
+        contexts:
+          - 'App\Features\UpdateInvoiceContext'
+        paths:
+          - '%paths.base%/features/update_invoice.feature'
+      delete_invoice:
+        contexts:
+          - 'App\Features\DeleteInvoiceContext'
+        paths:
+          - '%paths.base%/features/delete_invoice.feature'
+      view_invoice:
+        contexts:
+          - 'App\Features\ViewInvoiceContext'
+        paths:
+          - '%paths.base%/features/view_invoice.feature'
+      validate_invoice:
+        contexts:
+          - 'App\Features\ValidateInvoiceContext'
+        paths:
+          - '%paths.base%/features/validate_invoice.feature'
+      invalidate_invoice:
+        contexts:
+          - 'App\Features\InvalidateInvoiceContext'
+        paths:
+          - '%paths.base%/features/invalidate_invoice.feature'
+      create_meter:
+        contexts:
+          - 'App\Features\CreateMeterContext'
+        paths:
+          - '%paths.base%/features/create_meter.feature'
+      update_meter:
+        contexts:
+          - 'App\Features\UpdateMeterContext'
+        paths:
+          - '%paths.base%/features/update_meter.feature'
+      delete_meter:
+        contexts:
+          - 'App\Features\DeleteMeterContext'
+        paths:
+          - '%paths.base%/features/delete_meter.feature'
+      view_meter:
+        contexts:
+          - 'App\Features\ViewMeterContext'
+        paths:
+          - '%paths.base%/features/view_meter.feature'
+      validate_meter:
+        contexts:
+          - 'App\Features\ValidateMeterContext'
+        paths:
+          - '%paths.base%/features/validate_meter.feature'
+      invalidate_meter:
+        contexts:
+          - 'App\Features\InvalidateMeterContext'
+        paths:
+          - '%paths.base%/features/invalidate_meter.feature'
+      create_price:
+        contexts:
+          - 'App\Features\CreatePriceContext'
+        paths:
+          - '%paths.base%/features/create_price.feature'
+      update_price:
+        contexts:
+          - 'App\Features\UpdatePriceContext'
+        paths:
+          - '%paths.base%/features/update_price.feature'
+      delete_price:
+        contexts:
+          - 'App\Features\DeletePriceContext'
+        paths:
+          - '%paths.base%/features/delete_price.feature'
+      view_price:
+        contexts:
+          - 'App\Features\ViewPriceContext'
+        paths:
+          - '%paths.base%/features/view_price.feature'
+      validate_price:
+        contexts:
+          - 'App\Features\ValidatePriceContext'
+        paths:
+          - '%paths.base%/features/validate_price.feature'
+      invalidate_price:
+        contexts:
+          - 'App\Features\InvalidatePriceContext'
+        paths:
+          - '%paths.base%/features/invalidate_price.feature'
+      create_purchasedelivery:
+        contexts:
+          - 'App\Features\CreatePurchaseDeliveryContext'
+        paths:
+          - '%paths.base%/features/create_purchasedelivery.feature'
+      update_purchasedelivery:
+        contexts:
+          - 'App\Features\UpdatePurchaseDeliveryContext'
+        paths:
+          - '%paths.base%/features/update_purchasedelivery.feature'
+      delete_purchasedelivery:
+        contexts:
+          - 'App\Features\DeletePurchaseDeliveryContext'
+        paths:
+          - '%paths.base%/features/delete_purchasedelivery.feature'
+      view_purchasedelivery:
+        contexts:
+          - 'App\Features\ViewPurchaseDeliveryContext'
+        paths:
+          - '%paths.base%/features/view_purchasedelivery.feature'
+      validate_purchasedelivery:
+        contexts:
+          - 'App\Features\ValidatePurchaseDeliveryContext'
+        paths:
+          - '%paths.base%/features/validate_purchasedelivery.feature'
+      invalidate_purchasedelivery:
+        contexts:
+          - 'App\Features\InvalidatePurchaseDeliveryContext'
+        paths:
+          - '%paths.base%/features/invalidate_purchasedelivery.feature'
+      create_stock:
+        contexts:
+          - 'App\Features\CreateStockContext'
+        paths:
+          - '%paths.base%/features/create_stock.feature'
+      update_stock:
+        contexts:
+          - 'App\Features\UpdateStockContext'
+        paths:
+          - '%paths.base%/features/update_stock.feature'
+      delete_stock:
+        contexts:
+          - 'App\Features\DeleteStockContext'
+        paths:
+          - '%paths.base%/features/delete_stock.feature'
+      view_stock:
+        contexts:
+          - 'App\Features\ViewStockContext'
+        paths:
+          - '%paths.base%/features/view_stock.feature'
+      validate_stock:
+        contexts:
+          - 'App\Features\ValidateStockContext'
+        paths:
+          - '%paths.base%/features/validate_stock.feature'
+      invalidate_stock:
+        contexts:
+          - 'App\Features\InvalidateStockContext'
+        paths:
+          - '%paths.base%/features/invalidate_stock.feature'
