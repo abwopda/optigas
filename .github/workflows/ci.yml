@@ -2,7 +2,7 @@ name: Continuous Integration
 on: [push]
 jobs:
   router:
-    name: Besoin d'un job ?
+    name: Gestion de stations services
     runs-on: ${{ matrix.operating-system }}
     strategy:
       fail-fast: false
@@ -34,5 +34,3 @@ jobs:
         run: php vendor/bin/phpcs
       - name: Run Acceptance Tests
         run: php vendor/bin/behat --config behat.yaml
-      - name: Run Tests
-        run: php vendor/bin/simple-phpunit --testsuite unit,integration
