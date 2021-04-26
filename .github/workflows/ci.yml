@@ -34,10 +34,10 @@ jobs:
       - name: Install Composer dependencies
         run: |
           composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-      #- name: Run PHP Code Sniffer
-      #  run: php vendor/bin/phpcs
+      - name: Run PHP Code Sniffer
+        run: vendor/bin/phpcs
       - name: Run Acceptance Tests
-        run: php vendor/bin/behat --config behat.yaml        
+        run: vendor/bin/behat --config behat.yaml        
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
