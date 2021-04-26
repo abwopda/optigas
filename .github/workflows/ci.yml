@@ -9,7 +9,7 @@ jobs:
     name: Gestion de stations services
     runs-on: ${{ matrix.operating-system }}
     strategy:
-      fail-fast: false
+      #fail-fast: false
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['7.4']
