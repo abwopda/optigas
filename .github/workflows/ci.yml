@@ -5,10 +5,14 @@ name: Continuous Integration
 # Controls when the action will run. 
 on: [push]
 jobs:
-  #router:
-  #  name: Gestion de stations services
-  # This workflow contains a single job called "build"
   router:
+    name: Gestion de stations services
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+  # This workflow contains a single job called "build"
+  build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
