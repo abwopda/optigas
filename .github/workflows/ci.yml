@@ -8,8 +8,6 @@ jobs:
   router:
     name: Gestion de stations services
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     
   # This workflow contains a single job called "build"
   build:
