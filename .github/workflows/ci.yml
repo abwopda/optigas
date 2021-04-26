@@ -35,9 +35,9 @@ jobs:
         run: |
           composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
       - name: Run PHP Code Sniffer
-        run: vendor/bin/phpcs
+        run: php vendor/bin/phpcs
       - name: Run Acceptance Tests
-        run: vendor/bin/behat --config behat.yaml        
+        run: php vendor/bin/behat --config behat.yaml        
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
