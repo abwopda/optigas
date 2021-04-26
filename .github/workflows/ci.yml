@@ -2,7 +2,7 @@ name: Continuous Integration
 on: [push]
 jobs:
   router:
-    name: Gestion de stations services
+    name: Gestion de stations services (optigas)
     runs-on: ${{ matrix.operating-system }}
     strategy:
       fail-fast: false
