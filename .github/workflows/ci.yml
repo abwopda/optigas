@@ -34,3 +34,5 @@ jobs:
         run: php vendor/bin/phpcs
       - name: Run Acceptance Tests
         run: php vendor/bin/behat --config behat.yaml
+      - name: Run Tests
+        run: php vendor/bin/simple-phpunit --testsuite unit,integration
