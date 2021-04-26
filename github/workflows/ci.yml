@@ -2,7 +2,7 @@ name: Continuous Integration
 on: [push]
 jobs:
   router:
-    name: Besoin d'un job ?
+    name: Station service?
     runs-on: ${{ matrix.operating-system }}
     strategy:
       fail-fast: false
