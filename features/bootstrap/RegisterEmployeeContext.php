@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Features;
+
+
+use App\Adapter\InMemory\Repository\EmployeeRepository;
+use App\Entity\Employee;
+use App\UseCase\RegisterEmployee;
+use Assert\Assertion;
+use Behat\Behat\Context\Context;
+
+/**
+ * Class RegisterEmployeeContext
+ * @package App\Features
+ */
+class RegisterEmployeeContext implements Context
+{
+    /**
+     * @var RegisterEmployee
+     */
+    private RegisterEmployee $registerEmployee;
+
+    /**
+     * @var Employee
+     */
+    private Employee $employee;
+    /**
+     * @Given /^an employee need to be registered before using the platform$/
+     */
+    public function anEmployeeNeedToBeRegisteredBeforeUsingThePlatform()
+    {
+        $this->registerEmployee = new RegisterEmployee(new EmployeeRepository());
+    }
+
+    /**
+     * @Then /^the employee can log in with the account created$/
+     */
+    public function theEmployeeCanLogInWithTheAccountCreated()
+    {
+        Assertion::eq($this->employee,$this->registerEmployee->execute($this->employee));
+    }
+
+    /**
+     * @When an administrator fill the registration form
+     */
+    public function anAdministratorFillTheRegistrationForm()
+    {
+        $this->employee = new Employee();
+        $this->employee->setPlainPassword("Password123!");
+        $this->employee->setEmail("email@email.com");
+        $this->employee->setFirstName("John");
+        $this->employee->setLastName("Doe");
+    }
+
+}
