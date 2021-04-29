@@ -12,4 +12,19 @@ class CreateTankContext implements Context
     public function iWantToCreateANewTank()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
+    /**
+     * @Then the tank can be used
+     */
+    public function theTankCanBeUsed()
+    {
+    }
+
 }

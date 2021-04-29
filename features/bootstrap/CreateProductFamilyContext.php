@@ -12,4 +12,19 @@ class CreateProductFamilyContext implements Context
     public function iWantToCreateANewProductfamily()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
+    /**
+     * @Then the productfamily can be used
+     */
+    public function theProductfamilyCanBeUsed()
+    {
+    }
+
 }

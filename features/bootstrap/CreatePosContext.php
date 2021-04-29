@@ -19,4 +19,12 @@ class CreatePosContext implements Context
     public function iWantToCreateANewPos()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
 }

@@ -19,4 +19,12 @@ class CreateConsumptionContext implements Context
     public function iWantToCreateANewConsumption()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
 }

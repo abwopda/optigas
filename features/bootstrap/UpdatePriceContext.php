@@ -19,4 +19,11 @@ class UpdatePriceContext implements Context
     public function iWantToUpdateAnExistingUnvalidatedPrice()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
 }

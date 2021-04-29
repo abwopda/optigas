@@ -19,4 +19,13 @@ class ViewTankContext implements Context
     public function theTankDetailsAreDisplayed()
     {
     }
+
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
+
 }

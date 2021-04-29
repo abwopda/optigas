@@ -19,4 +19,12 @@ class CreateInvoiceContext implements Context
     public function theInvoiceCanBeUsed()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
 }

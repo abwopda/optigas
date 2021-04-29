@@ -19,4 +19,12 @@ class ActivatePosContext implements Context
     public function iWantToActivateAExistingPos()
     {
     }
+
+    /**
+     * @Then the pos can be used
+     */
+    public function thePosCanBeUsed()
+    {
+    }
+
 }

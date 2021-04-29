@@ -19,4 +19,12 @@ class ViewPosContext implements Context
     public function iWantToViewAnExistingPos()
     {
     }
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
+
 }

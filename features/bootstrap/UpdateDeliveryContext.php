@@ -19,4 +19,12 @@ class UpdateDeliveryContext implements Context
     public function theDeliveryIsUpdatedAndWaitingForValidation()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
 }

@@ -19,4 +19,12 @@ class ViewProductFamilyContext implements Context
     public function iWantToViewAnExistingProductfamily()
     {
     }
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
+
 }

@@ -19,4 +19,12 @@ class ViewPumpContext implements Context
     public function thePumpDetailsAreDisplayed()
     {
     }
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
+
 }

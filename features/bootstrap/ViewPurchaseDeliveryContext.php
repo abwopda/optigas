@@ -19,4 +19,13 @@ class ViewPurchaseDeliveryContext implements Context
     public function thePurchasedeliveryDetailsAreDisplayed()
     {
     }
+
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
+
 }

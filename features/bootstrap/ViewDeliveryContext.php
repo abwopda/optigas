@@ -19,4 +19,13 @@ class ViewDeliveryContext implements Context
     public function iWantToViewAnExistingDelivery()
     {
     }
+
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
+
 }

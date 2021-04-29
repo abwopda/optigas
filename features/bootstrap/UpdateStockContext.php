@@ -19,4 +19,11 @@ class UpdateStockContext implements Context
     public function theStockIsUpdatedAndWaitingForValidation()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
 }
