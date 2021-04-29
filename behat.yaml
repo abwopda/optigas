@@ -19,7 +19,7 @@ default:
         contexts:
           - 'App\Features\ViewCompanyContext'
         paths:
-          - '%paths.base%/features/view_tank.feature'
+          - '%paths.base%/features/view_company.feature'
       activate_company:
         contexts:
           - 'App\Features\ActivateCompanyContext'
@@ -450,3 +450,13 @@ default:
           - 'App\Features\InvalidateStockContext'
         paths:
           - '%paths.base%/features/invalidate_stock.feature'
+      register_employee:
+        contexts:
+          - 'App\Features\RegisterEmployeeContext'
+        paths:
+          - '%paths.base%/features/register_employee.feature'
+      register_contact:
+        contexts:
+          - 'App\Features\RegisterContactContext'
+        paths:
+          - '%paths.base%/features/register_contact.feature'
