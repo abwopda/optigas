@@ -26,5 +26,4 @@ class CreatePumpContext implements Context
     public function thePumpCanBeUsed()
     {
     }
-
 }

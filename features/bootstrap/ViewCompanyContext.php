@@ -26,5 +26,4 @@ class ViewCompanyContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

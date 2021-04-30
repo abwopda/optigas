@@ -27,5 +27,4 @@ class ViewDeliveryContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

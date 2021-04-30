@@ -26,5 +26,4 @@ class CreateDeliveryContext implements Context
     public function iFillTheForm()
     {
     }
-
 }

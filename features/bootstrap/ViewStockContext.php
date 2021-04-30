@@ -27,5 +27,4 @@ class ViewStockContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

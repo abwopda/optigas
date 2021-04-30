@@ -7,6 +7,7 @@ use App\Entity\Contact;
 use App\UseCase\RegisterContact;
 use Assert\Assertion;
 use Behat\Behat\Context\Context;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class RegisterContactContext
@@ -28,7 +29,25 @@ class RegisterContactContext implements Context
      */
     public function aContactNeedToBeRegisteredBeforeUsingThePlatform()
     {
-        $this->registerContact = new RegisterContact(new ContactRepository());
+        $userPasswordEncoder = new class () implements UserPasswordEncoderInterface
+        {
+            /**
+             * @inheritDoc
+             */
+            public function encodePassword(UserInterface $user, string $plainPassword)
+            {
+                return "hash_password";
+            }
+
+            public function isPasswordValid(UserInterface $user, string $raw)
+            {
+            }
+
+            public function needsRehash(UserInterface $user): bool
+            {
+            }
+        };
+        $this->registerContact = new RegisterContact(new ContactRepository($userPasswordEncoder));
     }
 
     /**
@@ -49,6 +68,6 @@ class RegisterContactContext implements Context
      */
     public function theContactCanLogInWithTheAccountCreated()
     {
-        Assertion::eq($this->contact,$this->registerContact->execute($this->contact));
+        Assertion::eq($this->contact, $this->registerContact->execute($this->contact));
     }
 }

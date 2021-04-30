@@ -27,5 +27,4 @@ class ViewPurchaseDeliveryContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

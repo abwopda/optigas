@@ -33,4 +33,12 @@ class Contact extends User
         $this->companyName = $companyName;
         return $this;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return ["ROLE_USER","ROLE_CONTACT"];
+    }
 }

@@ -27,5 +27,4 @@ class ViewTankContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

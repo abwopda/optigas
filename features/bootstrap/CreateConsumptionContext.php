@@ -26,5 +26,4 @@ class CreateConsumptionContext implements Context
     public function iFillTheForm()
     {
     }
-
 }

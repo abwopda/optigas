@@ -26,5 +26,4 @@ class CreateInvoiceContext implements Context
     public function iFillTheForm()
     {
     }
-
 }

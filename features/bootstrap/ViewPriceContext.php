@@ -27,5 +27,4 @@ class ViewPriceContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

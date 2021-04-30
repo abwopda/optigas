@@ -26,5 +26,4 @@ class CreateTankContext implements Context
     public function theTankCanBeUsed()
     {
     }
-
 }

@@ -26,5 +26,4 @@ class CreateStoreContext implements Context
     public function theStoreCanBeUsed()
     {
     }
-
 }

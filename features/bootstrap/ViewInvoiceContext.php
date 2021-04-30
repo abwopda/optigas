@@ -27,5 +27,4 @@ class ViewInvoiceContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

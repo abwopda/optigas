@@ -26,5 +26,4 @@ class CreatePosContext implements Context
     public function iFillTheForm()
     {
     }
-
 }

@@ -27,5 +27,4 @@ class ViewMeterContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

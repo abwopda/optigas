@@ -26,5 +26,4 @@ class ActivatePosContext implements Context
     public function thePosCanBeUsed()
     {
     }
-
 }

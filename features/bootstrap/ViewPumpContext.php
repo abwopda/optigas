@@ -26,5 +26,4 @@ class ViewPumpContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

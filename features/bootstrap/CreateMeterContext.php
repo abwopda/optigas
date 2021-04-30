@@ -26,5 +26,4 @@ class CreateMeterContext implements Context
     public function iFillTheForm()
     {
     }
-
 }

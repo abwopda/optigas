@@ -2,12 +2,12 @@
 
 namespace App\Features;
 
-
 use App\Adapter\InMemory\Repository\EmployeeRepository;
 use App\Entity\Employee;
 use App\UseCase\RegisterEmployee;
 use Assert\Assertion;
 use Behat\Behat\Context\Context;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class RegisterEmployeeContext
@@ -29,7 +29,25 @@ class RegisterEmployeeContext implements Context
      */
     public function anEmployeeNeedToBeRegisteredBeforeUsingThePlatform()
     {
-        $this->registerEmployee = new RegisterEmployee(new EmployeeRepository());
+        $userPasswordEncoder = new class () implements UserPasswordEncoderInterface
+        {
+            /**
+             * @inheritDoc
+             */
+            public function encodePassword(UserInterface $user, string $plainPassword)
+            {
+                return "hash_password";
+            }
+
+            public function isPasswordValid(UserInterface $user, string $raw)
+            {
+            }
+
+            public function needsRehash(UserInterface $user): bool
+            {
+            }
+        };
+        $this->registerEmployee = new RegisterEmployee(new EmployeeRepository($userPasswordEncoder));
     }
 
     /**
@@ -37,7 +55,7 @@ class RegisterEmployeeContext implements Context
      */
     public function theEmployeeCanLogInWithTheAccountCreated()
     {
-        Assertion::eq($this->employee,$this->registerEmployee->execute($this->employee));
+        Assertion::eq($this->employee, $this->registerEmployee->execute($this->employee));
     }
 
     /**
@@ -51,5 +69,4 @@ class RegisterEmployeeContext implements Context
         $this->employee->setFirstName("John");
         $this->employee->setLastName("Doe");
     }
-
 }

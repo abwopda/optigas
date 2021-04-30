@@ -9,11 +9,10 @@ use App\Gateway\ContactGateway;
  * Class ContactRepository
  * @package App\Adapter\InMemory\Repository
  */
-class ContactRepository  implements ContactGateway
+class ContactRepository extends UserRepository implements ContactGateway
 {
     public function register(Contact $contact): void
     {
         // TODO: Implement register() method.
     }
-
 }

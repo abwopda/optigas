@@ -26,5 +26,4 @@ class CreateCompanyContext implements Context
     public function theCompanyCanBeUsed()
     {
     }
-
 }

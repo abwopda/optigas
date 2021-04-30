@@ -26,5 +26,4 @@ class ViewProductFamilyContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

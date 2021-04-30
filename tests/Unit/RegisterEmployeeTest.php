@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\EmployeeRepository;
@@ -8,6 +7,7 @@ use App\Entity\Employee;
 use App\UseCase\RegisterEmployee;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class RegisterEmployeeTest
@@ -17,7 +17,10 @@ class RegisterEmployeeTest extends TestCase
 {
     public function testSuccessfulRegistration()
     {
-        $useCase = new RegisterEmployee(new EmployeeRepository());
+        $userPasswordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
+        $userPasswordEncoder->method("encodePassword")->willReturn("hash_password");
+
+        $useCase = new RegisterEmployee(new EmployeeRepository($userPasswordEncoder), $userPasswordEncoder);
 
         $employee = new Employee();
         $employee->setPlainPassword("Password123!");
@@ -25,8 +28,7 @@ class RegisterEmployeeTest extends TestCase
         $employee->setFirstName("John");
         $employee->setLastName("Doe");
 
-        $this->assertEquals($employee,$useCase->execute($employee));
-
+        $this->assertEquals($employee, $useCase->execute($employee));
     }
 
     /**
@@ -35,7 +37,10 @@ class RegisterEmployeeTest extends TestCase
      */
     public function testBadEmployee(Employee $employee)
     {
-        $useCase = new RegisterEmployee(new EmployeeRepository());
+        $userPasswordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
+        $userPasswordEncoder->method("encodePassword")->willReturn("hash_password");
+
+        $useCase = new RegisterEmployee(new EmployeeRepository($userPasswordEncoder), $userPasswordEncoder);
 
         $this->expectException(lazyAssertionException::class);
 

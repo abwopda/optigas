@@ -26,5 +26,4 @@ class CreateProductContext implements Context
     public function theProductCanBeUsed()
     {
     }
-
 }

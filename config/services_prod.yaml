@@ -4,3 +4,4 @@ imports:
 services:
   App\Gateway\EmployeeGateway: '@App\Adapter\Doctrine\Repository\EmployeeRepository'
   App\Gateway\ContactGateway: '@App\Adapter\Doctrine\Repository\ContactRepository'
+  App\Gateway\UserGateway: '@App\Adapter\Doctrine\Repository\UserRepository'

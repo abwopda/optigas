@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\ContactRepository;
@@ -8,6 +7,7 @@ use App\Entity\Contact;
 use App\UseCase\RegisterContact;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class RegisterContactTest
@@ -17,7 +17,10 @@ class RegisterContactTest extends TestCase
 {
     public function testSuccessfulRegistration()
     {
-        $useCase = new RegisterContact(new ContactRepository());
+        $userPasswordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
+        $userPasswordEncoder->method("encodePassword")->willReturn("hash_password");
+
+        $useCase = new RegisterContact(new ContactRepository($userPasswordEncoder), $userPasswordEncoder);
 
         $contact = new Contact();
         $contact->setPlainPassword("Password123!");
@@ -26,8 +29,7 @@ class RegisterContactTest extends TestCase
         $contact->setLastName("Doe");
         $contact->setCompanyName("Company");
 
-        $this->assertEquals($contact,$useCase->execute($contact));
-
+        $this->assertEquals($contact, $useCase->execute($contact));
     }
 
     /**
@@ -36,7 +38,10 @@ class RegisterContactTest extends TestCase
      */
     public function testBadContact(Contact $contact)
     {
-        $useCase = new RegisterContact(new ContactRepository());
+        $userPasswordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
+        $userPasswordEncoder->method("encodePassword")->willReturn("hash_password");
+
+        $useCase = new RegisterContact(new ContactRepository($userPasswordEncoder), $userPasswordEncoder);
 
         $this->expectException(lazyAssertionException::class);
 
@@ -124,6 +129,5 @@ class RegisterContactTest extends TestCase
                 ->setPlainPassword("")
                 ->setCompanyName("Company")
         ];
-
     }
 }

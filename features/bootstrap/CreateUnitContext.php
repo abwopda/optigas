@@ -26,5 +26,4 @@ class CreateUnitContext implements Context
     public function theUnitCanBeUsed()
     {
     }
-
 }

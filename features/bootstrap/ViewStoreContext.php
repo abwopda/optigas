@@ -26,5 +26,4 @@ class ViewStoreContext implements Context
     public function iLoadTheView()
     {
     }
-
 }

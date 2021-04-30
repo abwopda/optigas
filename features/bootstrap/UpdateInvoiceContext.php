@@ -26,5 +26,4 @@ class UpdateInvoiceContext implements Context
     public function iWantToUpdateAnExistingUnvalidatedInvoice()
     {
     }
-
 }

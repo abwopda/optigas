@@ -26,5 +26,4 @@ class CreateProductFamilyContext implements Context
     public function theProductfamilyCanBeUsed()
     {
     }
-
 }

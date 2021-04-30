@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Gateway;
 
 use App\Entity\Employee;

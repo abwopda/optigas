@@ -9,11 +9,10 @@ use App\Gateway\EmployeeGateway;
  * Class EmployeeRepository
  * @package App\Adapter\InMemory\Repository
  */
-class EmployeeRepository  implements EmployeeGateway
+class EmployeeRepository extends UserRepository implements EmployeeGateway
 {
     public function register(Employee $employee): void
     {
         // TODO: Implement register() method.
     }
-
 }

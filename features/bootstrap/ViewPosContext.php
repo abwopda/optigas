@@ -26,5 +26,4 @@ class ViewPosContext implements Context
     public function iLoadTheView()
     {
     }
-
 }
