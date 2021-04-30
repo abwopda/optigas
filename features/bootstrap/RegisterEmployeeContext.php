@@ -8,6 +8,7 @@ use App\UseCase\RegisterEmployee;
 use Assert\Assertion;
 use Behat\Behat\Context\Context;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class RegisterEmployeeContext
@@ -47,7 +48,10 @@ class RegisterEmployeeContext implements Context
             {
             }
         };
-        $this->registerEmployee = new RegisterEmployee(new EmployeeRepository($userPasswordEncoder));
+        $this->registerEmployee = new RegisterEmployee(
+            new EmployeeRepository($userPasswordEncoder),
+            $userPasswordEncoder
+        );
     }
 
     /**

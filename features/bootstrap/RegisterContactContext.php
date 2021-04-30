@@ -8,6 +8,7 @@ use App\UseCase\RegisterContact;
 use Assert\Assertion;
 use Behat\Behat\Context\Context;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class RegisterContactContext
@@ -47,7 +48,10 @@ class RegisterContactContext implements Context
             {
             }
         };
-        $this->registerContact = new RegisterContact(new ContactRepository($userPasswordEncoder));
+        $this->registerContact = new RegisterContact(
+            new ContactRepository($userPasswordEncoder),
+            $userPasswordEncoder
+        );
     }
 
     /**
