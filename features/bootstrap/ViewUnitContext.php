@@ -19,4 +19,12 @@ class ViewUnitContext implements Context
     public function theUnitDetailsAreDisplayed()
     {
     }
+
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
 }

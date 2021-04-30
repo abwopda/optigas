@@ -12,4 +12,18 @@ class CreateProductContext implements Context
     public function iWantToCreateANewProduct()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
+    /**
+     * @Then the product can be used
+     */
+    public function theProductCanBeUsed()
+    {
+    }
 }

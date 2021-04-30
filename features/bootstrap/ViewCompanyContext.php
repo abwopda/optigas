@@ -19,4 +19,11 @@ class ViewCompanyContext implements Context
     public function theCompanyDetailsAreDisplayed()
     {
     }
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
 }

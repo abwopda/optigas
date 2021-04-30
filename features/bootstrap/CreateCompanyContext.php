@@ -19,4 +19,11 @@ class CreateCompanyContext implements Context
     public function iWantToCreateANewCompany()
     {
     }
+
+    /**
+     * @Then the company can be used
+     */
+    public function theCompanyCanBeUsed()
+    {
+    }
 }

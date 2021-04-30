@@ -19,4 +19,11 @@ class CreateDeliveryContext implements Context
     public function theDeliveryCanBeUsed()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
 }

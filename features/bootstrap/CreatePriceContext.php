@@ -19,4 +19,11 @@ class CreatePriceContext implements Context
     public function iWantToCreateANewPrice()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
 }

@@ -19,4 +19,11 @@ class UpdatePurchaseDeliveryContext implements Context
     public function thePurchasedeliveryIsUpdatedAndWaitingForValidation()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
 }

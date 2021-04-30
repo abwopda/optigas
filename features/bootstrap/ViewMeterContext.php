@@ -19,4 +19,12 @@ class ViewMeterContext implements Context
     public function iWantToViewAnExistingMeter()
     {
     }
+
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
 }

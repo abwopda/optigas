@@ -12,4 +12,18 @@ class CreateStoreContext implements Context
     public function iWantToCreateANewStore()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
+    /**
+     * @Then the store can be used
+     */
+    public function theStoreCanBeUsed()
+    {
+    }
 }

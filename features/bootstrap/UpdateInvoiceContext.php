@@ -12,4 +12,18 @@ class UpdateInvoiceContext implements Context
     public function theInvoiceIsUpdatedAndWaitingForValidation()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
+    /**
+     * @Given i want to update an existing unvalidated invoice
+     */
+    public function iWantToUpdateAnExistingUnvalidatedInvoice()
+    {
+    }
 }

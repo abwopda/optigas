@@ -19,4 +19,11 @@ class ViewStoreContext implements Context
     public function theStoreDetailsAreDisplayed()
     {
     }
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
 }

@@ -19,4 +19,12 @@ class ViewPriceContext implements Context
     public function iWantToViewAnExistingPrice()
     {
     }
+
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
 }

@@ -19,4 +19,12 @@ class ViewInvoiceContext implements Context
     public function theInvoiceDetailsAreDisplayed()
     {
     }
+
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
 }

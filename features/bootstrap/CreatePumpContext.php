@@ -12,4 +12,18 @@ class CreatePumpContext implements Context
     public function iWantToCreateANewPump()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
+    /**
+     * @Then the pump can be used
+     */
+    public function thePumpCanBeUsed()
+    {
+    }
 }

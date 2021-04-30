@@ -12,4 +12,18 @@ class CreateUnitContext implements Context
     public function iWantToCreateANewUnit()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
+
+    /**
+     * @Then the unit can be used
+     */
+    public function theUnitCanBeUsed()
+    {
+    }
 }

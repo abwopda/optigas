@@ -19,4 +19,11 @@ class ViewProductContext implements Context
     public function iWantToViewAnExistingProduct()
     {
     }
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
 }

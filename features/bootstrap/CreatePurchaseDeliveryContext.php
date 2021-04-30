@@ -19,4 +19,11 @@ class CreatePurchaseDeliveryContext implements Context
     public function thePurchasedeliveryCanBeUsed()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
 }

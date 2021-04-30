@@ -19,4 +19,11 @@ class UpdateMeterContext implements Context
     public function iWantToUpdateAnExistingUnvalidatedMeter()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
 }

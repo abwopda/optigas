@@ -19,4 +19,11 @@ class CreateStockContext implements Context
     public function theStockCanBeUsed()
     {
     }
+
+    /**
+     * @When i fill the form
+     */
+    public function iFillTheForm()
+    {
+    }
 }

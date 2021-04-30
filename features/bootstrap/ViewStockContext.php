@@ -19,4 +19,12 @@ class ViewStockContext implements Context
     public function theStockDetailsAreDisplayed()
     {
     }
+
+
+    /**
+     * @When i load the view
+     */
+    public function iLoadTheView()
+    {
+    }
 }
