@@ -4,6 +4,9 @@ register_employee:
 register_contact:
   path: /contact/register
   controller: App\Controller\RegisterContactController
+create_pos:
+  path: /pos-create
+  controller: App\Controller\CreatePosController
 
 index:
   path: /
