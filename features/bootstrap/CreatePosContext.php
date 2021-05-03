@@ -2,6 +2,7 @@
 
 namespace App\Features;
 
+use App\Adapter\InMemory\Repository\PosRepository;
 use App\Entity\Pos;
 use App\UseCase\CreatePos;
 use Assert\Assertion;
@@ -18,7 +19,7 @@ class CreatePosContext implements Context
      */
     public function iWantToCreateANewPos()
     {
-        $this->createPos = new CreatePos();
+        $this->createPos = new CreatePos(new PosRepository());
     }
 
     /**
