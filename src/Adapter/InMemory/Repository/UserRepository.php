@@ -55,6 +55,7 @@ class UserRepository implements UserGateway
         if (!isset($this->users[$email])) {
             throw new UsernameNotFoundException();
         }
+
         return $this->users[$email];
     }
 }

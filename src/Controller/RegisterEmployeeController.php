@@ -18,25 +18,25 @@ use Twig\Environment;
  */
 class RegisterEmployeeController
 {
-    private FormFactoryInterface $formfactory;
+    private FormFactoryInterface $formFactory;
     private RegisterEmployee $employeeRegister;
     private UrlGeneratorInterface $urlGenerator;
     private Environment $twig;
 
     /**
      * RegisterEmployeeController constructor.
-     * @param FormFactoryInterface $formfactory
+     * @param FormFactoryInterface $formFactory
      * @param RegisterEmployee $employeeRegister
      * @param UrlGeneratorInterface $urlGenerator
      * @param Environment $twig
      */
     public function __construct(
-        FormFactoryInterface $formfactory,
+        FormFactoryInterface $formFactory,
         RegisterEmployee $employeeRegister,
         UrlGeneratorInterface $urlGenerator,
         Environment $twig
     ) {
-        $this->formfactory = $formfactory;
+        $this->formFactory = $formFactory;
         $this->employeeRegister = $employeeRegister;
         $this->urlGenerator = $urlGenerator;
         $this->twig = $twig;
@@ -55,7 +55,7 @@ class RegisterEmployeeController
     {
         $employee = new Employee();
 
-        $form = $this->formfactory->create(EmployeeRegistrationType::class, $employee)->handleRequest($request);
+        $form = $this->formFactory->create(EmployeeRegistrationType::class, $employee)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->employeeRegister->execute($employee);

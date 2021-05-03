@@ -2,44 +2,49 @@
 
 namespace App\Controller;
 
-use App\Entity\Contact;
-use App\Form\ContactRegistrationType;
-use App\UseCase\RegisterContact;
+use App\Entity\Pos;
+use App\Form\PosType;
+use App\UseCase\CreatePos;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
 /**
- * Class RegisterContactController
+ * Class CreatePosController
  * @package App\Controller
  */
-class RegisterContactController
+class CreatePosController
 {
     private FormFactoryInterface $formFactory;
-    private RegisterContact $contactRegister;
+    private CreatePos $createPos;
     private UrlGeneratorInterface $urlGenerator;
     private Environment $twig;
+    private Security $security;
 
     /**
-     * RegisterContactController constructor.
-     * @param FormFactoryInterface $formFactory
-     * @param RegisterContact $contactRegister
+     * CreatePosController constructor.
+     * @param FormFactoryInterface $formfactory
+     * @param CreatePos $createPos
      * @param UrlGeneratorInterface $urlGenerator
      * @param Environment $twig
+     * @param Security $security
      */
     public function __construct(
         FormFactoryInterface $formFactory,
-        RegisterContact $contactRegister,
+        CreatePos $createPos,
         UrlGeneratorInterface $urlGenerator,
-        Environment $twig
+        Environment $twig,
+        Security $security
     ) {
         $this->formFactory = $formFactory;
-        $this->contactRegister = $contactRegister;
+        $this->posCreate = $createPos;
         $this->urlGenerator = $urlGenerator;
         $this->twig = $twig;
+        $this->security = $security;
     }
 
 
@@ -49,21 +54,22 @@ class RegisterContactController
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
-
      */
     public function __invoke(Request $request): Response
     {
-        $contact = new Contact();
+        $pos = new Pos();
 
-        $form = $this->formFactory->create(ContactRegistrationType::class, $contact)->handleRequest($request);
+        $pos->setCreateBy($this->security->getUser());
+
+        $form = $this->formFactory->create(PosType::class, $pos)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->contactRegister->execute($contact);
+            $this->posCreate->execute($pos);
 
             return new RedirectResponse($this->urlGenerator->generate("index"));
         }
 
-        return new Response($this->twig->render("ui/register_contact.html.twig", [
+        return new Response($this->twig->render("ui/create_pos.html.twig", [
             "form" => $form->createView()
         ]));
     }
