@@ -36,9 +36,9 @@ class CreatePosContext implements Context
             ->setCapacity(60000)
             ->setActive(true)
             ->setValid(true)
-            ->setUpdateAt(null)
-            ->setValidateAt(null)
-            ->setActivateAt(null)
+            ->setUpdateAt(new \DateTimeImmutable())
+            ->setValidateAt(new \DateTimeImmutable())
+            ->setActivateAt(new \DateTimeImmutable())
         ;
     }
     /**
