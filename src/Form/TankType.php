@@ -3,21 +3,22 @@
 namespace App\Form;
 
 use App\Entity\Pos;
+use App\Entity\Tank;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
- * Class PosType
+ * Class TankType
  * @package App\Form
  */
-class PosType extends AbstractType
+class TankType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -26,6 +27,20 @@ class PosType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add("pos", PosType::class, [
+                "disabled" => true,
+                "label" => "Point de vente",
+                "constraints" => [
+                    new NotBlank()
+                ]
+            ])
+            /*->add("pos",EntityType::class,[
+                "class" => Pos::class,
+                "choice_label" => "name",
+                "constraints" => [
+                    new NotBlank()
+                ]
+            ])*/
             ->add("code", TextType::class, [
                 "label" => "Code",
                 "constraints" => [
@@ -44,18 +59,6 @@ class PosType extends AbstractType
                     new NotBlank()
                 ]
             ])
-            ->add("address", TextareaType::class, [
-                "label" => "Adresse",
-                "constraints" => [
-                    new NotBlank()
-                ]
-            ])
-            ->add("town", TextType::class, [
-                "label" => "Ville",
-                "constraints" => [
-                    new NotBlank()
-                ]
-            ])
             ->add("capacity", NumberType::class, [
                 "label" => "Capacité",
                 "constraints" => [
@@ -70,6 +73,6 @@ class PosType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault("data_class", Pos::class);
+        $resolver->setDefault("data_class", Tank::class);
     }
 }

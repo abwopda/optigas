@@ -1,12 +1,18 @@
 register_employee:
   path: /employee/register
   controller: App\Controller\RegisterEmployeeController
+
 register_contact:
   path: /contact/register
   controller: App\Controller\RegisterContactController
+
 create_pos:
   path: /pos-create
   controller: App\Controller\CreatePosController
+
+tank.create:
+  path: /tank-create/{pos}
+  controller: App\Controller\CreateTankController
 
 index:
   path: /

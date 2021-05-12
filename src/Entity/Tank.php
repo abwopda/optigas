@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package App\Entity
  * @ORM\Entity
  */
-class Pos
+class Tank
 {
     /**
      * @var int|null
@@ -36,18 +36,6 @@ class Pos
      * @ORM\Column(type="string")
      */
     private ?string $description = null;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string")
-     */
-    private ?string $town = null;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string")
-     */
-    private ?string $address = null;
 
     /**
      * @var int|null
@@ -92,6 +80,12 @@ class Pos
     private ?\DateTimeInterface $validateAt = null;
 
     /**
+     * @var Pos
+     * @ORM\ManyToOne(targetEntity="Pos")
+     */
+    private Pos $pos;
+
+    /**
      * @var Employee
      * @ORM\ManyToOne(targetEntity="Employee")
      */
@@ -115,13 +109,14 @@ class Pos
      */
     private ?Employee $validateBy = null;
 
-
     /**
-     * Pos constructor.
+     * Tank constructor.
+     * @param Pos $pos
      */
-    public function __construct()
+    public function __construct(Pos $pos)
     {
         $this->createAt = new \DateTimeImmutable();
+        $this->pos = $pos;
     }
 
     /**
@@ -142,9 +137,9 @@ class Pos
 
     /**
      * @param string|null $code
-     * @return Pos
+     * @return Tank
      */
-    public function setCode(?string $code): Pos
+    public function setCode(?string $code): Tank
     {
         $this->code = $code;
         return $this;
@@ -160,9 +155,9 @@ class Pos
 
     /**
      * @param string|null $name
-     * @return Pos
+     * @return Tank
      */
-    public function setName(?string $name): Pos
+    public function setName(?string $name): Tank
     {
         $this->name = $name;
         return $this;
@@ -178,47 +173,11 @@ class Pos
 
     /**
      * @param string|null $description
-     * @return Pos
+     * @return Tank
      */
-    public function setDescription(?string $description): Pos
+    public function setDescription(?string $description): Tank
     {
         $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTown(): ?string
-    {
-        return $this->town;
-    }
-
-    /**
-     * @param string|null $town
-     * @return Pos
-     */
-    public function setTown(?string $town): Pos
-    {
-        $this->town = $town;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param string|null $address
-     * @return Pos
-     */
-    public function setAddress(?string $address): Pos
-    {
-        $this->address = $address;
         return $this;
     }
 
@@ -232,9 +191,9 @@ class Pos
 
     /**
      * @param int|null $capacity
-     * @return Pos
+     * @return Tank
      */
-    public function setCapacity(?int $capacity): Pos
+    public function setCapacity(?int $capacity): Tank
     {
         $this->capacity = $capacity;
         return $this;
@@ -250,9 +209,9 @@ class Pos
 
     /**
      * @param bool|null $active
-     * @return Pos
+     * @return Tank
      */
-    public function setActive(?bool $active): Pos
+    public function setActive(?bool $active): Tank
     {
         $this->active = $active;
         return $this;
@@ -268,9 +227,9 @@ class Pos
 
     /**
      * @param bool|null $valid
-     * @return Pos
+     * @return Tank
      */
-    public function setValid(?bool $valid): Pos
+    public function setValid(?bool $valid): Tank
     {
         $this->valid = $valid;
         return $this;
@@ -294,9 +253,9 @@ class Pos
 
     /**
      * @param \DateTimeInterface|null $updateAt
-     * @return Pos
+     * @return Tank
      */
-    public function setUpdateAt(?\DateTimeInterface $updateAt): Pos
+    public function setUpdateAt(?\DateTimeInterface $updateAt): Tank
     {
         $this->updateAt = $updateAt;
         return $this;
@@ -312,9 +271,9 @@ class Pos
 
     /**
      * @param \DateTimeInterface|null $activateAt
-     * @return Pos
+     * @return Tank
      */
-    public function setActivateAt(?\DateTimeInterface $activateAt): Pos
+    public function setActivateAt(?\DateTimeInterface $activateAt): Tank
     {
         $this->activateAt = $activateAt;
         return $this;
@@ -330,9 +289,9 @@ class Pos
 
     /**
      * @param \DateTimeInterface|null $validateAt
-     * @return Pos
+     * @return Tank
      */
-    public function setValidateAt(?\DateTimeInterface $validateAt): Pos
+    public function setValidateAt(?\DateTimeInterface $validateAt): Tank
     {
         $this->validateAt = $validateAt;
         return $this;
@@ -348,11 +307,29 @@ class Pos
 
     /**
      * @param Employee $createBy
-     * @return Pos
+     * @return Tank
      */
-    public function setCreateBy(Employee $createBy): Pos
+    public function setCreateBy(Employee $createBy): Tank
     {
         $this->createBy = $createBy;
+        return $this;
+    }
+
+    /**
+     * @return Pos
+     */
+    public function getPos(): Pos
+    {
+        return $this->pos;
+    }
+
+    /**
+     * @param Pos $pos
+     * @return Tank
+     */
+    public function setPos(Pos $pos): Tank
+    {
+        $this->pos = $pos;
         return $this;
     }
 
@@ -366,9 +343,9 @@ class Pos
 
     /**
      * @param Employee|null $updateBy
-     * @return Pos
+     * @return Tank
      */
-    public function setUpdateBy(?Employee $updateBy): Pos
+    public function setUpdateBy(?Employee $updateBy): Tank
     {
         $this->updateBy = $updateBy;
         return $this;
@@ -384,9 +361,9 @@ class Pos
 
     /**
      * @param Employee|null $activateBy
-     * @return Pos
+     * @return Tank
      */
-    public function setActivateBy(?Employee $activateBy): Pos
+    public function setActivateBy(?Employee $activateBy): Tank
     {
         $this->activateBy = $activateBy;
         return $this;
@@ -402,9 +379,9 @@ class Pos
 
     /**
      * @param Employee|null $validateBy
-     * @return Pos
+     * @return Tank
      */
-    public function setValidateBy(?Employee $validateBy): Pos
+    public function setValidateBy(?Employee $validateBy): Tank
     {
         $this->validateBy = $validateBy;
         return $this;

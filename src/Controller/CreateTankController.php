@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Pos;
-use App\Form\PosType;
-use App\UseCase\CreatePos;
+use App\Entity\Tank;
+use App\Form\TankType;
+use App\Gateway\PosGateway;
+use App\UseCase\CreateTank;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,37 +16,41 @@ use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
 /**
- * Class CreatePosController
+ * Class CreateTankController
  * @package App\Controller
  */
-class CreatePosController
+class CreateTankController
 {
     private FormFactoryInterface $formFactory;
-    private CreatePos $createPos;
+    private CreateTank $createTank;
     private UrlGeneratorInterface $urlGenerator;
     private Environment $twig;
     private Security $security;
+    private PosGateway $posGateway;
 
     /**
-     * CreatePosController constructor.
+     * CreateTankController constructor.
      * @param FormFactoryInterface $formfactory
-     * @param CreatePos $createPos
+     * @param CreateTank $createTank
      * @param UrlGeneratorInterface $urlGenerator
      * @param Environment $twig
      * @param Security $security
+     * @param PosGateway $posGateway
      */
     public function __construct(
         FormFactoryInterface $formFactory,
-        CreatePos $createPos,
+        CreateTank $createTank,
         UrlGeneratorInterface $urlGenerator,
         Environment $twig,
-        Security $security
+        Security $security,
+        PosGateway $posGateway
     ) {
         $this->formFactory = $formFactory;
-        $this->createPos = $createPos;
+        $this->createTank = $createTank;
         $this->urlGenerator = $urlGenerator;
         $this->twig = $twig;
         $this->security = $security;
+        $this->posGateway = $posGateway;
     }
 
 
@@ -55,21 +61,22 @@ class CreatePosController
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function __invoke(Request $request): Response
+    public function __invoke(int $pos, Request $request): Response
     {
-        $pos = new Pos();
+        $tank = new Tank($this->posGateway->findOneById($pos));
 
-        $pos->setCreateBy($this->security->getUser());
+        $tank->setCreateBy($this->security->getUser());
 
-        $form = $this->formFactory->create(PosType::class, $pos)->handleRequest($request);
+        $form = $this->formFactory->create(TankType::class, $tank)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->createPos->execute($pos);
+            $this->createTank->execute($tank);
 
             return new RedirectResponse($this->urlGenerator->generate("index"));
         }
 
-        return new Response($this->twig->render("ui/create_pos.html.twig", [
+        return new Response($this->twig->render("ui/tank/create.html.twig", [
+            "entity" => $tank,
             "form" => $form->createView()
         ]));
     }
