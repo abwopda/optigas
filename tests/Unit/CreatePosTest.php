@@ -25,16 +25,10 @@ class CreatePosTest extends TestCase
             ->setTown("town")
             ->setAddress("address")
             ->setCapacity(60000)
-            ->setActive(true)
-            ->setValid(true)
-            ->setUpdateAt(new \DateTimeImmutable())
-            ->setValidateAt(new \DateTimeImmutable())
-            ->setActivateAt(new \DateTimeImmutable())
         ;
 
         $this->AssertEquals($pos, $useCase->execute($pos));
     }
-
     /**
      * @dataProvider provideBadPos
      * @param Pos $pos
@@ -60,11 +54,6 @@ class CreatePosTest extends TestCase
                 ->setTown("town")
                 ->setAddress("address")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -74,11 +63,6 @@ class CreatePosTest extends TestCase
                 ->setTown("town")
                 ->setAddress("address")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -87,11 +71,6 @@ class CreatePosTest extends TestCase
                 ->setTown("town")
                 ->setAddress("address")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -100,11 +79,6 @@ class CreatePosTest extends TestCase
                 ->setTown("town")
                 ->setAddress("address")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -114,11 +88,6 @@ class CreatePosTest extends TestCase
                 ->setTown("town")
                 ->setAddress("address")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -127,11 +96,6 @@ class CreatePosTest extends TestCase
                 ->setDescription("description")
                 ->setAddress("address")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -141,11 +105,6 @@ class CreatePosTest extends TestCase
                 ->setTown("")
                 ->setAddress("address")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -154,11 +113,6 @@ class CreatePosTest extends TestCase
                 ->setDescription("description")
                 ->setTown("town")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -168,11 +122,6 @@ class CreatePosTest extends TestCase
                 ->setTown("town")
                 ->setAddress("")
                 ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
         ];
         yield[
             (new Pos())
@@ -181,76 +130,6 @@ class CreatePosTest extends TestCase
                 ->setDescription("description")
                 ->setTown("town")
                 ->setAddress("address")
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
-        ];
-        yield[
-            (new Pos())
-                ->setCode("code")
-                ->setName("name")
-                ->setDescription("description")
-                ->setTown("town")
-                ->setAddress("address")
-                ->setCapacity(60000)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
-        ];
-        yield[
-            (new Pos())
-                ->setCode("code")
-                ->setName("name")
-                ->setDescription("description")
-                ->setTown("town")
-                ->setAddress("address")
-                ->setCapacity(60000)
-                ->setActive(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
-        ];
-        yield[
-            (new Pos())
-                ->setCode("code")
-                ->setName("name")
-                ->setDescription("description")
-                ->setTown("town")
-                ->setAddress("address")
-                ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setValidateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
-        ];
-        yield[
-            (new Pos())
-                ->setCode("code")
-                ->setName("name")
-                ->setDescription("description")
-                ->setTown("town")
-                ->setAddress("address")
-                ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setActivateAt(new \DateTimeImmutable())
-        ];
-        yield[
-            (new Pos())
-                ->setCode("code")
-                ->setName("name")
-                ->setDescription("description")
-                ->setTown("town")
-                ->setAddress("address")
-                ->setCapacity(60000)
-                ->setActive(true)
-                ->setValid(true)
-                ->setUpdateAt(new \DateTimeImmutable())
-                ->setValidateAt(new \DateTimeImmutable())
         ];
     }
 }

@@ -4,6 +4,8 @@ namespace App\DataFixtures;
 
 use App\Entity\Contact;
 use App\Entity\Employee;
+use App\Entity\Pos;
+use App\Entity\Tank;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -46,6 +48,87 @@ class UserFixtures extends Fixture
         $contact->setPassword($this->userPasswordEncoder->encodePassword($contact, "Password123!"));
 
         $manager->persist($contact);
+        $manager->flush();
+
+        $pos = (new Pos())
+            ->setCode("STA01")
+            ->setName("Tawaal Oil AKAK")
+            ->setDescription("Station service")
+            ->setTown("Yaoundé")
+            ->setAddress("BP 10075")
+            ->setCapacity("95000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pos);
+        $manager->flush();
+
+        $tank = (new Tank($pos))
+            ->setCode("CUV0101")
+            ->setName("Super")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCapacity("30000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($tank);
+        $manager->flush();
+
+        $tank = (new Tank($pos))
+            ->setCode("CUV0102")
+            ->setName("Gasoil 1")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCapacity("30000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($tank);
+        $manager->flush();
+
+        $tank = (new Tank($pos))
+            ->setCode("CUV0103")
+            ->setName("Gasoil 2")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCapacity("15000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($tank);
+        $manager->flush();
+
+        $pos = (new Pos())
+            ->setCode("STA02")
+            ->setName("Tawaal Oil Sangmelima")
+            ->setDescription("Station service")
+            ->setTown("Sangmelima")
+            ->setAddress("BP 10075")
+            ->setCapacity("80000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pos);
+        $manager->flush();
+
+        $tank = (new Tank($pos))
+            ->setCode("CUV0201")
+            ->setName("Super")
+            ->setDescription("Tawaal Oil Sangmelima")
+            ->setCapacity("30000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($tank);
+        $manager->flush();
+
+        $tank = (new Tank($pos))
+            ->setCode("CUV0202")
+            ->setName("Gasoil")
+            ->setDescription("Tawaal Oil Sangmelima")
+            ->setCapacity("50000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($tank);
         $manager->flush();
     }
 }

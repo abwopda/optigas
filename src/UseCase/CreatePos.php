@@ -44,14 +44,6 @@ class CreatePos
                 ->notBlank()
                 ->integer()
                 ->greaterThan(0)
-            ->that($pos->getValid(), "valid")->notNull()
-            ->that($pos->getActive(), "active")->notNull()
-            ->that($pos->getActivateAt(), "activateAt")
-                ->notNull()
-            ->that($pos->getValidateAt(), "validateAt")
-                ->notNull()
-            ->that($pos->getUpdateAt(), "updateAt")
-                ->notNull()
             ->verifyNow()
         ;
 

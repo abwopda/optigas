@@ -14,4 +14,10 @@ interface PosGateway
      * @param Pos $pos
      */
     public function create(Pos $pos): void;
+
+    /**
+     * @param int $id
+     * @return Pos
+     */
+    public function findOneById(int $id): Pos;
 }

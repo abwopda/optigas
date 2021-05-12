@@ -37,14 +37,12 @@ class CreatePosTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         $form = $crawler->filter("form")->form([
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "Tawaal Oil AKAK",
             "pos[description]" => "Station service",
             "pos[town]" => "Yaoundé",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true
         ]);
 
         $client->submit($form);
@@ -92,8 +90,6 @@ class CreatePosTest extends WebTestCase
             "pos[town]" => "Yaoundé",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
@@ -103,122 +99,82 @@ class CreatePosTest extends WebTestCase
             "pos[town]" => "Yaoundé",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[description]" => "Station service",
             "pos[town]" => "Yaoundé",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "",
             "pos[description]" => "Station service",
             "pos[town]" => "Yaoundé",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "Tawaal Oil AKAK",
             "pos[town]" => "Yaoundé",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "Tawaal Oil AKAK",
             "pos[description]" => "",
             "pos[town]" => "Yaoundé",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "Tawaal Oil AKAK",
             "pos[description]" => "Station service",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "Tawaal Oil AKAK",
             "pos[description]" => "Station service",
             "pos[town]" => "",
             "pos[address]" => "BP 10075",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "Tawaal Oil AKAK",
             "pos[description]" => "Station service",
             "pos[town]" => "Yaoundé",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "Tawaal Oil AKAK",
             "pos[description]" => "Station service",
             "pos[town]" => "Yaoundé",
             "pos[address]" => "",
             "pos[capacity]" => 95000,
-            "pos[active]" => true,
-            "pos[valid]" => true,
         ]];
 
         yield[[
-            "pos[code]" => "STA01",
+            "pos[code]" => "STA00",
             "pos[name]" => "Tawaal Oil AKAK",
             "pos[description]" => "Station service",
             "pos[town]" => "Yaoundé",
             "pos[address]" => "BP 10075",
-            "pos[active]" => true,
-            "pos[valid]" => true,
-        ]];
-
-        yield[[
-            "pos[code]" => "STA01",
-            "pos[name]" => "Tawaal Oil AKAK",
-            "pos[description]" => "Station service",
-            "pos[town]" => "Yaoundé",
-            "pos[address]" => "BP 10075",
-            "pos[capacity]" => 95000,
-            "pos[valid]" => true,
-        ]];
-
-        yield[[
-            "pos[code]" => "STA01",
-            "pos[name]" => "Tawaal Oil AKAK",
-            "pos[description]" => "Station service",
-            "pos[town]" => "Yaoundé",
-            "pos[address]" => "BP 10075",
-            "pos[capacity]" => 95000,
-            "pos[active]" => true,
         ]];
     }
 }
