@@ -16,7 +16,7 @@ class CreatePosTest extends TestCase
 {
     public function testSuccessfulPosCreated()
     {
-        $useCase = new CreatePos(new PosRepository());
+        $useCase = new createPos(new PosRepository());
 
         $pos = (new Pos())
             ->setCode("code")

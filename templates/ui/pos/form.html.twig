@@ -1,0 +1,13 @@
+<legend>Données du point de vente</legend>
+  {{ form_row(form.code, { 'label': 'Code'}) }}
+  {{ form_row(form.name, { 'label': 'Désignation'}) }}
+  {{ form_row(form.description, { 'label': 'Description'}) }}
+  {{ form_row(form.address, { 'label': 'Adresse'}) }}
+  {{ form_row(form.town, { 'label': 'Ville'}) }}
+  {{ form_row(form.capacity, { 'label': 'Capacité'}) }}
+
+<legend>Informations générale</legend>
+
+  {{ form_rest(form) }} 
+
+  

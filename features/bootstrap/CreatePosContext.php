@@ -10,7 +10,7 @@ use Behat\Behat\Context\Context;
 
 class CreatePosContext implements Context
 {
-    private CreatePos $createPos;
+    private Pos $createPos;
 
     private Pos $pos;
 
@@ -19,7 +19,7 @@ class CreatePosContext implements Context
      */
     public function iWantToCreateANewPos()
     {
-        $this->createPos = new CreatePos(new PosRepository());
+        $this->createPos = new Pos(new PosRepository());
     }
 
     /**

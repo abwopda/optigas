@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Pos
+ * Class CreatePos
  * @package App\Entity
  * @ORM\Entity
  */
@@ -117,7 +117,7 @@ class Pos
 
 
     /**
-     * Pos constructor.
+     * CreatePos constructor.
      */
     public function __construct()
     {
