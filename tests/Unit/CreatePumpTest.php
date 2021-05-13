@@ -2,23 +2,24 @@
 
 namespace App\Tests\Unit;
 
-use App\Adapter\InMemory\Repository\PosRepository;
 use App\Adapter\InMemory\Repository\TankRepository;
+use App\Adapter\InMemory\Repository\PumpRepository;
 use App\Entity\Pos;
 use App\Entity\Tank;
-use App\UseCase\CreateTank;
+use App\Entity\Pump;
+use App\UseCase\CreatePump;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class CreateTankTest
+ * Class CreatePumpTest
  * @package App\Tests\Unit
  */
-class CreateTankTest extends TestCase
+class CreatePumpTest extends TestCase
 {
-    public function testSuccessfulTankCreated()
+    public function testSuccessfulPumpCreated()
     {
-        $useCase = new CreateTank(new TankRepository());
+        $useCase = new CreatePump(new PumpRepository());
 
         $pos = (new Pos())
             ->setCode("code")
@@ -30,31 +31,38 @@ class CreateTankTest extends TestCase
         ;
 
         $tank = (new Tank($pos))
+            ->setCode("CUV0000")
+            ->setName("Cuve Super")
+            ->setDescription("Tawaal oil XXX")
+            ->setCapacity(20000)
+        ;
+
+        $pump = (new Pump($tank))
             ->setCode("code")
             ->setName("name")
             ->setDescription("description")
-            ->setCapacity(30000)
+            ->setCounter(4578952)
         ;
 
-        $this->AssertEquals($tank, $useCase->execute($tank));
+        $this->AssertEquals($pump, $useCase->execute($pump));
     }
     /**
-     * @dataProvider provideBadTank
-     * @param Tank $tank
+     * @dataProvider provideBadPump
+     * @param Pump $pump
      */
-    public function testBadTank(Tank $tank)
+    public function testBadPump(Pump $pump)
     {
-        $useCase = new CreateTank(new TankRepository());
+        $useCase = new CreatePump(new PumpRepository());
 
         $this->expectException(LazyAssertionException::class);
 
-        $this->assertEquals($tank, $useCase->execute($tank));
+        $this->assertEquals($pump, $useCase->execute($pump));
     }
 
     /**
      * @return \Generator
      */
-    public function provideBadTank(): \Generator
+    public function provideBadPump(): \Generator
     {
         $pos = (new Pos())
             ->setCode("code")
@@ -65,48 +73,55 @@ class CreateTankTest extends TestCase
             ->setCapacity(60000)
         ;
 
+        $tank = (new Tank($pos))
+            ->setCode("CUV0000")
+            ->setName("Cuve Super")
+            ->setDescription("Tawaal oil XXX")
+            ->setCapacity(20000)
+        ;
+
         yield [
-            (new Tank($pos))
+            (new Pump($tank))
                 ->setName("name")
                 ->setDescription("description")
-                ->setCapacity(30000)
+                ->setCounter(4578952)
         ];
         yield [
-            (new Tank($pos))
+            (new Pump($tank))
                 ->setCode("")
                 ->setName("name")
                 ->setDescription("description")
-                ->setCapacity(30000)
+                ->setCounter(4578952)
         ];
         yield [
-            (new Tank($pos))
-                ->setName("name")
+            (new Pump($tank))
+                ->setCode("code")
                 ->setDescription("description")
-                ->setCapacity(30000)
+                ->setCounter(4578952)
         ];
         yield [
-            (new Tank($pos))
+            (new Pump($tank))
                 ->setCode("code")
                 ->setName("")
                 ->setDescription("description")
-                ->setCapacity(30000)
+                ->setCounter(4578952)
         ];
         yield [
-            (new Tank($pos))
+            (new Pump($tank))
                 ->setCode("code")
                 ->setName("name")
-                ->setCapacity(30000)
+                ->setCounter(4578952)
         ];
         yield [
-            (new Tank($pos))
-                ->setName("code")
+            (new Pump($tank))
+                ->setCode("code")
                 ->setName("name")
                 ->setDescription("")
-                ->setCapacity(30000)
+                ->setCounter(4578952)
         ];
         yield [
-            (new Tank($pos))
-                ->setName("code")
+            (new Pump($tank))
+                ->setCode("code")
                 ->setName("name")
                 ->setDescription("description")
         ];
