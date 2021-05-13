@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Contact;
 use App\Entity\Employee;
 use App\Entity\Pos;
+use App\Entity\Pump;
 use App\Entity\Tank;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -74,6 +75,28 @@ class UserFixtures extends Fixture
         $manager->persist($tank);
         $manager->flush();
 
+        $pump = (new Pump($tank))
+            ->setCode("POM010101")
+            ->setName("Super 1")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("3121555")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
+        $manager->flush();
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010102")
+            ->setName("Super 2")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("66985222")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
+        $manager->flush();
+
         $tank = (new Tank($pos))
             ->setCode("CUV0102")
             ->setName("Gasoil 1")
@@ -83,6 +106,17 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($tank);
+        $manager->flush();
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010201")
+            ->setName("Gasoil 1")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("255588")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
         $manager->flush();
 
         $tank = (new Tank($pos))
@@ -130,5 +164,7 @@ class UserFixtures extends Fixture
 
         $manager->persist($tank);
         $manager->flush();
+
+
     }
 }

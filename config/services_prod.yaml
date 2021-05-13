@@ -7,3 +7,4 @@ services:
   App\Gateway\UserGateway: '@App\Adapter\Doctrine\Repository\UserRepository'
   App\Gateway\PosGateway: '@App\Adapter\Doctrine\Repository\PosRepository'
   App\Gateway\TankGateway: '@App\Adapter\Doctrine\Repository\TankRepository'
+  App\Gateway\PumpGateway: '@App\Adapter\Doctrine\Repository\PumpRepository'

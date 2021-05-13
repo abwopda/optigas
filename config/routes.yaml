@@ -14,6 +14,10 @@ tank.create:
   path: /tank-create/{pos}
   controller: App\Controller\CreateTankController
 
+pump.create:
+  path: /pump-create/{tank}
+  controller: App\Controller\CreatePumpController
+
 index:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

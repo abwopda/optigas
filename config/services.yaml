@@ -32,3 +32,4 @@ services:
     App\Gateway\UserGateway: '@App\Adapter\InMemory\Repository\UserRepository'
     App\Gateway\PosGateway: '@App\Adapter\InMemory\Repository\PosRepository'
     App\Gateway\TankGateway: '@App\Adapter\InMemory\Repository\TankRepository'
+    App\Gateway\PumpGateway: '@App\Adapter\InMemory\Repository\PumpRepository'
