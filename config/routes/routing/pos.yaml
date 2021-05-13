@@ -1,7 +1,21 @@
+pos.new:
+  path:     /new
+  controller: App\Controller\PosController::new
+
 pos.create:
   path: /create
   controller: App\Controller\PosController::create
+  requirements: { _method: post }
 
 pos.show:
-  path: /show/{pos}
+  path: /{id}/show
   controller: App\Controller\PosController::show
+
+pos.edit:
+  path:     /{id}/edit
+  controller: App\Controller\PosController::edit
+
+pos.update:
+  path: /{id}/update
+  controller: App\Controller\PosController::update
+  requirements: { _method: post|put }

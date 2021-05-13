@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Pos
+ * Class Tank
  * @package App\Entity
  * @ORM\Entity
  */

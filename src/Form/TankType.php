@@ -35,7 +35,7 @@ class TankType extends AbstractType
                 ]
             ])
             /*->add("pos",EntityType::class,[
-                "class" => Pos::class,
+                "class" => CreatePos::class,
                 "choice_label" => "name",
                 "constraints" => [
                     new NotBlank()

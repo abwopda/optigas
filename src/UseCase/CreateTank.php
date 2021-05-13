@@ -27,7 +27,10 @@ class CreateTank
         $this->tankGateway = $tankGateway;
     }
 
-
+    /**
+     * @param Tank $tank
+     * @return Tank
+     */
     public function execute(Tank $tank): Tank
     {
         Assert::lazy()

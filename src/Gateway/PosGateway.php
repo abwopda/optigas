@@ -16,6 +16,11 @@ interface PosGateway
     public function create(Pos $pos): void;
 
     /**
+     * @param Pos $pos
+     */
+    public function update(Pos $pos): void;
+
+    /**
      * @param int $id
      * @return Pos
      */

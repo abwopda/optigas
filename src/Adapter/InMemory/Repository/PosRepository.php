@@ -44,7 +44,7 @@ class PosRepository implements PosGateway
 
         $this->pos = [1 => $p];
 
-        /*$p = (new Pos())
+        /*$p = (new CreatePos())
             ->setCode("STA0001")
             ->setName("Station TAWAAL YYYY")
             ->setDescription("blablabla")
@@ -69,6 +69,13 @@ class PosRepository implements PosGateway
      * @param Pos $pos
      */
     public function create(Pos $pos): void
+    {
+    }
+
+    /**
+     * @param Pos $pos
+     */
+    public function update(Pos $pos): void
     {
     }
 }
