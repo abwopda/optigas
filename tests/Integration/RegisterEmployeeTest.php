@@ -28,7 +28,7 @@ class RegisterEmployeeTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("register_employee")
+            $router->generate("employee.register")
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -60,7 +60,7 @@ class RegisterEmployeeTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("register_employee")
+            $router->generate("employee.register")
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);

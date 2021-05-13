@@ -1,0 +1,3 @@
+pump.create:
+  path: /create/{tank}
+  controller: App\Controller\PumpController::create

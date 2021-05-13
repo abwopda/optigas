@@ -1,0 +1,3 @@
+employee.register:
+  path: /register
+  controller: App\Controller\EmployeeController::register

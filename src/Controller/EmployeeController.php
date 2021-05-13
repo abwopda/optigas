@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Employee;
 use App\Form\EmployeeRegistrationType;
 use App\UseCase\RegisterEmployee;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,33 +14,21 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
 /**
- * Class RegisterEmployeeController
+ * Class EmployeeController
  * @package App\Controller
  */
-class RegisterEmployeeController
+class EmployeeController extends AbstractController
 {
-    private FormFactoryInterface $formFactory;
     private RegisterEmployee $employeeRegister;
-    private UrlGeneratorInterface $urlGenerator;
-    private Environment $twig;
 
     /**
-     * RegisterEmployeeController constructor.
-     * @param FormFactoryInterface $formFactory
+     * EmployeeController constructor.
      * @param RegisterEmployee $employeeRegister
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param Environment $twig
      */
     public function __construct(
-        FormFactoryInterface $formFactory,
-        RegisterEmployee $employeeRegister,
-        UrlGeneratorInterface $urlGenerator,
-        Environment $twig
+        RegisterEmployee $employeeRegister
     ) {
-        $this->formFactory = $formFactory;
         $this->employeeRegister = $employeeRegister;
-        $this->urlGenerator = $urlGenerator;
-        $this->twig = $twig;
     }
 
 
@@ -51,20 +40,20 @@ class RegisterEmployeeController
      * @throws \Twig\Error\SyntaxError
 
      */
-    public function __invoke(Request $request): Response
+    public function register(Request $request): Response
     {
         $employee = new Employee();
 
-        $form = $this->formFactory->create(EmployeeRegistrationType::class, $employee)->handleRequest($request);
+        $form = $this->createForm(EmployeeRegistrationType::class, $employee)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->employeeRegister->execute($employee);
 
-            return new RedirectResponse($this->urlGenerator->generate("index"));
+            return $this->redirectToRoute("index");
         }
 
-        return new Response($this->twig->render("ui/register_employee.html.twig", [
+        return $this->render("ui/register_employee.html.twig", [
             "form" => $form->createView()
-        ]));
+        ]);
     }
 }

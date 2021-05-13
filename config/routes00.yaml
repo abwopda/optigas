@@ -1,0 +1,25 @@
+welcome:
+  resource: "routes/routes.yaml"
+  prefix:   /
+
+register_contact:
+  path: /contact/register
+  controller: App\Controller\RegisterContactController
+
+create_pos:
+  path: /pos-create
+  controller: App\Controller\CreatePosController
+
+tank.create:
+  path: /tank-create/{pos}
+  controller: App\Controller\CreateTankController
+
+pump.create:
+  path: /pump-create/{tank}
+  controller: App\Controller\CreatePumpController
+
+index:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: ui/index.html.twig

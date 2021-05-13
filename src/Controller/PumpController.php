@@ -7,6 +7,7 @@ use App\Entity\Pump;
 use App\Form\PumpType;
 use App\Gateway\TankGateway;
 use App\UseCase\CreatePump;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,39 +17,27 @@ use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
 /**
- * Class CreatePumpController
+ * Class PumpController
  * @package App\Controller
  */
-class CreatePumpController
+class PumpController extends AbstractController
 {
-    private FormFactoryInterface $formFactory;
     private CreatePump $createPump;
-    private UrlGeneratorInterface $urlGenerator;
-    private Environment $twig;
     private Security $security;
     private TankGateway $posGateway;
 
     /**
-     * CreatePumpController constructor.
-     * @param FormFactoryInterface $formfactory
+     * PumpController constructor.
      * @param CreatePump $createPump
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param Environment $twig
      * @param Security $security
      * @param TankGateway $posGateway
      */
     public function __construct(
-        FormFactoryInterface $formFactory,
         CreatePump $createPump,
-        UrlGeneratorInterface $urlGenerator,
-        Environment $twig,
         Security $security,
         TankGateway $posGateway
     ) {
-        $this->formFactory = $formFactory;
         $this->createPump = $createPump;
-        $this->urlGenerator = $urlGenerator;
-        $this->twig = $twig;
         $this->security = $security;
         $this->posGateway = $posGateway;
     }
@@ -61,23 +50,26 @@ class CreatePumpController
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function __invoke(int $tank, Request $request): Response
+    public function create(int $tank, Request $request): Response
     {
         $pump = new Pump($this->posGateway->findOneById($tank));
 
-        $pump->setCreateBy($this->security->getUser());
+        $user = $this->security->getUser();
 
-        $form = $this->formFactory->create(PumpType::class, $pump)->handleRequest($request);
+        $pump->setCreateBy($user);
+
+        $form = $this->createForm(PumpType::class, $pump)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createPump->execute($pump);
+            $this->addFlash('success', "Pompe créée avec succès");
 
-            return new RedirectResponse($this->urlGenerator->generate("index"));
+            return $this->redirectToRoute("index");
         }
 
-        return new Response($this->twig->render("ui/pump/create.html.twig", [
+        return $this->render("ui/pump/create.html.twig", [
             "entity" => $pump,
             "form" => $form->createView()
-        ]));
+        ]);
     }
 }
