@@ -1,0 +1,25 @@
+employee:
+  resource: "routing/employee.yaml"
+  prefix:   /employee
+
+contact:
+  resource: "routing/contact.yaml"
+  prefix:   /contact
+
+pos:
+  resource: "routing/pos.yaml"
+  prefix:   /pos
+
+tank:
+  resource: "routing/tank.yaml"
+  prefix:   /tank
+
+pump:
+  resource: "routing/pump.yaml"
+  prefix:   /pump
+
+index:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: ui/index.html.twig

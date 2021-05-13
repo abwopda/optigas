@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactRegistrationType;
 use App\UseCase\RegisterContact;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,33 +14,21 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
 /**
- * Class RegisterContactController
+ * Class ContactController
  * @package App\Controller
  */
-class RegisterContactController
+class ContactController extends AbstractController
 {
-    private FormFactoryInterface $formFactory;
     private RegisterContact $contactRegister;
-    private UrlGeneratorInterface $urlGenerator;
-    private Environment $twig;
 
     /**
-     * RegisterContactController constructor.
-     * @param FormFactoryInterface $formFactory
+     * ContactController constructor.
      * @param RegisterContact $contactRegister
-     * @param UrlGeneratorInterface $urlGenerator
-     * @param Environment $twig
      */
     public function __construct(
-        FormFactoryInterface $formFactory,
-        RegisterContact $contactRegister,
-        UrlGeneratorInterface $urlGenerator,
-        Environment $twig
+        RegisterContact $contactRegister
     ) {
-        $this->formFactory = $formFactory;
         $this->contactRegister = $contactRegister;
-        $this->urlGenerator = $urlGenerator;
-        $this->twig = $twig;
     }
 
 
@@ -51,20 +40,20 @@ class RegisterContactController
      * @throws \Twig\Error\SyntaxError
 
      */
-    public function __invoke(Request $request): Response
+    public function register(Request $request): Response
     {
         $contact = new Contact();
 
-        $form = $this->formFactory->create(ContactRegistrationType::class, $contact)->handleRequest($request);
+        $form = $this->createForm(ContactRegistrationType::class, $contact)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->contactRegister->execute($contact);
 
-            return new RedirectResponse($this->urlGenerator->generate("index"));
+            return $this->redirectToRoute("index");
         }
 
-        return new Response($this->twig->render("ui/register_contact.html.twig", [
+        return $this->render("ui/register_contact.html.twig", [
             "form" => $form->createView()
-        ]));
+        ]);
     }
 }

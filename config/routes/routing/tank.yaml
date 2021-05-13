@@ -1,0 +1,3 @@
+tank.create:
+  path: /create/{pos}
+  controller: App\Controller\TankController::create

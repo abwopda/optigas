@@ -28,7 +28,7 @@ class RegisterContactTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("register_contact")
+            $router->generate("contact.register")
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -61,7 +61,7 @@ class RegisterContactTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("register_contact")
+            $router->generate("contact.register")
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);

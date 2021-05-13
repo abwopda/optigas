@@ -2,6 +2,7 @@
 
 namespace App\Adapter\InMemory\Repository;
 
+use App\Entity\Employee;
 use App\Entity\Pos;
 use App\Gateway\PosGateway;
 
@@ -21,6 +22,11 @@ class PosRepository implements PosGateway
      */
     public function __construct()
     {
+        $employee = (new Employee())
+            ->setFirstName("John")
+            ->setLastName("Doe")
+            ->setEmail("employee@email.com")
+        ;
         $p = (new Pos())
             ->setCode("STA0000")
             ->setName("Station TAWAAL XXXX")
@@ -28,11 +34,7 @@ class PosRepository implements PosGateway
             ->setTown("Ville")
             ->setAddress("BP XXXX")
             ->setCapacity(60000)
-            ->setActive(true)
-            ->setValid(true)
-            ->setUpdateAt(new \DateTimeImmutable())
-            ->setValidateAt(new \DateTimeImmutable())
-            ->setActivateAt(new \DateTimeImmutable())
+            ->setCreateBy($employee)
         ;
 
         $reflectionClass = new \ReflectionClass($p);
@@ -41,6 +43,17 @@ class PosRepository implements PosGateway
         $reflectionProperty->setValue($p, 1);
 
         $this->pos = [1 => $p];
+
+        /*$p = (new Pos())
+            ->setCode("STA0001")
+            ->setName("Station TAWAAL YYYY")
+            ->setDescription("blablabla")
+            ->setTown("Ville B")
+            ->setAddress("BP YYYY")
+            ->setCapacity(12000)
+            ->setCreateBy($employee)
+        ;
+        */
     }
 
     /**
