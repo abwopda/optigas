@@ -29,7 +29,7 @@ class CreatePumpTest extends TestCase
             ->setAddress("address")
             ->setCapacity(60000)
         ;
-        
+
         $tank = (new Tank($pos))
             ->setCode("CUV0000")
             ->setName("Cuve Super")

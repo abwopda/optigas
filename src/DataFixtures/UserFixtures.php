@@ -164,7 +164,5 @@ class UserFixtures extends Fixture
 
         $manager->persist($tank);
         $manager->flush();
-
-
     }
 }
