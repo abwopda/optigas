@@ -35,6 +35,7 @@ class PosRepository implements PosGateway
             ->setAddress("BP XXXX")
             ->setCapacity(60000)
             ->setCreateBy($employee)
+
         ;
 
         $reflectionClass = new \ReflectionClass($p);
@@ -42,9 +43,9 @@ class PosRepository implements PosGateway
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($p, 1);
 
-        $this->pos = [1 => $p];
+        $this->pos[1] = $p;
 
-        /*$p = (new CreatePos())
+        $p = (new Pos())
             ->setCode("STA0001")
             ->setName("Station TAWAAL YYYY")
             ->setDescription("blablabla")
@@ -52,16 +53,29 @@ class PosRepository implements PosGateway
             ->setAddress("BP YYYY")
             ->setCapacity(12000)
             ->setCreateBy($employee)
+            ->setActive(true)
+            ->setActivateBy($employee)
+            ->setActivateAt(new \DateTimeImmutable())
         ;
-        */
+
+        $reflectionClass = new \ReflectionClass($p);
+        $reflectionProperty = $reflectionClass->getProperty("id");
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($p, 2);
+
+        $this->pos[2] =  $p;
     }
 
     /**
      * @param int $id
-     * @return Pos
+     * @return Pos|null
      */
-    public function findOneById(int $id): Pos
+    public function findOneById(int $id): ?Pos
     {
+        if (!array_key_exists($id, $this->pos)) {
+            //throw new Exception("Notice: Undefined offset: ".$id);
+            return null;
+        }
         return $this->pos[$id];
     }
 
@@ -77,5 +91,18 @@ class PosRepository implements PosGateway
      */
     public function update(Pos $pos): void
     {
+    }
+
+    /**
+     * @param Pos $pos
+     * @param bool $status
+     */
+    public function activate(Pos $pos, bool $status): void
+    {
+        $this->pos[1]
+            ->setActive($status)
+            ->setActivateAt(new \DateTimeImmutable())
+            ->setActivateBy($this->pos[1]->getCreateBy())
+        ;
     }
 }

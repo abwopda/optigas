@@ -35,4 +35,10 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
         $this->_em->persist($pos);
         $this->_em->flush();
     }
+
+    public function activate(Pos $pos, bool $status): void
+    {
+        $this->_em->persist($pos);
+        $this->_em->flush();
+    }
 }

@@ -1,6 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="btn-group pull-right" style="margin-top: 15px;">
+        <button class="btn btn-primary"><span></span>Selectionner une action</button>
+        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ path('pos.edit', { 'id': 1 }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>
+            {% if entity.active %}
+                <li><a href="{{ path('pos.disable', { 'id': 1 }) }}"><span class="glyphicon glyphicon-minus-sign"></span> Desactiver </a></li>
+            {% else %}
+                <li><a href="{{ path('pos.activate', { 'id': 1 }) }}"><span class="glyphicon glyphicon-ok-sign"></span> Activer </a></li>
+            {% endif %}
+        </ul>
+    </div>
     <h3>{{ entity.name }}</h3>
     <div class="row">
         <div class="col-md-4">

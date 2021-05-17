@@ -50,7 +50,6 @@ class UpdatePosTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
-
     /**
      * @dataProvider provideBadRequest
      * @param array $formData
@@ -66,7 +65,7 @@ class UpdatePosTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("pos.new")
+            $router->generate("pos.edit", ["id" => 1])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -84,14 +83,6 @@ class UpdatePosTest extends WebTestCase
     public function provideBadRequest(): \Generator
     {
         yield[[
-            "pos[name]" => "Tawaal Oil AKAK Beta",
-            "pos[description]" => "Station service Alpha",
-            "pos[town]" => "Douala",
-            "pos[address]" => "BP 0000",
-            "pos[capacity]" => 78,
-        ]];
-
-        yield[[
             "pos[code]" => "",
             "pos[name]" => "Tawaal Oil AKAK Beta",
             "pos[description]" => "Station service Alpha",
@@ -99,15 +90,6 @@ class UpdatePosTest extends WebTestCase
             "pos[address]" => "BP 0000",
             "pos[capacity]" => 78,
         ]];
-
-        yield[[
-            "pos[code]" => "STA01",
-            "pos[description]" => "Station service Alpha",
-            "pos[town]" => "Douala",
-            "pos[address]" => "BP 0000",
-            "pos[capacity]" => 78,
-        ]];
-
         yield[[
             "pos[code]" => "STA01",
             "pos[name]" => "",
@@ -116,15 +98,6 @@ class UpdatePosTest extends WebTestCase
             "pos[address]" => "BP 0000",
             "pos[capacity]" => 78,
         ]];
-
-        yield[[
-            "pos[code]" => "STA01",
-            "pos[name]" => "Tawaal Oil AKAK Beta",
-            "pos[town]" => "Douala",
-            "pos[address]" => "BP 0000",
-            "pos[capacity]" => 78,
-        ]];
-
         yield[[
             "pos[code]" => "STA01",
             "pos[name]" => "Tawaal Oil AKAK Beta",
@@ -133,15 +106,6 @@ class UpdatePosTest extends WebTestCase
             "pos[address]" => "BP 0000",
             "pos[capacity]" => 78,
         ]];
-
-        yield[[
-            "pos[code]" => "STA01",
-            "pos[name]" => "Tawaal Oil AKAK Beta",
-            "pos[description]" => "Station service Alpha",
-            "pos[address]" => "BP 0000",
-            "pos[capacity]" => 78,
-        ]];
-
         yield[[
             "pos[code]" => "STA01",
             "pos[name]" => "Tawaal Oil AKAK Beta",
@@ -150,15 +114,6 @@ class UpdatePosTest extends WebTestCase
             "pos[address]" => "BP 0000",
             "pos[capacity]" => 78,
         ]];
-
-        yield[[
-            "pos[code]" => "STA01",
-            "pos[name]" => "Tawaal Oil AKAK Beta",
-            "pos[description]" => "Station service Alpha",
-            "pos[town]" => "Douala",
-            "pos[capacity]" => 78,
-        ]];
-
         yield[[
             "pos[code]" => "STA01",
             "pos[name]" => "Tawaal Oil AKAK Beta",
@@ -166,14 +121,6 @@ class UpdatePosTest extends WebTestCase
             "pos[town]" => "Douala",
             "pos[address]" => "",
             "pos[capacity]" => 78,
-        ]];
-
-        yield[[
-            "pos[code]" => "STA01",
-            "pos[name]" => "Tawaal Oil AKAK Beta",
-            "pos[description]" => "Station service Alpha",
-            "pos[town]" => "Douala",
-            "pos[address]" => "BP 0000",
         ]];
     }
 }

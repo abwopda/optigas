@@ -21,8 +21,14 @@ interface PosGateway
     public function update(Pos $pos): void;
 
     /**
-     * @param int $id
-     * @return Pos
+     * @param Pos $pos
+     * @param bool $status
      */
-    public function findOneById(int $id): Pos;
+    public function activate(Pos $pos, bool $status): void;
+
+    /**
+     * @param int $id
+     * @return Pos|null
+     */
+    public function findOneById(int $id): ?Pos;
 }

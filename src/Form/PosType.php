@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Pos;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -59,7 +60,7 @@ class PosType extends AbstractType
             ->add("capacity", NumberType::class, [
                 "label" => "Capacité",
                 "constraints" => [
-                    new NotBlank()
+                    new NotBlank(),
                 ]
             ])
         ;
