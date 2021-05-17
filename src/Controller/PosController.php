@@ -148,7 +148,7 @@ class PosController extends AbstractController
             'entity'      => $entity,
         ]);
     }
-    public function _activate($entity, $status)
+    public function __activate($entity, $status)
     {
         $entity->setActive($status);
         $user =  $this->security->getUser();
@@ -164,7 +164,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->_activate($entity, 1);
+        $this->__activate($entity, 1);
 
         $this->activatePos->execute($id, 1);
 
@@ -182,7 +182,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->_activate($entity, 0);
+        $this->__activate($entity, 0);
 
         $this->activatePos->execute($id, 0);
 
