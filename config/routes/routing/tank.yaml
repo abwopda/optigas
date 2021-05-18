@@ -10,3 +10,12 @@ tank.create:
 tank.show:
   path: /{id}/show
   controller: App\Controller\TankController::show
+
+tank.edit:
+  path:     /{id}/edit
+  controller: App\Controller\TankController::edit
+
+tank.update:
+  path: /{id}/update
+  controller: App\Controller\TankController::update
+  requirements: { _method: post|put }

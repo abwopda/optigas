@@ -4,7 +4,6 @@ namespace App\UseCase;
 
 use App\Entity\Tank;
 use App\Gateway\TankGateway;
-use Assert\Assert;
 
 /**
  * Class UpdateTank
