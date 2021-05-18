@@ -29,3 +29,13 @@ tank.disable:
   path: /{id}/disable
   controller: App\Controller\TankController::disable
   requirements: { _method: post|put }
+
+tank.validate:
+  path: /{id}/validate
+  controller: App\Controller\TankController::validate
+  requirements: { _method: post|put }
+
+tank.invalidate:
+  path: /{id}/invalidate
+  controller: App\Controller\TankController::invalidate
+  requirements: { _method: post|put }

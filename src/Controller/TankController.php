@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Pos;
 use App\Entity\Tank;
 use App\Form\TankType;
 use App\Gateway\PosGateway;
@@ -10,14 +9,11 @@ use App\Gateway\TankGateway;
 use App\UseCase\ActivateTank;
 use App\UseCase\CreateTank;
 use App\UseCase\UpdateTank;
+use App\UseCase\ValidateTank;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
-use Twig\Environment;
 
 /**
  * Class TankController
@@ -28,6 +24,7 @@ class TankController extends AbstractController
     private CreateTank $createTank;
     private UpdateTank $updateTank;
     private ActivateTank $activateTank;
+    private ValidateTank $validateTank;
     private Security $security;
     private PosGateway $posGateway;
     private TankGateway $tankGateway;
@@ -37,6 +34,7 @@ class TankController extends AbstractController
      * @param CreateTank $createTank
      * @param UpdateTank $updateTank
      * @param ActivateTank $activateTank
+     * @param ValidateTank $validateTank
      * @param Security $security
      * @param PosGateway $posGateway
      * @param TankGateway $tankGateway
@@ -45,6 +43,7 @@ class TankController extends AbstractController
         CreateTank $createTank,
         UpdateTank $updateTank,
         ActivateTank $activateTank,
+        ValidateTank $validateTank,
         Security $security,
         PosGateway $posGateway,
         TankGateway $tankGateway
@@ -52,6 +51,7 @@ class TankController extends AbstractController
         $this->createTank = $createTank;
         $this->updateTank = $updateTank;
         $this->activateTank = $activateTank;
+        $this->validateTank = $validateTank;
         $this->security = $security;
         $this->posGateway = $posGateway;
         $this->tankGateway = $tankGateway;
@@ -195,7 +195,7 @@ class TankController extends AbstractController
 
     public function disable(int $id, Request $request)
     {
-        $entity = $this->posGateway->findOneById($id);
+        $entity = $this->tankGateway->findOneById($id);
 
         if (!$entity) {
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
@@ -206,6 +206,48 @@ class TankController extends AbstractController
         $this->activateTank->execute($id, 0);
 
         $this->addFlash('success', "Cuve désactivée avec succès");
+        return $this->redirectToRoute("tank.show", ["id" => 1]);
+    }
+
+    public function __validate($entity, $status)
+    {
+        $entity->setValid($status);
+        $user =  $this->security->getUser();
+        $entity->setValidateBy($user);
+        $entity->setValidateAt(new \DateTimeImmutable());
+    }
+
+    public function validate(int $id, Request $request)
+    {
+        $entity = $this->tankGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
+        }
+
+        $this->__validate($entity, 1);
+
+        $this->validateTank->execute($id, 1);
+
+        //var_export($entity);
+
+        $this->addFlash('success', "Cuve validée avec succès");
+        return $this->redirectToRoute("tank.show", ["id" => 1]);
+    }
+
+    public function invalidate(int $id, Request $request)
+    {
+        $entity = $this->tankGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
+        }
+
+        $this->__validate($entity, 0);
+
+        $this->validateTank->execute($id, 0);
+
+        $this->addFlash('success', "Cuve invalidée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => 1]);
     }
 }

@@ -41,4 +41,9 @@ class TankRepository extends ServiceEntityRepository implements TankGateway
         $this->_em->persist($tank);
         $this->_em->flush();
     }
+    public function validate(Tank $tank, bool $status): void
+    {
+        $this->_em->persist($tank);
+        $this->_em->flush();
+    }
 }
