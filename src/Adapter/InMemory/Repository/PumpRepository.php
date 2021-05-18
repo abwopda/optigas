@@ -120,6 +120,19 @@ class PumpRepository implements PumpGateway
      * @param Pump $pump
      * @param bool $status
      */
+    public function activate(Pump $pump, bool $status): void
+    {
+        $this->pump[1]
+            ->setActive($status)
+            ->setActivateAt(new \DateTimeImmutable())
+            ->setActivateBy($this->pump[1]->getCreateBy())
+        ;
+    }
+
+    /**
+     * @param Pump $pump
+     * @param bool $status
+     */
     public function validate(Pump $pump, bool $status): void
     {
         $this->pump[1]

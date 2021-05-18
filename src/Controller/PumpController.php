@@ -6,6 +6,7 @@ use App\Entity\Pump;
 use App\Form\PumpType;
 use App\Gateway\PumpGateway;
 use App\Gateway\TankGateway;
+use App\UseCase\ActivatePump;
 use App\UseCase\CreatePump;
 use App\UseCase\UpdatePump;
 use App\UseCase\ValidatePump;
@@ -22,6 +23,7 @@ class PumpController extends AbstractController
 {
     private CreatePump $createPump;
     private UpdatePump $updatePump;
+    private ActivatePump $activatePump;
     private ValidatePump $validatePump;
     private Security $security;
     private TankGateway $tankGateway;
@@ -31,6 +33,7 @@ class PumpController extends AbstractController
      * PumpController constructor.
      * @param CreatePump $createPump
      * @param UpdatePump $updatePump
+     * @param ActivatePump $activatePump
      * @param ValidatePump $validatePump
      * @param Security $security
      * @param TankGateway $tankGateway
@@ -39,6 +42,7 @@ class PumpController extends AbstractController
     public function __construct(
         CreatePump $createPump,
         UpdatePump $updatePump,
+        ActivatePump $activatePump,
         ValidatePump $validatePump,
         Security $security,
         TankGateway $tankGateway,
@@ -46,6 +50,7 @@ class PumpController extends AbstractController
     ) {
         $this->createPump = $createPump;
         $this->updatePump = $updatePump;
+        $this->activatePump = $activatePump;
         $this->validatePump = $validatePump;
         $this->security = $security;
         $this->tankGateway = $tankGateway;
@@ -149,6 +154,48 @@ class PumpController extends AbstractController
         return $this->render('ui/pump/show.html.twig', [
             'entity'      => $entity,
         ]);
+    }
+
+    public function __activate($entity, $status)
+    {
+        $entity->setActive($status);
+        $user =  $this->security->getUser();
+        $entity->setActivateBy($user);
+        $entity->setActivateAt(new \DateTimeImmutable());
+    }
+
+    public function activate(int $id, Request $request)
+    {
+        $entity = $this->pumpGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
+        }
+
+        $this->__activate($entity, 1);
+
+        $this->activatePump->execute($id, 1);
+
+        //var_export($entity);
+
+        $this->addFlash('success', "Pompe activée avec succès");
+        return $this->redirectToRoute("pump.show", ["id" => 1]);
+    }
+
+    public function disable(int $id, Request $request)
+    {
+        $entity = $this->pumpGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
+        }
+
+        $this->__activate($entity, 0);
+
+        $this->activatePump->execute($id, 0);
+
+        $this->addFlash('success', "Pompe désactivée avec succès");
+        return $this->redirectToRoute("pump.show", ["id" => 1]);
     }
 
     public function __validate($entity, $status)
