@@ -31,5 +31,11 @@ interface PumpGateway
      * @param Pump $pump
      * @param bool $status
      */
+    public function activate(Pump $pump, bool $status): void;
+
+    /**
+     * @param Pump $pump
+     * @param bool $status
+     */
     public function validate(Pump $pump, bool $status): void;
 }
