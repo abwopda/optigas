@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h3>Création d'une nouvelle cuve</h3>
-    <form action="{{ path('tank.create', {'pos': entity.pos.id}) }}" method="post">
-        {% include "ui/tank/form.html.twig" %}
-        <button type="submit" class="btn btn-primary">Créer</button>
-    </form>
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+    <button class="btn btn-primary">Créer</button>
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
 {% endblock %}

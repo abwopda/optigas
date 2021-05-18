@@ -3,10 +3,10 @@
 namespace App\Tests\System;
 
 /**
- * Class ShowPosTest
+ * Class ShowTankTest
  * @package App\Tests\System
  */
-class ShowPosTest extends \App\Tests\Integration\ShowPosTest
+class ShowTankTest extends \App\Tests\Integration\ShowTankTest
 {
     use SystemTestTrait;
 }

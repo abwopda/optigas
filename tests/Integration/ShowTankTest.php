@@ -9,14 +9,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Class ShowPosTest
+ * Class ShowTankTest
  * @package App\Tests\Integration
  */
-class ShowPosTest extends WebTestCase
+class ShowTankTest extends WebTestCase
 {
     use AuthenticationTrait;
 
-    public function testSuccessfulPosShowed()
+    public function testSuccessfulTankShowed()
     {
         $client = static::createAuthenticatedClient("employee@email.com");
 
@@ -27,7 +27,7 @@ class ShowPosTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("pos.show", ["id" => 1])
+            $router->generate("tank.show", ["id" => 1])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);

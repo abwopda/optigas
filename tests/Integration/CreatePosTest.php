@@ -66,7 +66,7 @@ class CreatePosTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("pos.new")
+            $router->generate("pos.create")
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);

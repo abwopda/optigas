@@ -46,7 +46,7 @@ class CreateTankTest extends WebTestCase
 
         $client->submit($form);
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
 
@@ -65,7 +65,7 @@ class CreateTankTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("tank.create", ["pos" => 1])
+            $router->generate("tank.new", ["pos" => 1])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
