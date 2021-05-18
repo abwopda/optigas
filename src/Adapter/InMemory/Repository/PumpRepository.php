@@ -37,6 +37,14 @@ class PumpRepository implements PumpGateway
     }
 
     /**
+     * @return Pump[]|null
+     */
+    public function findAll(): ?array
+    {
+        return $this->pump;
+    }
+
+    /**
      * TankRepository constructor.
      */
     public function __construct()

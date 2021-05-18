@@ -57,13 +57,17 @@ class TankController extends AbstractController
         $this->tankGateway = $tankGateway;
     }
 
+    public function index()
+    {
+        $entities = $this->tankGateway->findAll();
+        return $this->render("ui/tank/index.html.twig", [
+            "entities"  => $entities,
+        ]);
+    }
 
     /**
      * @param Request $request
      * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
 
     public function new(int $pos)

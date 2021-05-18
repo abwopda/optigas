@@ -24,6 +24,11 @@ class TankRepository extends ServiceEntityRepository implements TankGateway
         return parent::find(["id" => $id]);
     }
 
+    public function findAll(): ?array
+    {
+        return parent::findAll();
+    }
+
     public function create(Tank $tank): void
     {
         $this->_em->persist($tank);

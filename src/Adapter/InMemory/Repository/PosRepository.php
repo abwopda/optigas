@@ -100,6 +100,14 @@ class PosRepository implements PosGateway
     }
 
     /**
+     * @return Pos[]|null
+     */
+    public function findAll(): ?array
+    {
+        return $this->pos;
+    }
+
+    /**
      * @param Pos $pos
      */
     public function create(Pos $pos): void
@@ -123,6 +131,19 @@ class PosRepository implements PosGateway
             ->setActive($status)
             ->setActivateAt(new \DateTimeImmutable())
             ->setActivateBy($this->pos[1]->getCreateBy())
+        ;
+    }
+
+    /**
+     * @param Pos $pos
+     * @param bool $status
+     */
+    public function validate(Pos $pos, bool $status): void
+    {
+        $this->pos[1]
+            ->setValid($status)
+            ->setValidateAt(new \DateTimeImmutable())
+            ->setValidateBy($this->pos[1]->getCreateBy())
         ;
     }
 }

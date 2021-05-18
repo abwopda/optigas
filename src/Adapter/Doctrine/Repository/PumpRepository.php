@@ -24,6 +24,11 @@ class PumpRepository extends ServiceEntityRepository implements PumpGateway
         return parent::find(["id" => $id]);
     }
 
+    public function findAll(): ?array
+    {
+        return parent::findAll();
+    }
+
     public function create(Pump $pump): void
     {
         $this->_em->persist($pump);
