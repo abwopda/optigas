@@ -2,12 +2,7 @@
 
 namespace App\Tests\Integration;
 
-use App\Adapter\InMemory\Repository\PumpRepository;
-use App\Entity\Pos;
-use App\Entity\Pump;
-use App\UseCase\CreatePump;
 use App\Tests\AuthenticationTrait;
-use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +41,7 @@ class CreatePumpTest extends WebTestCase
 
         $client->submit($form);
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
 
 

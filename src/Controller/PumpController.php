@@ -2,19 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Tank;
 use App\Entity\Pump;
 use App\Form\PumpType;
+use App\Gateway\PumpGateway;
 use App\Gateway\TankGateway;
 use App\UseCase\CreatePump;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
-use Twig\Environment;
 
 /**
  * Class PumpController
@@ -24,35 +20,46 @@ class PumpController extends AbstractController
 {
     private CreatePump $createPump;
     private Security $security;
-    private TankGateway $posGateway;
+    private TankGateway $tankGateway;
+    private PumpGateway $pumpGateway;
 
     /**
      * PumpController constructor.
      * @param CreatePump $createPump
      * @param Security $security
-     * @param TankGateway $posGateway
+     * @param TankGateway $tankGateway
+     * @param PumpGateway $pumpGateway
      */
     public function __construct(
         CreatePump $createPump,
         Security $security,
-        TankGateway $posGateway
+        TankGateway $tankGateway,
+        PumpGateway $pumpGateway
     ) {
         $this->createPump = $createPump;
         $this->security = $security;
-        $this->posGateway = $posGateway;
+        $this->tankGateway = $tankGateway;
+        $this->pumpGateway = $pumpGateway;
     }
 
+    public function new(int $tank)
+    {
+        $entity = new Pump($this->tankGateway->findOneById($tank));
+        $form = $this->createForm(PumpType::class, $entity);
+
+        return $this->render('ui/pump/new.html.twig', [
+            'entity' => $entity,
+            'form' => $form->createView()
+        ]);
+    }
 
     /**
      * @param Request $request
      * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
     public function create(int $tank, Request $request): Response
     {
-        $pump = new Pump($this->posGateway->findOneById($tank));
+        $pump = new Pump($this->tankGateway->findOneById($tank));
 
         $user = $this->security->getUser();
 
@@ -64,12 +71,25 @@ class PumpController extends AbstractController
             $this->createPump->execute($pump);
             $this->addFlash('success', "Pompe créée avec succès");
 
-            return $this->redirectToRoute("index");
+            return $this->redirectToRoute("pump.show", ["id" => 1]);
         }
 
         return $this->render("ui/pump/create.html.twig", [
             "entity" => $pump,
             "form" => $form->createView()
+        ]);
+    }
+
+    public function show(int $id)
+    {
+        $entity = $this->pumpGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
+        }
+
+        return $this->render('ui/pump/show.html.twig', [
+            'entity'      => $entity,
         ]);
     }
 }

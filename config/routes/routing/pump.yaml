@@ -1,3 +1,41 @@
+pump.new:
+  path:     /{tank}/new
+  controller: App\Controller\PumpController::new
+
 pump.create:
-  path: /create/{tank}
+  path: /{tank}/create
   controller: App\Controller\PumpController::create
+  requirements: { _method: post }
+
+pump.show:
+  path: /{id}/show
+  controller: App\Controller\PumpController::show
+  
+pump.edit:
+  path:     /{id}/edit
+  controller: App\Controller\PumpController::edit
+
+pump.update:
+  path: /{id}/update
+  controller: App\Controller\PumpController::update
+  requirements: { _method: post|put }
+
+pump.activate:
+  path: /{id}/activate
+  controller: App\Controller\PumpController::activate
+  requirements: { _method: post|put }
+
+pump.disable:
+  path: /{id}/disable
+  controller: App\Controller\PumpController::disable
+  requirements: { _method: post|put }
+
+pump.validate:
+  path: /{id}/validate
+  controller: App\Controller\PumpController::validate
+  requirements: { _method: post|put }
+
+pump.invalidate:
+  path: /{id}/invalidate
+  controller: App\Controller\PumpController::invalidate
+  requirements: { _method: post|put }
