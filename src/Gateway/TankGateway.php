@@ -25,4 +25,10 @@ interface TankGateway
      * @param Tank $tank
      */
     public function update(Tank $tank): void;
+
+    /**
+     * @param Tank $tank
+     * @param bool $status
+     */
+    public function activate(Tank $tank, bool $status): void;
 }

@@ -7,6 +7,7 @@ use App\Entity\Tank;
 use App\Form\TankType;
 use App\Gateway\PosGateway;
 use App\Gateway\TankGateway;
+use App\UseCase\ActivateTank;
 use App\UseCase\CreateTank;
 use App\UseCase\UpdateTank;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,7 @@ class TankController extends AbstractController
 {
     private CreateTank $createTank;
     private UpdateTank $updateTank;
+    private ActivateTank $activateTank;
     private Security $security;
     private PosGateway $posGateway;
     private TankGateway $tankGateway;
@@ -34,6 +36,7 @@ class TankController extends AbstractController
      * TankController constructor.
      * @param CreateTank $createTank
      * @param UpdateTank $updateTank
+     * @param ActivateTank $activateTank
      * @param Security $security
      * @param PosGateway $posGateway
      * @param TankGateway $tankGateway
@@ -41,12 +44,14 @@ class TankController extends AbstractController
     public function __construct(
         CreateTank $createTank,
         UpdateTank $updateTank,
+        ActivateTank $activateTank,
         Security $security,
         PosGateway $posGateway,
         TankGateway $tankGateway
     ) {
         $this->createTank = $createTank;
         $this->updateTank = $updateTank;
+        $this->activateTank = $activateTank;
         $this->security = $security;
         $this->posGateway = $posGateway;
         $this->tankGateway = $tankGateway;
@@ -160,5 +165,47 @@ class TankController extends AbstractController
         return $this->render('ui/tank/show.html.twig', [
             'entity'      => $entity,
         ]);
+    }
+
+    public function __activate($entity, $status)
+    {
+        $entity->setActive($status);
+        $user =  $this->security->getUser();
+        $entity->setActivateBy($user);
+        $entity->setActivateAt(new \DateTimeImmutable());
+    }
+
+    public function activate(int $id, Request $request)
+    {
+        $entity = $this->tankGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
+        }
+
+        $this->__activate($entity, 1);
+
+        $this->activateTank->execute($id, 1);
+
+        //var_export($entity);
+
+        $this->addFlash('success', "Cuve activée avec succès");
+        return $this->redirectToRoute("tank.show", ["id" => 1]);
+    }
+
+    public function disable(int $id, Request $request)
+    {
+        $entity = $this->posGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
+        }
+
+        $this->__activate($entity, 0);
+
+        $this->activateTank->execute($id, 0);
+
+        $this->addFlash('success', "Cuve désactivée avec succès");
+        return $this->redirectToRoute("tank.show", ["id" => 1]);
     }
 }

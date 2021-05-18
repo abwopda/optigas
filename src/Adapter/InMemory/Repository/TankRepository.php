@@ -107,4 +107,17 @@ class TankRepository implements TankGateway
     public function update(Tank $tank): void
     {
     }
+
+    /**
+     * @param Tank $tank
+     * @param bool $status
+     */
+    public function activate(Tank $tank, bool $status): void
+    {
+        $this->tank[1]
+            ->setActive($status)
+            ->setActivateAt(new \DateTimeImmutable())
+            ->setActivateBy($this->tank[1]->getCreateBy())
+        ;
+    }
 }
