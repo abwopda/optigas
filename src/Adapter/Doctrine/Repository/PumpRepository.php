@@ -29,4 +29,9 @@ class PumpRepository extends ServiceEntityRepository implements PumpGateway
         $this->_em->persist($pump);
         $this->_em->flush();
     }
+    public function update(Pump $pump): void
+    {
+        $this->_em->persist($pump);
+        $this->_em->flush();
+    }
 }
