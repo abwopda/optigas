@@ -8,6 +8,7 @@ use App\Gateway\PumpGateway;
 use App\Gateway\TankGateway;
 use App\UseCase\CreatePump;
 use App\UseCase\UpdatePump;
+use App\UseCase\ValidatePump;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,7 @@ class PumpController extends AbstractController
 {
     private CreatePump $createPump;
     private UpdatePump $updatePump;
+    private ValidatePump $validatePump;
     private Security $security;
     private TankGateway $tankGateway;
     private PumpGateway $pumpGateway;
@@ -29,6 +31,7 @@ class PumpController extends AbstractController
      * PumpController constructor.
      * @param CreatePump $createPump
      * @param UpdatePump $updatePump
+     * @param ValidatePump $validatePump
      * @param Security $security
      * @param TankGateway $tankGateway
      * @param PumpGateway $pumpGateway
@@ -36,12 +39,14 @@ class PumpController extends AbstractController
     public function __construct(
         CreatePump $createPump,
         UpdatePump $updatePump,
+        ValidatePump $validatePump,
         Security $security,
         TankGateway $tankGateway,
         PumpGateway $pumpGateway
     ) {
         $this->createPump = $createPump;
         $this->updatePump = $updatePump;
+        $this->validatePump = $validatePump;
         $this->security = $security;
         $this->tankGateway = $tankGateway;
         $this->pumpGateway = $pumpGateway;
@@ -144,5 +149,47 @@ class PumpController extends AbstractController
         return $this->render('ui/pump/show.html.twig', [
             'entity'      => $entity,
         ]);
+    }
+
+    public function __validate($entity, $status)
+    {
+        $entity->setValid($status);
+        $user =  $this->security->getUser();
+        $entity->setValidateBy($user);
+        $entity->setValidateAt(new \DateTimeImmutable());
+    }
+
+    public function validate(int $id, Request $request)
+    {
+        $entity = $this->pumpGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
+        }
+
+        $this->__validate($entity, 1);
+
+        $this->validatePump->execute($id, 1);
+
+        //var_export($entity);
+
+        $this->addFlash('success', "Pompe validée avec succès");
+        return $this->redirectToRoute("pump.show", ["id" => 1]);
+    }
+
+    public function invalidate(int $id, Request $request)
+    {
+        $entity = $this->pumpGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
+        }
+
+        $this->__validate($entity, 0);
+
+        $this->validatePump->execute($id, 0);
+
+        $this->addFlash('success', "Pompe invalidée avec succès");
+        return $this->redirectToRoute("pump.show", ["id" => 1]);
     }
 }
