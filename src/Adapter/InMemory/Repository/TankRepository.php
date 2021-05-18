@@ -120,4 +120,17 @@ class TankRepository implements TankGateway
             ->setActivateBy($this->tank[1]->getCreateBy())
         ;
     }
+
+    /**
+     * @param Tank $tank
+     * @param bool $status
+     */
+    public function validate(Tank $tank, bool $status): void
+    {
+        $this->tank[1]
+            ->setValid($status)
+            ->setValidateAt(new \DateTimeImmutable())
+            ->setValidateBy($this->tank[1]->getCreateBy())
+        ;
+    }
 }
