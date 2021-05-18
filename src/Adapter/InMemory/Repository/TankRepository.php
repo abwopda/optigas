@@ -108,6 +108,13 @@ class TankRepository implements TankGateway
         return $this->tank[$id];
     }
 
+    /**
+     * @return Tank[]|null
+     */
+    public function findAll(): ?array
+    {
+        return $this->tank;
+    }
 
     /**
      * @param Tank $tank

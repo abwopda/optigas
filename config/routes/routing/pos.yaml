@@ -1,3 +1,7 @@
+pos:
+  path:     /
+  controller: App\Controller\PosController::index
+
 pos.new:
   path:     /new
   controller: App\Controller\PosController::new
@@ -28,4 +32,14 @@ pos.activate:
 pos.disable:
   path: /{id}/disable
   controller: App\Controller\PosController::disable
+  requirements: { _method: post|put }
+
+pos.validate:
+  path: /{id}/validate
+  controller: App\Controller\PosController::validate
+  requirements: { _method: post|put }
+
+pos.invalidate:
+  path: /{id}/invalidate
+  controller: App\Controller\PosController::invalidate
   requirements: { _method: post|put }

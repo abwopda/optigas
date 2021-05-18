@@ -22,6 +22,11 @@ interface TankGateway
     public function findOneById(int $id): ?Tank;
 
     /**
+     * @return Tank[]|null
+     */
+    public function findAll(): ?array;
+
+    /**
      * @param Tank $tank
      */
     public function update(Tank $tank): void;

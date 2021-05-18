@@ -57,6 +57,14 @@ class PumpController extends AbstractController
         $this->pumpGateway = $pumpGateway;
     }
 
+    public function index()
+    {
+        $entities = $this->pumpGateway->findAll();
+        return $this->render("ui/pump/index.html.twig", [
+            "entities"  => $entities,
+        ]);
+    }
+
     public function new(int $tank)
     {
         $entity = new Pump($this->tankGateway->findOneById($tank));

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h3><span class="glyphicon glyphicon-company"></span>Liste des cuves</h3>
+    <div id="pos">
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th class="hidden-print"><input id="checkall" type="checkbox" value=""></th>
+                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Code<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Designation<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Description<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Capacité<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Point de vente<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                    <th class="hidden-print">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="dataContainer">
+            {% for entity in entities %}
+                <tr>
+                    <td class="hidden-print"><input type="checkbox" name="entities[]" value="{{ entity.id }}"></td>
+                    <td>{{ entity.code }}</td>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.description }}</td>
+                    <td>{{ entity.capacity }}</td>
+                    <td>{{ entity.pos.code }} - {{ entity.pos.name }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

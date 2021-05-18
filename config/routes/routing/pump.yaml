@@ -1,3 +1,7 @@
+pump:
+  path:     /
+  controller: App\Controller\PumpController::index
+
 pump.new:
   path:     /{tank}/new
   controller: App\Controller\PumpController::new

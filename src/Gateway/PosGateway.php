@@ -31,4 +31,9 @@ interface PosGateway
      * @return Pos|null
      */
     public function findOneById(int $id): ?Pos;
+
+    /**
+     * @return Pos[]|null
+     */
+    public function findAll(): ?array;
 }

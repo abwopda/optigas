@@ -23,6 +23,11 @@ interface PumpGateway
     public function findOneById(int $id): ?Pump;
 
     /**
+     * @return Pump[]|null
+     */
+    public function findAll(): ?array;
+
+    /**
      * @param Pump $pump
      */
     public function update(Pump $pump): void;

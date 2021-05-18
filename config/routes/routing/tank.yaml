@@ -1,3 +1,7 @@
+tank:
+  path:     /
+  controller: App\Controller\TankController::index
+
 tank.new:
   path:     /{pos}/new
   controller: App\Controller\TankController::new

@@ -24,6 +24,11 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
         return parent::find(["id" => $id]);
     }
 
+    public function findAll(): ?array
+    {
+        return parent::findAll();
+    }
+
     public function create(Pos $pos): void
     {
         $this->_em->persist($pos);
@@ -37,6 +42,12 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
     }
 
     public function activate(Pos $pos, bool $status): void
+    {
+        $this->_em->persist($pos);
+        $this->_em->flush();
+    }
+
+    public function validate(Pos $pos, bool $status): void
     {
         $this->_em->persist($pos);
         $this->_em->flush();
