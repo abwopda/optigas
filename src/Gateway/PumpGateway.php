@@ -15,4 +15,10 @@ interface PumpGateway
      * @param Pump $pump
      */
     public function create(Pump $pump): void;
+
+    /**
+     * @param int $id
+     * @return Pump|null
+     */
+    public function findOneById(int $id): ?Pump;
 }

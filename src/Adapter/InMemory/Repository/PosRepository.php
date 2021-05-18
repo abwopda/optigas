@@ -28,12 +28,12 @@ class PosRepository implements PosGateway
             ->setEmail("employee@email.com")
         ;
         $p = (new Pos())
-            ->setCode("STA0000")
-            ->setName("Station TAWAAL XXXX")
-            ->setDescription("description")
-            ->setTown("Ville")
-            ->setAddress("BP XXXX")
-            ->setCapacity(60000)
+            ->setCode("01")
+            ->setName("TAWAAL OIL AKAK")
+            ->setDescription("Station Service")
+            ->setTown("Yaounde")
+            ->setAddress("BP 12570")
+            ->setCapacity(90000)
             ->setCreateBy($employee)
 
         ;
@@ -46,12 +46,12 @@ class PosRepository implements PosGateway
         $this->pos[1] = $p;
 
         $p = (new Pos())
-            ->setCode("STA0001")
-            ->setName("Station TAWAAL YYYY")
-            ->setDescription("blablabla")
-            ->setTown("Ville B")
+            ->setCode("02")
+            ->setName("TAWAAL OIL SANGMELIMA")
+            ->setDescription("Station Service")
+            ->setTown("Sangmelima")
             ->setAddress("BP YYYY")
-            ->setCapacity(12000)
+            ->setCapacity(80000)
             ->setCreateBy($employee)
             ->setActive(true)
             ->setActivateBy($employee)
@@ -64,6 +64,26 @@ class PosRepository implements PosGateway
         $reflectionProperty->setValue($p, 2);
 
         $this->pos[2] =  $p;
+
+        $p = (new Pos())
+            ->setCode("03")
+            ->setName("TAWAAL OIL NGOYA 1")
+            ->setDescription("Station Service")
+            ->setTown("Ngoya")
+            ->setAddress("BP YYYY")
+            ->setCapacity(7000)
+            ->setCreateBy($employee)
+            ->setValid(true)
+            ->setValidateBy($employee)
+            ->setValidateAt(new \DateTimeImmutable())
+        ;
+
+        $reflectionClass = new \ReflectionClass($p);
+        $reflectionProperty = $reflectionClass->getProperty("id");
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($p, 3);
+
+        $this->pos[3] =  $p;
     }
 
     /**

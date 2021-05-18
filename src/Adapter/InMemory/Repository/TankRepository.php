@@ -35,10 +35,10 @@ class TankRepository implements TankGateway
         $this->pos = new PosRepository();
 
         $t = (new Tank($this->pos->findOneById(1)))
-            ->setCode("CUV0000")
+            ->setCode("CUV0101")
             ->setName("Super")
-            ->setDescription("Station TAWAAL XXXX")
-            ->setCapacity(20000)
+            ->setDescription("TAWAAL OIL AKAK")
+            ->setCapacity(30000)
             ->setCreateBy($employee)
         ;
 
@@ -50,9 +50,9 @@ class TankRepository implements TankGateway
         $this->tank[1] = $t;
 
         $t = (new Tank($this->pos->findOneById(1)))
-            ->setCode("CUV0001")
-            ->setName("Gasoil")
-            ->setDescription("Station TAWAAL XXXX")
+            ->setCode("CUV0102")
+            ->setName("Gasoil 1")
+            ->setDescription("TAWAAL OIL AKAK")
             ->setCapacity(30000)
             ->setCreateBy($employee)
         ;
@@ -65,9 +65,9 @@ class TankRepository implements TankGateway
         $this->tank[2] = $t;
 
         $t = (new Tank($this->pos->findOneById(1)))
-            ->setCode("CUV0003")
-            ->setName("Petrole")
-            ->setDescription("Station TAWAAL XXXX")
+            ->setCode("CUV0103")
+            ->setName("Gasoil 2")
+            ->setDescription("TAWAAL OIL AKAK")
             ->setCapacity(15000)
             ->setCreateBy($employee)
         ;
@@ -78,6 +78,21 @@ class TankRepository implements TankGateway
         $reflectionProperty->setValue($t, 3);
 
         $this->tank[3] = $t;
+
+        $t = (new Tank($this->pos->findOneById(1)))
+            ->setCode("CUV0104")
+            ->setName("Petrole")
+            ->setDescription("TAWAAL OIL AKAK")
+            ->setCapacity(15000)
+            ->setCreateBy($employee)
+        ;
+
+        $reflectionClass = new \ReflectionClass($t);
+        $reflectionProperty = $reflectionClass->getProperty("id");
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($t, 4);
+
+        $this->tank[4] = $t;
     }
 
     /**

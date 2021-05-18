@@ -7,3 +7,6 @@
     {{ form_row(form.name, { 'label': 'Designation'}) }}
     {{ form_row(form.description, { 'label': 'Descriprion'}) }}
     {{ form_row(form.counter, { 'label': 'Index'}) }}
+<legend>Informations générale</legend>
+{{ form_rest(form) }}
+    {{ form_errors(form) }}
