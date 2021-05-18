@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3><span class="glyphicon glyphicon-send"></span> Modification d'une cuve</h3>
+    <form enctype="multipart/form-data" action="{{ path('tank.update', { 'id': entity.id }) }}"  class="form-horizontal col-md-8" method="post">
+        {% include "ui/tank/form.html.twig" %}
+
+        <div class="form-group">
+            <div class="col-sm-offset-6 col-sm-6">
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Mettre à jour</button>
+                <a href="{{ path('tank.show', { 'id': entity.id }) }}" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Afficher</a>
+                {#<a href="{{ path('pos.delete', { 'id': entity.id }) }}" class="btn btn-danger"><span class="glyphicon glyphicon-search"></span> Supprimer</a> #}
+            </div>
+        </div>
+    </form>
+{% endblock %}
