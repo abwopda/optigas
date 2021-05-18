@@ -29,4 +29,10 @@ class TankRepository extends ServiceEntityRepository implements TankGateway
         $this->_em->persist($tank);
         $this->_em->flush();
     }
+
+    public function update(Tank $tank): void
+    {
+        $this->_em->persist($tank);
+        $this->_em->flush();
+    }
 }

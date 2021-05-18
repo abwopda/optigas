@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="btn-group pull-right" style="margin-top: 15px;">
+        <button class="btn btn-primary"><span></span>Selectionner une action</button>
+        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            {#<li><a href="{{ path('pos.edit', { 'id': 1 }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>#}
+            {% if entity.active %}
+                {#<li><a href="{{ path('pos.disable', { 'id': 1 }) }}"><span class="glyphicon glyphicon-minus-sign"></span> Desactiver </a></li>#}
+            {% else %}
+                {#<li><a href="{{ path('pos.activate', { 'id': 1 }) }}"><span class="glyphicon glyphicon-ok-sign"></span> Activer </a></li>#}
+            {% endif %}
+        </ul>
+    </div>
+    <h3>{{ entity.name }}</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box">
+                <header>
+                    <h4><span></span>Accueil</h4>
+                </header>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Point de vente:</strong>{{ entity.pos.id }} - {{ entity.pos.name }}</li>
+                    <li class="list-group-item"><strong>Code:</strong>{{ entity.code }}</li>
+                    <li class="list-group-item"><strong>Nom:</strong>{{ entity.name }}</li>
+                    <li class="list-group-item"><strong>Description:</strong>{{ entity.description }}</li>
+                    <li class="list-group-item"><strong>Capacité:</strong>{{ entity.capacity }}</li>
+                    <li class="list-group-item"><strong>Créé le :</strong> {{ entity.createAt | date('d/m/Y H:i:s') }}</li>
+                    <li class="list-group-item"><strong>Créé par :</strong> {{ entity.createBy is null ? "" : entity.createBy.username}}</li>
+                    {% if entity.updateAt is not null %}
+                        <li class="list-group-item"><strong>Modifié le :</strong> {{ entity.updateAt | date('d/m/Y H:i:s') }}</li>
+                        <li class="list-group-item"><strong>Modifié par :</strong> {{ entity.updateBy  is null ? "" :entity.updateBy.username }}</li>
+                    {% endif %}
+                    {% if entity.valid is not null %}<li class="list-group-item"><strong>{% if entity.valid %} Validé {% else %} Invalidé {% endif %} le :</strong> {{ entity.validateAt is null ? '' : (entity.validateAt| date('d/m/Y H:i:s') )}}</li>{% endif %}
+                    {% if entity.valid is not null %}<li class="list-group-item"><strong>{% if entity.valid %} Validé {% else %} Invalidé {% endif %}par :</strong> {{ entity.validateBy  is null ? "" :entity.validateBy.username }}</li>{% endif %}
+                    {% if entity.active is not null %}<li class="list-group-item"><strong>{% if entity.active %} Activé {% else %} Désactivé {% endif %} le :</strong> {{ entity.activateAt is null ? '' : (entity.activateAt| date('d/m/Y H:i:s') )}}</li>{% endif %}
+                    {% if entity.active is not null %}<li class="list-group-item"><strong>{% if entity.active %} Activé {% else %} Désactivé {% endif %} par :</strong> {{ entity.activateBy  is null ? "" :entity.activateBy.username }}</li>{% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

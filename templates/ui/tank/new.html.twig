@@ -2,11 +2,11 @@
 
 {% block body %}
 <div class="col-md-12">
-    <h3><span class="glyphicon glyphicon-send"></span> Création d'un nouveau point de vente</h3>
+    <h3><span class="glyphicon glyphicon-send"></span> Création d'une nouvelle cuve</h3>
 
-<form enctype="multipart/form-data" action="{{ path('pos.create') }}"  class="form-horizontal col-md-8" method="post"  >
+<form enctype="multipart/form-data" action="{{ path('tank.create', { 'pos': entity.pos.id }) }}"  class="form-horizontal col-md-8" method="post">
 
-    {% include "ui/pos/form.html.twig" %}
+    {% include "ui/tank/form.html.twig" %}
 
     <div class="form-group">
       <div class="col-sm-offset-6 col-sm-6">
