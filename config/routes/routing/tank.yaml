@@ -19,3 +19,13 @@ tank.update:
   path: /{id}/update
   controller: App\Controller\TankController::update
   requirements: { _method: post|put }
+
+tank.activate:
+  path: /{id}/activate
+  controller: App\Controller\TankController::activate
+  requirements: { _method: post|put }
+
+tank.disable:
+  path: /{id}/disable
+  controller: App\Controller\TankController::disable
+  requirements: { _method: post|put }
