@@ -108,4 +108,11 @@ class PumpRepository implements PumpGateway
 
         $this->pump[11] = $p;
     }
+
+    /**
+     * @param Pump $pump
+     */
+    public function update(Pump $pump): void
+    {
+    }
 }

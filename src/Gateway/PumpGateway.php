@@ -21,4 +21,9 @@ interface PumpGateway
      * @return Pump|null
      */
     public function findOneById(int $id): ?Pump;
+
+    /**
+     * @param Pump $pump
+     */
+    public function update(Pump $pump): void;
 }

@@ -7,6 +7,7 @@ use App\Form\PumpType;
 use App\Gateway\PumpGateway;
 use App\Gateway\TankGateway;
 use App\UseCase\CreatePump;
+use App\UseCase\UpdatePump;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ use Symfony\Component\Security\Core\Security;
 class PumpController extends AbstractController
 {
     private CreatePump $createPump;
+    private UpdatePump $updatePump;
     private Security $security;
     private TankGateway $tankGateway;
     private PumpGateway $pumpGateway;
@@ -26,17 +28,20 @@ class PumpController extends AbstractController
     /**
      * PumpController constructor.
      * @param CreatePump $createPump
+     * @param UpdatePump $updatePump
      * @param Security $security
      * @param TankGateway $tankGateway
      * @param PumpGateway $pumpGateway
      */
     public function __construct(
         CreatePump $createPump,
+        UpdatePump $updatePump,
         Security $security,
         TankGateway $tankGateway,
         PumpGateway $pumpGateway
     ) {
         $this->createPump = $createPump;
+        $this->updatePump = $updatePump;
         $this->security = $security;
         $this->tankGateway = $tankGateway;
         $this->pumpGateway = $pumpGateway;
@@ -76,6 +81,54 @@ class PumpController extends AbstractController
 
         return $this->render("ui/pump/create.html.twig", [
             "entity" => $pump,
+            "form" => $form->createView()
+        ]);
+    }
+
+    public function edit(int $id)
+    {
+        $entity = $this->pumpGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la pompe  " . $id);
+        }
+
+        $form = $this->createForm(PumpType::class, $entity);
+
+        return $this->render('ui/pump/edit.html.twig', [
+            'entity' => $entity,
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function update(int $id, Request $request)
+    {
+        $entity = $this->pumpGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Impossible de trouver la pompe d"id' . $id);
+        }
+
+        $user =  $this->security->getUser();
+
+        $entity
+            ->setUpdateBy($user)
+            ->setUpdateAt(new \DateTimeImmutable())
+        ;
+
+        $form = $this->createForm(PumpType::class, $entity)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->updatePump->execute($id);
+
+            $this->addFlash('success', "Pompe mise à jour avec succès");
+            return $this->redirectToRoute("pump.show", ["id" => 2]);
+        }
+
+        $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
+
+        return $this->render("ui/pump/update.html.twig", [
+            "entity" => $entity,
             "form" => $form->createView()
         ]);
     }
