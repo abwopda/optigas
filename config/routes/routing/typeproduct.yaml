@@ -1,0 +1,45 @@
+typeproduct:
+  path:     /
+  controller: App\Controller\TypeProductController::index
+
+typeproduct.new:
+  path:     /new
+  controller: App\Controller\TypeProductController::new
+
+typeproduct.create:
+  path: /create
+  controller: App\Controller\TypeProductController::create
+  requirements: { _method: post }
+
+typeproduct.show:
+  path: /{id}/show
+  controller: App\Controller\TypeProductController::show
+
+typeproduct.edit:
+  path:     /{id}/edit
+  controller: App\Controller\TypeProductController::edit
+
+typeproduct.update:
+  path: /{id}/update
+  controller: App\Controller\TypeProductController::update
+  requirements: { _method: post|put }
+
+typeproduct.activate:
+  path: /{id}/activate
+  controller: App\Controller\TypeProductController::activate
+  requirements: { _method: post|put }
+
+typeproduct.disable:
+  path: /{id}/disable
+  controller: App\Controller\TypeProductController::disable
+  requirements: { _method: post|put }
+
+typeproduct.validate:
+  path: /{id}/validate
+  controller: App\Controller\TypeProductController::validate
+  requirements: { _method: post|put }
+
+typeproduct.invalidate:
+  path: /{id}/invalidate
+  controller: App\Controller\TypeProductController::invalidate
+  requirements: { _method: post|put }

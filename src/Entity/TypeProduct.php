@@ -5,11 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Pos
+ * Class TypeProduct
  * @package App\Entity
  * @ORM\Entity
  */
-class Pos
+class TypeProduct
 {
     /**
      * @var int|null
@@ -36,24 +36,6 @@ class Pos
      * @ORM\Column(type="string")
      */
     private ?string $description = null;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string")
-     */
-    private ?string $town = null;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string")
-     */
-    private ?string $address = null;
-
-    /**
-     * @var int|null
-     * @ORM\Column(type="integer")
-     */
-    private ?int $capacity = null;
 
     /**
      * @var bool|null
@@ -117,7 +99,7 @@ class Pos
 
 
     /**
-     * Pos constructor.
+     * TypeProduct constructor.
      */
     public function __construct()
     {
@@ -142,9 +124,9 @@ class Pos
 
     /**
      * @param string|null $code
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setCode(?string $code): Pos
+    public function setCode(?string $code): TypeProduct
     {
         $this->code = $code;
         return $this;
@@ -160,9 +142,9 @@ class Pos
 
     /**
      * @param string|null $name
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setName(?string $name): Pos
+    public function setName(?string $name): TypeProduct
     {
         $this->name = $name;
         return $this;
@@ -178,65 +160,11 @@ class Pos
 
     /**
      * @param string|null $description
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setDescription(?string $description): Pos
+    public function setDescription(?string $description): TypeProduct
     {
         $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTown(): ?string
-    {
-        return $this->town;
-    }
-
-    /**
-     * @param string|null $town
-     * @return Pos
-     */
-    public function setTown(?string $town): Pos
-    {
-        $this->town = $town;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param string|null $address
-     * @return Pos
-     */
-    public function setAddress(?string $address): Pos
-    {
-        $this->address = $address;
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getCapacity(): ?int
-    {
-        return $this->capacity;
-    }
-
-    /**
-     * @param int|null $capacity
-     * @return Pos
-     */
-    public function setCapacity(?int $capacity): Pos
-    {
-        $this->capacity = $capacity;
         return $this;
     }
 
@@ -250,9 +178,9 @@ class Pos
 
     /**
      * @param bool|null $active
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setActive(?bool $active): Pos
+    public function setActive(?bool $active): TypeProduct
     {
         $this->active = $active;
         return $this;
@@ -268,9 +196,9 @@ class Pos
 
     /**
      * @param bool|null $valid
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setValid(?bool $valid): Pos
+    public function setValid(?bool $valid): TypeProduct
     {
         $this->valid = $valid;
         return $this;
@@ -294,9 +222,9 @@ class Pos
 
     /**
      * @param \DateTimeInterface|null $updateAt
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setUpdateAt(?\DateTimeInterface $updateAt): Pos
+    public function setUpdateAt(?\DateTimeInterface $updateAt): TypeProduct
     {
         $this->updateAt = $updateAt;
         return $this;
@@ -312,9 +240,9 @@ class Pos
 
     /**
      * @param \DateTimeInterface|null $activateAt
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setActivateAt(?\DateTimeInterface $activateAt): Pos
+    public function setActivateAt(?\DateTimeInterface $activateAt): TypeProduct
     {
         $this->activateAt = $activateAt;
         return $this;
@@ -330,9 +258,9 @@ class Pos
 
     /**
      * @param \DateTimeInterface|null $validateAt
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setValidateAt(?\DateTimeInterface $validateAt): Pos
+    public function setValidateAt(?\DateTimeInterface $validateAt): TypeProduct
     {
         $this->validateAt = $validateAt;
         return $this;
@@ -348,9 +276,9 @@ class Pos
 
     /**
      * @param Employee $createBy
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setCreateBy(Employee $createBy): Pos
+    public function setCreateBy(Employee $createBy): TypeProduct
     {
         $this->createBy = $createBy;
         return $this;
@@ -366,9 +294,9 @@ class Pos
 
     /**
      * @param Employee|null $updateBy
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setUpdateBy(?Employee $updateBy): Pos
+    public function setUpdateBy(?Employee $updateBy): TypeProduct
     {
         $this->updateBy = $updateBy;
         return $this;
@@ -384,9 +312,9 @@ class Pos
 
     /**
      * @param Employee|null $activateBy
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setActivateBy(?Employee $activateBy): Pos
+    public function setActivateBy(?Employee $activateBy): TypeProduct
     {
         $this->activateBy = $activateBy;
         return $this;
@@ -402,9 +330,9 @@ class Pos
 
     /**
      * @param Employee|null $validateBy
-     * @return Pos
+     * @return TypeProduct
      */
-    public function setValidateBy(?Employee $validateBy): Pos
+    public function setValidateBy(?Employee $validateBy): TypeProduct
     {
         $this->validateBy = $validateBy;
         return $this;

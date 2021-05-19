@@ -7,6 +7,7 @@ use App\Entity\Employee;
 use App\Entity\Pos;
 use App\Entity\Pump;
 use App\Entity\Tank;
+use App\Entity\TypeProduct;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -49,6 +50,36 @@ class UserFixtures extends Fixture
         $contact->setPassword($this->userPasswordEncoder->encodePassword($contact, "Password123!"));
 
         $manager->persist($contact);
+        $manager->flush();
+
+        $typeproduct = (new TypeProduct())
+            ->setCode("01")
+            ->setName("Carburant")
+            ->setDescription("Produits inflammable Super,Gasoil, Petrole")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($typeproduct);
+        $manager->flush();
+
+        $typeproduct = (new TypeProduct())
+            ->setCode("02")
+            ->setName("Lubrifiants")
+            ->setDescription("Huiles et graisses")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($typeproduct);
+        $manager->flush();
+
+        $typeproduct = (new TypeProduct())
+            ->setCode("03")
+            ->setName("Divers")
+            ->setDescription("Autres produits de maintenance")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($typeproduct);
         $manager->flush();
 
         $pos = (new Pos())
