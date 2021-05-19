@@ -1,0 +1,11 @@
+<legend>Données du type de produit</legend>
+    {{ form_row(form.typeproduct.code, { 'label': 'Type de produit'}) }}
+    {{ form_row(form.typeproduct.name, { 'label': 'Designation'}) }}
+
+<legend>Données de la cuve</legend>
+    {{ form_row(form.code, { 'label': 'Famille'}) }}
+    {{ form_row(form.name, { 'label': 'Designation'}) }}
+    {{ form_row(form.description, { 'label': 'Description'}) }}
+<legend>Informations générale</legend>
+    {{ form_rest(form) }}
+    {{ form_errors(form) }}

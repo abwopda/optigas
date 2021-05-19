@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h3><span class="glyphicon glyphicon-company"></span>Liste des points de ventes</h3>
+    <h3><span class="glyphicon glyphicon-company"></span>Liste des familles</h3>
     <div id="pos">
         <table class="table table-striped table-hover table-bordered">
             <thead>
@@ -9,9 +9,7 @@
                     <th class="sortable"><a href="#" class="js-sort" data-order="desc">Code<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
                     <th class="sortable"><a href="#" class="js-sort" data-order="desc">Designation<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
                     <th class="sortable"><a href="#" class="js-sort" data-order="desc">Description<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
-                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Adresse<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
-                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Ville<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
-                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Capacité<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
+                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Type de produit<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
                     <th class="hidden-print">Actions</th>
                 </tr>
             </thead>
@@ -22,13 +20,11 @@
                     <td>{{ entity.code }}</td>
                     <td>{{ entity.name }}</td>
                     <td>{{ entity.description }}</td>
-                    <td>{{ entity.address }}</td>
-                    <td>{{ entity.town }}</td>
-                    <td>{{ entity.capacity }}</td>
+                    <td>{{ entity.typeproduct.code }} - {{ entity.typeproduct.name }} </td>
                     <td class="hidden-print">
                         <div class="text-center">
-                            <a class="btn btn-primary btn-xs"  data-toggle="tooltip" data-placement="top" title="afficher" href="{{ path('pos.show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-search"></span></a>
-                            <a class="btn btn-danger btn-xs"  data-toggle="tooltip" data-placement="top" title="modifier" href="{{ path('pos.edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-primary btn-xs"  data-toggle="tooltip" data-placement="top" title="afficher" href="{{ path('productfamily.show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-search"></span></a>
+                            <a class="btn btn-danger btn-xs"  data-toggle="tooltip" data-placement="top" title="modifier" href="{{ path('productfamily.edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                             {% if entity.active %}
                                 <span data-toggle="tooltip"  title="activé {{ entity.activateBy  is null ? '' :'par ' ~ entity.activateBy.username     ~ ' le '  ~ (entity.activateAt| date('d/m/Y H:i:s') )}}" class="glyphicon glyphicon-thumbs-up"></span>
                             {% else %}

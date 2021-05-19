@@ -9,3 +9,4 @@ services:
   App\Gateway\TankGateway: '@App\Adapter\Doctrine\Repository\TankRepository'
   App\Gateway\PumpGateway: '@App\Adapter\Doctrine\Repository\PumpRepository'
   App\Gateway\TypeProductGateway: '@App\Adapter\Doctrine\Repository\TypeProductRepository'
+  App\Gateway\ProductFamilyGateway: '@App\Adapter\Doctrine\Repository\ProductFamilyRepository'
