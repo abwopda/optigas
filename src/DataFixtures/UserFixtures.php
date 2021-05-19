@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Contact;
 use App\Entity\Employee;
 use App\Entity\Pos;
+use App\Entity\ProductFamily;
 use App\Entity\Pump;
 use App\Entity\Tank;
 use App\Entity\TypeProduct;
@@ -62,6 +63,16 @@ class UserFixtures extends Fixture
         $manager->persist($typeproduct);
         $manager->flush();
 
+        $productfamily = (new ProductFamily($typeproduct))
+            ->setCode("CAR")
+            ->setName("Carburant")
+            ->setDescription("Produits inflammable Super,Gasoil, Petrole")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($productfamily);
+        $manager->flush();
+
         $typeproduct = (new TypeProduct())
             ->setCode("02")
             ->setName("Lubrifiants")
@@ -72,6 +83,26 @@ class UserFixtures extends Fixture
         $manager->persist($typeproduct);
         $manager->flush();
 
+        $productfamily = (new ProductFamily($typeproduct))
+            ->setCode("LUB")
+            ->setName("Lubrifiant")
+            ->setDescription("Huiles")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($productfamily);
+        $manager->flush();
+
+        $productfamily = (new ProductFamily($typeproduct))
+            ->setCode("GRA")
+            ->setName("Graisse")
+            ->setDescription("Graisses")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($productfamily);
+        $manager->flush();
+
         $typeproduct = (new TypeProduct())
             ->setCode("03")
             ->setName("Divers")
@@ -80,6 +111,26 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($typeproduct);
+        $manager->flush();
+
+        $productfamily = (new ProductFamily($typeproduct))
+            ->setCode("FIL")
+            ->setName("Filtre")
+            ->setDescription("Filtres")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($productfamily);
+        $manager->flush();
+
+        $productfamily = (new ProductFamily($typeproduct))
+            ->setCode("DET")
+            ->setName("Detergent")
+            ->setDescription("Detergents")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($productfamily);
         $manager->flush();
 
         $pos = (new Pos())

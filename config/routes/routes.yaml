@@ -22,6 +22,10 @@ typeproduct:
   resource: "routing/typeproduct.yaml"
   prefix:   /typeproduct
 
+productfamily:
+  resource: "routing/productfamily.yaml"
+  prefix:   /productfamily
+
 index:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

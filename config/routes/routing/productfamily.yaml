@@ -1,0 +1,45 @@
+productfamily:
+  path:     /
+  controller: App\Controller\ProductFamilyController::index
+
+productfamily.new:
+  path:     /{typeproduct}/new
+  controller: App\Controller\ProductFamilyController::new
+
+productfamily.create:
+  path: /{typeproduct}/create
+  controller: App\Controller\ProductFamilyController::create
+  requirements: { _method: post }
+
+productfamily.show:
+  path: /{id}/show
+  controller: App\Controller\ProductFamilyController::show
+
+productfamily.edit:
+  path:     /{id}/edit
+  controller: App\Controller\ProductFamilyController::edit
+
+productfamily.update:
+  path: /{id}/update
+  controller: App\Controller\ProductFamilyController::update
+  requirements: { _method: post|put }
+
+productfamily.activate:
+  path: /{id}/activate
+  controller: App\Controller\ProductFamilyController::activate
+  requirements: { _method: post|put }
+
+productfamily.disable:
+  path: /{id}/disable
+  controller: App\Controller\ProductFamilyController::disable
+  requirements: { _method: post|put }
+
+productfamily.validate:
+  path: /{id}/validate
+  controller: App\Controller\ProductFamilyController::validate
+  requirements: { _method: post|put }
+
+productfamily.invalidate:
+  path: /{id}/invalidate
+  controller: App\Controller\ProductFamilyController::invalidate
+  requirements: { _method: post|put }

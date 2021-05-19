@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <legend>Données du point de vente</legend>
-        {{ form_row(form.pos.code, { 'label': 'Point de vente'}) }}
+    <legend>Données du type produit</legend>
+        {{ form_row(form.pos.code, { 'label': 'Type du produit'}) }}
         {{ form_row(form.pos.name, { 'label': 'Designation'}) }}
 
     <legend>Données de la cuve</legend>
-        {{ form_row(form.code, { 'label': 'Cuve'}) }}
+        {{ form_row(form.code, { 'label': 'Famille'}) }}
         {{ form_row(form.name, { 'label': 'Designation'}) }}
         {{ form_row(form.description, { 'label': 'Description'}) }}
-        {{ form_row(form.capacity, { 'label': 'Capacité'}) }}
     <button class="btn btn-primary">Créer</button>
 {% endblock %}
