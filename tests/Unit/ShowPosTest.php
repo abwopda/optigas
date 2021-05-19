@@ -9,7 +9,7 @@ use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class UpdatePosTest
+ * Class ShowPosTest
  * @package App\Tests\Unit
  */
 class ShowPosTest extends TestCase

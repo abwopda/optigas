@@ -2,9 +2,6 @@
 
 namespace App\Tests\Integration;
 
-use App\Adapter\InMemory\Repository\PosRepository;
-use App\Entity\Pos;
-use App\UseCase\CreatePos;
 use App\Tests\AuthenticationTrait;
 use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

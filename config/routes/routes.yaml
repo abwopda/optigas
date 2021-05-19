@@ -18,6 +18,10 @@ pump:
   resource: "routing/pump.yaml"
   prefix:   /pump
 
+typeproduct:
+  resource: "routing/typeproduct.yaml"
+  prefix:   /typeproduct
+
 index:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
