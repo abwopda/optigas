@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Contact;
 use App\Entity\Employee;
 use App\Entity\Pos;
+use App\Entity\Product;
 use App\Entity\ProductFamily;
 use App\Entity\Pump;
 use App\Entity\Tank;
@@ -73,6 +74,36 @@ class UserFixtures extends Fixture
         $manager->persist($productfamily);
         $manager->flush();
 
+        $product = (new Product($productfamily))
+            ->setCode("CAR01")
+            ->setName("Super")
+            ->setDescription("Produit inflammable")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("CAR02")
+            ->setName("Gasoil")
+            ->setDescription("Produit inflammable")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("CAR03")
+            ->setName("Petrole")
+            ->setDescription("Produit inflammable")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+        $manager->flush();
+
         $typeproduct = (new TypeProduct())
             ->setCode("02")
             ->setName("Lubrifiants")
@@ -93,6 +124,36 @@ class UserFixtures extends Fixture
         $manager->persist($productfamily);
         $manager->flush();
 
+        $product = (new Product($productfamily))
+            ->setCode("LUB01")
+            ->setName("Huile 40")
+            ->setDescription("Huile")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("LUB02")
+            ->setName("Huile 15W40")
+            ->setDescription("Huile")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("LUB03")
+            ->setName("Huile 20W50")
+            ->setDescription("Huile")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+        $manager->flush();
+
         $productfamily = (new ProductFamily($typeproduct))
             ->setCode("GRA")
             ->setName("Graisse")
@@ -101,6 +162,16 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($productfamily);
+        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("GRA01")
+            ->setName("Multifack")
+            ->setDescription("Graisse")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
         $manager->flush();
 
         $typeproduct = (new TypeProduct())
@@ -123,6 +194,16 @@ class UserFixtures extends Fixture
         $manager->persist($productfamily);
         $manager->flush();
 
+        $product = (new Product($productfamily))
+            ->setCode("FIL01")
+            ->setName("Filtre Mercedes 190")
+            ->setDescription("Filtre")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+        $manager->flush();
+
         $productfamily = (new ProductFamily($typeproduct))
             ->setCode("DET")
             ->setName("Detergent")
@@ -131,6 +212,16 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($productfamily);
+        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("DET01")
+            ->setName("Lave glace")
+            ->setDescription("Divers")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
         $manager->flush();
 
         $pos = (new Pos())
