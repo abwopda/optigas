@@ -28,15 +28,14 @@ class ValidatePos
 
 
     /**
-     * @param Pos $pos
-     * @return Pos
+     * @param Pos|null $pos
+     * @param bool $status
+     * @return Pos|null
      */
-    public function execute(int $pos, bool $status): Pos
+    public function execute(?Pos $pos, bool $status): ?Pos
     {
-        $p = $this->posGateway->findOneById($pos);
+        $this->posGateway->validate($pos, $status);
 
-        $this->posGateway->validate($p, $status);
-
-        return $p;
+        return $pos;
     }
 }

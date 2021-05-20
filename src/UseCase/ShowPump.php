@@ -31,8 +31,8 @@ class ShowPump
      * @param Pump $pump
      * @return Pump|null
      */
-    public function execute(int $pump): ?Pump
+    public function execute(?Pump $pump): ?Pump
     {
-        return $this->pumpGateway->findOneById($pump);
+        return $pump;
     }
 }

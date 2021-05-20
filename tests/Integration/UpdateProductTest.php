@@ -31,20 +31,36 @@ class UpdateProductTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("product.edit", ["id" => 1])
+            $router->generate("product.edit", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        $form = $crawler->filter("form")->form([
-            "product[code]" => "C00",
-            "product[name]" => "Produit alpha",
-            "product[description]" => "Famille carburant",
-        ]);
+        $crawler = $client->request(
+            Request::METHOD_GET,
+            $router->generate("product.update", ["id" => 50])
+        );
 
-        $client->submit($form);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        for ($i = 1; $i <= 3; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_GET,
+                $router->generate("product.edit", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+
+            $form = $crawler->filter("form")->form([
+                "product[code]" => "C00" . $i,
+                "product[name]" => "Produit alpha" . $i,
+                "product[description]" => "Famille carburant" . $i,
+            ]);
+
+            $client->submit($form);
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        }
     }
 
     /**

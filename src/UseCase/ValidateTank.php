@@ -26,17 +26,15 @@ class ValidateTank
         $this->tankGateway = $tankGateway;
     }
 
-
     /**
-     * @param Tank $tank
-     * @return Tank
+     * @param Tank|null $tank
+     * @param bool $status
+     * @return Tank|null
      */
-    public function execute(int $tank, bool $status): Tank
+    public function execute(?Tank $tank, bool $status): ?Tank
     {
-        $t = $this->tankGateway->findOneById($tank);
+        $this->tankGateway->validate($tank, $status);
 
-        $this->tankGateway->validate($t, $status);
-
-        return $t;
+        return $tank;
     }
 }

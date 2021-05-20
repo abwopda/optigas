@@ -30,17 +30,34 @@ class ValidateTypeProductTest extends WebTestCase
         $router = $client->getContainer()->get("router");
 
         $crawler = $client->request(
-            Request::METHOD_GET,
-            $router->generate("typeproduct.validate", ["id" => 1])
+            Request::METHOD_POST,
+            $router->generate("typeproduct.validate", ["id" => 10])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
-            Request::METHOD_GET,
-            $router->generate("typeproduct.disable", ["id" => 1])
+            Request::METHOD_POST,
+            $router->generate("typeproduct.invalidate", ["id" => 10])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        for ($i = 1; $i <= 3; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_POST,
+                $router->generate("typeproduct.validate", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+
+
+            $crawler = $client->request(
+                Request::METHOD_POST,
+                $router->generate("typeproduct.invalidate", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        }
     }
 }

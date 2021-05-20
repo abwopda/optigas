@@ -28,15 +28,14 @@ class ActivatePump
 
 
     /**
-     * @param Pump $pump
-     * @return Pump
+     * @param Pump|null $pump
+     * @param bool $status
+     * @return Pump|null
      */
-    public function execute(int $pump, bool $status): Pump
+    public function execute(?Pump $pump, bool $status): ?Pump
     {
-        $p = $this->pumpGateway->findOneById($pump);
+        $this->pumpGateway->activate($pump, $status);
 
-        $this->pumpGateway->activate($p, $status);
-
-        return $p;
+        return $pump;
     }
 }

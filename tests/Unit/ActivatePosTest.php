@@ -17,16 +17,12 @@ class ActivatePosTest extends TestCase
     public function testSuccessfulPosActivated()
     {
         $useCase = new activatePos(new PosRepository());
-        $pos = $useCase->execute(1, 1);
+        for ($i = 1; $i <= 3; $i++) {
+            $entity = (new PosRepository())->findOneById($i);
 
-        //var_export($pos);
+            $this->assertInstanceOf(Pos::class, $useCase->execute($entity, 1));
 
-        $this->assertInstanceOf(Pos::class, $pos);
-
-        $pos = $useCase->execute(1, 0);
-
-        //var_export($pos);
-
-        $this->assertInstanceOf(Pos::class, $pos);
+            $this->assertInstanceOf(Pos::class, $useCase->execute($entity, 0));
+        }
     }
 }

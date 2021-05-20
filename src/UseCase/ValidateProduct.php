@@ -28,15 +28,14 @@ class ValidateProduct
 
 
     /**
-     * @param Product $product
-     * @return Product
+     * @param Product|null $product
+     * @param bool $status
+     * @return Product|null
      */
-    public function execute(int $product, bool $status): Product
+    public function execute(?Product $product, bool $status): ?Product
     {
-        $entity = $this->productGateway->findOneById($product);
+        $this->productGateway->validate($product, $status);
 
-        $this->productGateway->validate($entity, $status);
-
-        return $entity;
+        return $product;
     }
 }

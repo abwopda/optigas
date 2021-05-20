@@ -55,6 +55,8 @@ class TankRepository implements TankGateway
             ->setDescription("TAWAAL OIL AKAK")
             ->setCapacity(30000)
             ->setCreateBy($employee)
+            ->setUpdateBy($employee)
+            ->setUpdateAt(new \DateTimeImmutable())
         ;
 
         $reflectionClass = new \ReflectionClass($t);
@@ -70,6 +72,9 @@ class TankRepository implements TankGateway
             ->setDescription("TAWAAL OIL AKAK")
             ->setCapacity(15000)
             ->setCreateBy($employee)
+            ->setValid(true)
+            ->setValidateBy($employee)
+            ->setValidateAt(new \DateTimeImmutable())
         ;
 
         $reflectionClass = new \ReflectionClass($t);
@@ -85,6 +90,9 @@ class TankRepository implements TankGateway
             ->setDescription("TAWAAL OIL AKAK")
             ->setCapacity(15000)
             ->setCreateBy($employee)
+            ->setActive(true)
+            ->setActivateBy($employee)
+            ->setActivateAt(new \DateTimeImmutable())
         ;
 
         $reflectionClass = new \ReflectionClass($t);

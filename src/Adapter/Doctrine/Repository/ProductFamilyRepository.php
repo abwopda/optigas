@@ -19,7 +19,7 @@ class ProductFamilyRepository extends ServiceEntityRepository implements Product
         parent::__construct($registry, ProductFamily::class);
     }
 
-    public function findOneById(int $id): ProductFamily
+    public function findOneById(int $id): ?ProductFamily
     {
         return parent::find(["id" => $id]);
     }

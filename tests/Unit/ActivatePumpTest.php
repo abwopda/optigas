@@ -5,7 +5,6 @@ namespace App\Tests\Unit;
 use App\Adapter\InMemory\Repository\PumpRepository;
 use App\Entity\Pump;
 use App\UseCase\ActivatePump;
-use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,16 +16,12 @@ class ActivatePumpTest extends TestCase
     public function testSuccessfulPumpActivated()
     {
         $useCase = new activatePump(new PumpRepository());
-        $pump = $useCase->execute(1, 1);
+        for ($i = 1; $i <= 11; $i++) {
+            $entity = (new PumpRepository())->findOneById($i);
 
-        //var_export($pump);
+            $this->assertInstanceOf(Pump::class, $useCase->execute($entity, 1));
 
-        $this->assertInstanceOf(Pump::class, $pump);
-
-        $pump = $useCase->execute(1, 0);
-
-        //var_export($pump);
-
-        $this->assertInstanceOf(Pump::class, $pump);
+            $this->assertInstanceOf(Pump::class, $useCase->execute($entity, 0));
+        }
     }
 }

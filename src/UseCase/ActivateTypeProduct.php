@@ -26,17 +26,15 @@ class ActivateTypeProduct
         $this->typeproductGateway = $typeproductGateway;
     }
 
-
     /**
-     * @param TypeProduct $typeproduct
-     * @return TypeProduct
+     * @param TypeProduct|null $typeproduct
+     * @param bool $status
+     * @return TypeProduct|null
      */
-    public function execute(int $typeproduct, bool $status): TypeProduct
+    public function execute(?TypeProduct $typeproduct, bool $status): ?TypeProduct
     {
-        $entity = $this->typeproductGateway->findOneById($typeproduct);
+        $this->typeproductGateway->activate($typeproduct, $status);
 
-        $this->typeproductGateway->activate($entity, $status);
-
-        return $entity;
+        return $typeproduct;
     }
 }

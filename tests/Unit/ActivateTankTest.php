@@ -17,16 +17,12 @@ class ActivateTankTest extends TestCase
     public function testSuccessfulTankActivated()
     {
         $useCase = new activateTank(new TankRepository());
-        $tank = $useCase->execute(1, 1);
+        for ($i = 1; $i <= 3; $i++) {
+            $entity = (new TankRepository())->findOneById($i);
 
-        //var_export($tank);
+            $this->assertInstanceOf(Tank::class, $useCase->execute($entity, 1));
 
-        $this->assertInstanceOf(Tank::class, $tank);
-
-        $tank = $useCase->execute(1, 0);
-
-        //var_export($tank);
-
-        $this->assertInstanceOf(Tank::class, $tank);
+            $this->assertInstanceOf(Tank::class, $useCase->execute($entity, 0));
+        }
     }
 }

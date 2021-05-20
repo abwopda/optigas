@@ -52,7 +52,6 @@ class UserFixtures extends Fixture
         $contact->setPassword($this->userPasswordEncoder->encodePassword($contact, "Password123!"));
 
         $manager->persist($contact);
-        $manager->flush();
 
         $typeproduct = (new TypeProduct())
             ->setCode("01")
@@ -62,7 +61,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($typeproduct);
-        $manager->flush();
 
         $productfamily = (new ProductFamily($typeproduct))
             ->setCode("CAR")
@@ -72,7 +70,33 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($productfamily);
-        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("CAR01")
+            ->setName("Super")
+            ->setDescription("Produit inflammable")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+
+        $product = (new Product($productfamily))
+            ->setCode("CAR02")
+            ->setName("Gasoil")
+            ->setDescription("Produit inflammable")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+
+        $product = (new Product($productfamily))
+            ->setCode("CAR03")
+            ->setName("Petrole")
+            ->setDescription("Produit inflammable")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
 
         $product = (new Product($productfamily))
             ->setCode("CAR01")
@@ -112,7 +136,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($typeproduct);
-        $manager->flush();
 
         $productfamily = (new ProductFamily($typeproduct))
             ->setCode("LUB")
@@ -122,7 +145,33 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($productfamily);
-        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("LUB01")
+            ->setName("Huile 40")
+            ->setDescription("Huile")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+
+        $product = (new Product($productfamily))
+            ->setCode("LUB02")
+            ->setName("Huile 15W40")
+            ->setDescription("Huile")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
+
+        $product = (new Product($productfamily))
+            ->setCode("LUB03")
+            ->setName("Huile 20W50")
+            ->setDescription("Huile")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
 
         $product = (new Product($productfamily))
             ->setCode("LUB01")
@@ -162,7 +211,15 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($productfamily);
-        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("GRA01")
+            ->setName("Multifack")
+            ->setDescription("Graisse")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
 
         $product = (new Product($productfamily))
             ->setCode("GRA01")
@@ -182,7 +239,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($typeproduct);
-        $manager->flush();
 
         $productfamily = (new ProductFamily($typeproduct))
             ->setCode("FIL")
@@ -192,7 +248,15 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($productfamily);
-        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("FIL01")
+            ->setName("Filtre Mercedes 190")
+            ->setDescription("Filtre")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
 
         $product = (new Product($productfamily))
             ->setCode("FIL01")
@@ -212,7 +276,15 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($productfamily);
-        $manager->flush();
+
+        $product = (new Product($productfamily))
+            ->setCode("DET01")
+            ->setName("Lave glace")
+            ->setDescription("Divers")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($product);
 
         $product = (new Product($productfamily))
             ->setCode("DET01")
@@ -235,7 +307,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($pos);
-        $manager->flush();
 
         $tank = (new Tank($pos))
             ->setCode("CUV0101")
@@ -246,7 +317,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($tank);
-        $manager->flush();
 
         $pump = (new Pump($tank))
             ->setCode("POM010101")
@@ -257,7 +327,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($pump);
-        $manager->flush();
 
         $pump = (new Pump($tank))
             ->setCode("POM010102")
@@ -268,7 +337,36 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($pump);
-        $manager->flush();
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010103")
+            ->setName("Super 3")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("46546565")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010104")
+            ->setName("Super 4")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("6979944")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010105")
+            ->setName("Super 5")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("466667")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
 
         $tank = (new Tank($pos))
             ->setCode("CUV0102")
@@ -279,7 +377,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($tank);
-        $manager->flush();
 
         $pump = (new Pump($tank))
             ->setCode("POM010201")
@@ -290,7 +387,36 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($pump);
-        $manager->flush();
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010202")
+            ->setName("Gasoil 2")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("4569654")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010203")
+            ->setName("Gasoil 3")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("325644")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010204")
+            ->setName("Gasoil 4")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("4589322")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
 
         $tank = (new Tank($pos))
             ->setCode("CUV0103")
@@ -301,7 +427,36 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($tank);
-        $manager->flush();
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010301")
+            ->setName("Gasoil 5")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("15479")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
+
+        $tank = (new Tank($pos))
+            ->setCode("CUV0104")
+            ->setName("Petrole")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCapacity("15000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($tank);
+
+        $pump = (new Pump($tank))
+            ->setCode("POM010401")
+            ->setName("petrole")
+            ->setDescription("Tawaal Oil AKAK")
+            ->setCounter("84572")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pump);
 
         $pos = (new Pos())
             ->setCode("STA02")
@@ -314,7 +469,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($pos);
-        $manager->flush();
 
         $tank = (new Tank($pos))
             ->setCode("CUV0201")
@@ -325,7 +479,6 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($tank);
-        $manager->flush();
 
         $tank = (new Tank($pos))
             ->setCode("CUV0202")
@@ -336,6 +489,18 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($tank);
+
+        $pos = (new Pos())
+            ->setCode("STA03")
+            ->setName("Tawaal Oil Ngoya 1")
+            ->setDescription("Station service")
+            ->setTown("Ngoya")
+            ->setAddress("BP 10075")
+            ->setCapacity("70000")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($pos);
         $manager->flush();
     }
 }

@@ -28,15 +28,14 @@ class ActivateProduct
 
 
     /**
-     * @param Product $product
-     * @return Product
+     * @param Product|null $product
+     * @param bool $status
+     * @return Product|null
      */
-    public function execute(int $product, bool $status): Product
+    public function execute(?Product $product, bool $status): ?Product
     {
-        $entity = $this->productGateway->findOneById($product);
+        $this->productGateway->activate($product, $status);
 
-        $this->productGateway->activate($entity, $status);
-
-        return $entity;
+        return $product;
     }
 }

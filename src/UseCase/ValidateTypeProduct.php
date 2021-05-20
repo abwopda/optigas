@@ -26,17 +26,15 @@ class ValidateTypeProduct
         $this->typeproductGateway = $typeproductGateway;
     }
 
-
     /**
-     * @param TypeProduct $typeproduct
-     * @return TypeProduct
+     * @param TypeProduct|null $typeproduct
+     * @param bool $status
+     * @return TypeProduct|null
      */
-    public function execute(int $typeproduct, bool $status): TypeProduct
+    public function execute(?TypeProduct $typeproduct, bool $status): ?TypeProduct
     {
-        $entity = $this->typeproductGateway->findOneById($typeproduct);
+        $this->typeproductGateway->validate($typeproduct, $status);
 
-        $this->typeproductGateway->validate($entity, $status);
-
-        return $entity;
+        return $typeproduct;
     }
 }

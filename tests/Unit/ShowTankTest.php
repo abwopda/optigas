@@ -17,15 +17,17 @@ class ShowTankTest extends TestCase
     public function testSuccessfulTankShowed()
     {
         $useCase = new showTank(new TankRepository());
-
-        $this->assertInstanceOf(Tank::class, $useCase->execute(1));
+        for ($i = 1; $i <= 4; $i++) {
+            $entity = (new TankRepository())->findOneById($i);
+            $this->assertInstanceOf(Tank::class, $useCase->execute($entity));
+        }
     }
 
     /**
      * @dataProvider provideBadTank
-     * @param int $tank
+     * @param Tank|null $tank
      */
-    public function testBadTank(int $tank)
+    public function testBadTank(?Tank $tank)
     {
         $useCase = new showTank(new TankRepository());
 
@@ -38,7 +40,7 @@ class ShowTankTest extends TestCase
     public function provideBadTank(): \Generator
     {
         yield [
-            5
+            (new TankRepository())->findOneById(50)
         ];
     }
 }

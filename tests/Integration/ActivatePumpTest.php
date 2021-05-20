@@ -3,7 +3,6 @@
 namespace App\Tests\Integration;
 
 use App\Tests\AuthenticationTrait;
-use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,17 +26,34 @@ class ActivatePumpTest extends WebTestCase
         $router = $client->getContainer()->get("router");
 
         $crawler = $client->request(
-            Request::METHOD_GET,
-            $router->generate("pump.activate", ["id" => 1])
+            Request::METHOD_POST,
+            $router->generate("pump.activate", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
-            Request::METHOD_GET,
-            $router->generate("pump.disable", ["id" => 1])
+            Request::METHOD_POST,
+            $router->generate("pump.disable", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        for ($i = 1; $i <= 11; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_POST,
+                $router->generate("pump.activate", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+
+
+            $crawler = $client->request(
+                Request::METHOD_POST,
+                $router->generate("pump.disable", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        }
     }
 }

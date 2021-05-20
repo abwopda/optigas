@@ -67,7 +67,14 @@ class PumpController extends AbstractController
 
     public function new(int $tank)
     {
-        $entity = new Pump($this->tankGateway->findOneById($tank));
+        $entity = $this->tankGateway->findOneById($tank);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $tank);
+        }
+
+        $entity = new Pump($entity);
+
         $form = $this->createForm(PumpType::class, $entity);
 
         return $this->render('ui/pump/new.html.twig', [
@@ -82,23 +89,28 @@ class PumpController extends AbstractController
      */
     public function create(int $tank, Request $request): Response
     {
-        $pump = new Pump($this->tankGateway->findOneById($tank));
+        $entity = $this->tankGateway->findOneById($tank);
 
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $tank);
+        }
         $user = $this->security->getUser();
 
-        $pump->setCreateBy($user);
+        $entity = new Pump($entity);
 
-        $form = $this->createForm(PumpType::class, $pump)->handleRequest($request);
+        $entity->setCreateBy($user);
+
+        $form = $this->createForm(PumpType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->createPump->execute($pump);
+            $this->createPump->execute($entity);
             $this->addFlash('success', "Pompe créée avec succès");
 
-            return $this->redirectToRoute("pump.show", ["id" => 1]);
+            return $this->redirectToRoute("pump.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
         }
 
         return $this->render("ui/pump/create.html.twig", [
-            "entity" => $pump,
+            "entity" => $entity,
             "form" => $form->createView()
         ]);
     }
@@ -137,10 +149,10 @@ class PumpController extends AbstractController
         $form = $this->createForm(PumpType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updatePump->execute($id);
+            $this->updatePump->execute($entity);
 
             $this->addFlash('success', "Pompe mise à jour avec succès");
-            return $this->redirectToRoute("pump.show", ["id" => 2]);
+            return $this->redirectToRoute("pump.show", ["id" => $id]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -182,12 +194,12 @@ class PumpController extends AbstractController
 
         $this->__activate($entity, 1);
 
-        $this->activatePump->execute($id, 1);
+        $this->activatePump->execute($entity, 1);
 
         //var_export($entity);
 
         $this->addFlash('success', "Pompe activée avec succès");
-        return $this->redirectToRoute("pump.show", ["id" => 1]);
+        return $this->redirectToRoute("pump.show", ["id" => $id]);
     }
 
     public function disable(int $id, Request $request)
@@ -200,10 +212,10 @@ class PumpController extends AbstractController
 
         $this->__activate($entity, 0);
 
-        $this->activatePump->execute($id, 0);
+        $this->activatePump->execute($entity, 0);
 
         $this->addFlash('success', "Pompe désactivée avec succès");
-        return $this->redirectToRoute("pump.show", ["id" => 1]);
+        return $this->redirectToRoute("pump.show", ["id" => $id]);
     }
 
     public function __validate($entity, $status)
@@ -224,12 +236,12 @@ class PumpController extends AbstractController
 
         $this->__validate($entity, 1);
 
-        $this->validatePump->execute($id, 1);
+        $this->validatePump->execute($entity, 1);
 
         //var_export($entity);
 
         $this->addFlash('success', "Pompe validée avec succès");
-        return $this->redirectToRoute("pump.show", ["id" => 1]);
+        return $this->redirectToRoute("pump.show", ["id" => $id]);
     }
 
     public function invalidate(int $id, Request $request)
@@ -242,9 +254,9 @@ class PumpController extends AbstractController
 
         $this->__validate($entity, 0);
 
-        $this->validatePump->execute($id, 0);
+        $this->validatePump->execute($entity, 0);
 
         $this->addFlash('success', "Pompe invalidée avec succès");
-        return $this->redirectToRoute("pump.show", ["id" => 1]);
+        return $this->redirectToRoute("pump.show", ["id" => $id]);
     }
 }

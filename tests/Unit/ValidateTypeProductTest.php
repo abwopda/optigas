@@ -5,7 +5,6 @@ namespace App\Tests\Unit;
 use App\Adapter\InMemory\Repository\TypeProductRepository;
 use App\Entity\TypeProduct;
 use App\UseCase\ValidateTypeProduct;
-use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,16 +16,12 @@ class ValidateTypeProductTest extends TestCase
     public function testSuccessfulTypeProductValidated()
     {
         $useCase = new ValidateTypeProduct(new TypeProductRepository());
-        $typeproduct = $useCase->execute(1, 1);
+        for ($i = 1; $i <= 3; $i++) {
+            $entity = (new TypeProductRepository())->findOneById($i);
 
-        //var_export($typeproduct);
+            $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, 1));
 
-        $this->assertInstanceOf(TypeProduct::class, $typeproduct);
-
-        $typeproduct = $useCase->execute(1, 0);
-
-        //var_export($typeproduct);
-
-        $this->assertInstanceOf(TypeProduct::class, $typeproduct);
+            $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, 0));
+        }
     }
 }

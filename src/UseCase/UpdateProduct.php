@@ -24,17 +24,14 @@ class UpdateProduct
     {
         $this->productGateway = $productGateway;
     }
-
-
+  
     /**
-     * @param Product $product
-     * @return Product
+     * @param Product|null $product
+     * @return Product|null
      */
-    public function execute(int $product): Product
+    public function execute(?Product $product): ?Product
     {
-        $entity = $this->productGateway->findOneById($product);
-
-        $this->productGateway->update($entity);
-        return $entity;
+        $this->productGateway->update($product);
+        return $product;
     }
 }

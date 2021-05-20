@@ -2,7 +2,6 @@
 
 namespace App\Tests\Unit;
 
-use App\Adapter\InMemory\Repository\PosRepository;
 use App\Adapter\InMemory\Repository\TankRepository;
 use App\Entity\Pos;
 use App\Entity\Tank;

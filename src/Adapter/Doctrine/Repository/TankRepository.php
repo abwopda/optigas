@@ -19,7 +19,7 @@ class TankRepository extends ServiceEntityRepository implements TankGateway
         parent::__construct($registry, Tank::class);
     }
 
-    public function findOneById(int $id): Tank
+    public function findOneById(int $id): ?Tank
     {
         return parent::find(["id" => $id]);
     }

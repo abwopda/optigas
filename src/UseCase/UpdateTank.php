@@ -27,14 +27,12 @@ class UpdateTank
 
 
     /**
-     * @param Tank $tank
-     * @return Tank
+     * @param Tank|null $tank
+     * @return Tank|null
      */
-    public function execute(int $tank): Tank
+    public function execute(?Tank $tank): ?Tank
     {
-        $t = $this->tankGateway->findOneById($tank);
-
-        $this->tankGateway->update($t);
-        return $t;
+        $this->tankGateway->update($tank);
+        return $tank;
     }
 }
