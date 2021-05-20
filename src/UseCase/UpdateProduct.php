@@ -24,7 +24,7 @@ class UpdateProduct
     {
         $this->productGateway = $productGateway;
     }
-  
+
     /**
      * @param Product|null $product
      * @return Product|null

@@ -69,7 +69,6 @@ class ProductController extends AbstractController
      * @param Request $request
      * @return Response
      */
-
     public function new(int $productfamily)
     {
         $entity = $this->productfamilyGateway->findOneById($productfamily);
@@ -79,7 +78,7 @@ class ProductController extends AbstractController
         }
 
         $entity = new Product($entity);
-      
+
         $form = $this->createForm(ProductType::class, $entity);
 
         return $this->render('ui/product/new.html.twig', [
@@ -113,7 +112,6 @@ class ProductController extends AbstractController
 
             $this->addFlash('success', "Produit créé avec succès");
             return $this->redirectToRoute("product.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
-
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -158,7 +156,6 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->updateProduct->execute($entity);
 
             $this->addFlash('success', "Produit mise à jour avec succès");
@@ -211,7 +208,6 @@ class ProductController extends AbstractController
         $this->addFlash('success', "Produit activé avec succès");
 
         return $this->redirectToRoute("product.show", ["id" => $id]);
-
     }
 
     public function disable(int $id, Request $request)
@@ -228,7 +224,6 @@ class ProductController extends AbstractController
 
         $this->addFlash('success', "Produit désactivé avec succès");
         return $this->redirectToRoute("product.show", ["id" => $id]);
-
     }
 
     public function __validate($entity, $status)
