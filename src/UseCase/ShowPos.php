@@ -28,11 +28,11 @@ class ShowPos
 
 
     /**
-     * @param Pos $pos
+     * @param Pos|null $pos
      * @return Pos|null
      */
-    public function execute(int $pos): ?Pos
+    public function execute(?Pos $pos): ?Pos
     {
-        return $this->posGateway->findOneById($pos);
+        return $pos;
     }
 }

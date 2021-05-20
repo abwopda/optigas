@@ -28,14 +28,12 @@ class UpdatePos
 
 
     /**
-     * @param Pos $pos
-     * @return Pos
+     * @param Pos|null $pos
+     * @return Pos|null
      */
-    public function execute(int $pos): Pos
+    public function execute(?Pos $pos): ?Pos
     {
-        $p = $this->posGateway->findOneById($pos);
-
-        $this->posGateway->update($p);
-        return $p;
+        $this->posGateway->update($pos);
+        return $pos;
     }
 }

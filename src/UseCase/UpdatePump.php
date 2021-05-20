@@ -25,16 +25,13 @@ class UpdatePump
         $this->pumpGateway = $pumpGateway;
     }
 
-
     /**
-     * @param Pump $pump
-     * @return Pump
+     * @param Pump|null $pump
+     * @return Pump|null
      */
-    public function execute(int $pump): Pump
+    public function execute(?Pump $pump): ?Pump
     {
-        $p = $this->pumpGateway->findOneById($pump);
-
-        $this->pumpGateway->update($p);
-        return $p;
+        $this->pumpGateway->update($pump);
+        return $pump;
     }
 }

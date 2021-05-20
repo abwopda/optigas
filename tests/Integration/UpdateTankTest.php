@@ -31,21 +31,37 @@ class UpdateTankTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("tank.edit", ["id" => 1])
+            $router->generate("tank.edit", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        $form = $crawler->filter("form")->form([
-            "tank[code]" => "CUV00",
-            "tank[name]" => "Super Gasoil",
-            "tank[description]" => "Station service ZZZ",
-            "tank[capacity]" => 10000,
-        ]);
+        $crawler = $client->request(
+            Request::METHOD_GET,
+            $router->generate("tank.update", ["id" => 50])
+        );
 
-        $client->submit($form);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        for ($i = 1; $i <= 4; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_GET,
+                $router->generate("tank.edit", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+
+            $form = $crawler->filter("form")->form([
+                "tank[code]" => "CUV00" . $i,
+                "tank[name]" => "Super Gasoil" . $i,
+                "tank[description]" => "Station service ZZZ" . $i,
+                "tank[capacity]" => 10000,
+            ]);
+
+            $client->submit($form);
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        }
     }
 
     /**

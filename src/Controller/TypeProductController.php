@@ -95,7 +95,7 @@ class TypeProductController extends AbstractController
             $this->createTypeProduct->execute($entity);
             //var_export($entity);
             $this->addFlash('success', "Type produit créé avec succès");
-            return $this->redirectToRoute("typeproduct.show", ["id" => 1]);
+            return $this->redirectToRoute("typeproduct.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -140,10 +140,10 @@ class TypeProductController extends AbstractController
         $form = $this->createForm(TypeProductType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updateTypeProduct->execute($id);
+            $this->updateTypeProduct->execute($entity);
 
             $this->addFlash('success', "Type produit mis à jour avec succès");
-            return $this->redirectToRoute("typeproduct.show", ["id" => 2]);
+            return $this->redirectToRoute("typeproduct.show", ["id" => $id]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -184,12 +184,12 @@ class TypeProductController extends AbstractController
 
         $this->__activate($entity, 1);
 
-        $this->activateTypeProduct->execute($id, 1);
+        $this->activateTypeProduct->execute($entity, 1);
 
         //var_export($entity);
 
         $this->addFlash('success', "Type produit activé avec succès");
-        return $this->redirectToRoute("typeproduct.show", ["id" => 1]);
+        return $this->redirectToRoute("typeproduct.show", ["id" => $id]);
     }
 
     public function disable(int $id, Request $request)
@@ -202,10 +202,10 @@ class TypeProductController extends AbstractController
 
         $this->__activate($entity, 0);
 
-        $this->activateTypeProduct->execute($id, 0);
+        $this->activateTypeProduct->execute($entity, 0);
 
         $this->addFlash('success', "Type produit désactivé avec succès");
-        return $this->redirectToRoute("typeproduct.show", ["id" => 1]);
+        return $this->redirectToRoute("typeproduct.show", ["id" => $id]);
     }
 
     public function __validate($entity, $status)
@@ -226,10 +226,10 @@ class TypeProductController extends AbstractController
 
         $this->__validate($entity, 1);
 
-        $this->validateTypeProduct->execute($id, 1);
+        $this->validateTypeProduct->execute($entity, 1);
 
         $this->addFlash('success', "Type produit validé avec succès");
-        return $this->redirectToRoute("typeproduct.show", ["id" => 1]);
+        return $this->redirectToRoute("typeproduct.show", ["id" => $id]);
     }
 
     public function invalidate(int $id, Request $request)
@@ -242,9 +242,9 @@ class TypeProductController extends AbstractController
 
         $this->__validate($entity, 0);
 
-        $this->validateTypeProduct->execute($id, 0);
+        $this->validateTypeProduct->execute($entity, 0);
 
         $this->addFlash('success', "Type produit invalidé avec succès");
-        return $this->redirectToRoute("typeproduct.show", ["id" => 1]);
+        return $this->redirectToRoute("typeproduct.show", ["id" => $id]);
     }
 }

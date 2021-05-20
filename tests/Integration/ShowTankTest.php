@@ -27,9 +27,18 @@ class ShowTankTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("tank.show", ["id" => 1])
+            $router->generate("tank.show", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        for ($i = 1; $i <= 4; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_GET,
+                $router->generate("tank.show", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        }
     }
 }

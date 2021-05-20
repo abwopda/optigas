@@ -2,11 +2,7 @@
 
 namespace App\Tests\Integration;
 
-use App\Adapter\InMemory\Repository\ProductFamilyRepository;
-use App\Entity\ProductFamily;
-use App\UseCase\UpdateProductFamily;
 use App\Tests\AuthenticationTrait;
-use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,20 +27,36 @@ class UpdateProductFamilyTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("productfamily.edit", ["id" => 1])
+            $router->generate("productfamily.edit", ["id" => 10])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        $form = $crawler->filter("form")->form([
-            "product_family[code]" => "C00",
-            "product_family[name]" => "Carburant alpha",
-            "product_family[description]" => "Famille carburant",
-        ]);
+        $crawler = $client->request(
+            Request::METHOD_GET,
+            $router->generate("productfamily.update", ["id" => 10])
+        );
 
-        $client->submit($form);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        for ($i = 1; $i <= 5; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_GET,
+                $router->generate("productfamily.edit", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+
+            $form = $crawler->filter("form")->form([
+                "product_family[code]" => "C00" . $i,
+                "product_family[name]" => "Carburant alpha" . $i,
+                "product_family[description]" => "Famille carburant" . $i
+            ]);
+
+            $client->submit($form);
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        }
     }
 
     /**

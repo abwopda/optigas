@@ -26,16 +26,13 @@ class UpdateTypeProduct
         $this->typeproductGateway = $typeproductGateway;
     }
 
-
     /**
-     * @param TypeProduct $typeproduct
-     * @return TypeProduct
+     * @param TypeProduct|null $typeproduct
+     * @return TypeProduct|null
      */
-    public function execute(int $typeproduct): TypeProduct
+    public function execute(?TypeProduct $typeproduct): ?TypeProduct
     {
-        $entity = $this->typeproductGateway->findOneById($typeproduct);
-
-        $this->typeproductGateway->update($entity);
-        return $entity;
+        $this->typeproductGateway->update($typeproduct);
+        return $typeproduct;
     }
 }

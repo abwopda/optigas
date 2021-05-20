@@ -31,8 +31,8 @@ class ShowProductFamily
      * @param ProductFamily $productfamily
      * @return ProductFamily|null
      */
-    public function execute(int $productfamily): ?ProductFamily
+    public function execute(?ProductFamily $productfamily): ?ProductFamily
     {
-        return $this->productfamilyGateway->findOneById($productfamily);
+        return $productfamily;
     }
 }

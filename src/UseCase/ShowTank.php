@@ -31,8 +31,8 @@ class ShowTank
      * @param Tank $tank
      * @return Tank|null
      */
-    public function execute(int $tank): ?Tank
+    public function execute(?Tank $tank): ?Tank
     {
-        return $this->tankGateway->findOneById($tank);
+        return $tank;
     }
 }

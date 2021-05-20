@@ -2,12 +2,7 @@
 
 namespace App\Tests\Integration;
 
-use App\Adapter\InMemory\Repository\TankRepository;
-use App\Entity\Pos;
-use App\Entity\Tank;
-use App\UseCase\CreateTank;
 use App\Tests\AuthenticationTrait;
-use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -93,9 +93,11 @@ class PosController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createPos->execute($entity);
+
             //var_export($entity);
+
             $this->addFlash('success', "Point de vente créé avec succès");
-            return $this->redirectToRoute("pos.show", ["id" => 1]);
+            return $this->redirectToRoute("pos.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -140,10 +142,10 @@ class PosController extends AbstractController
         $form = $this->createForm(PosType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updatePos->execute($id);
+            $this->updatePos->execute($entity);
 
             $this->addFlash('success', "Point de vente mis à jour avec succès");
-            return $this->redirectToRoute("pos.show", ["id" => 2]);
+            return $this->redirectToRoute("pos.show", ["id" => $id]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -184,12 +186,10 @@ class PosController extends AbstractController
 
         $this->__activate($entity, 1);
 
-        $this->activatePos->execute($id, 1);
-
-        //var_export($entity);
+        $this->activatePos->execute($entity, 1);
 
         $this->addFlash('success', "Point de vente activé avec succès");
-        return $this->redirectToRoute("pos.show", ["id" => 1]);
+        return $this->redirectToRoute("pos.show", ["id" => $id]);
     }
 
     public function disable(int $id, Request $request)
@@ -202,10 +202,10 @@ class PosController extends AbstractController
 
         $this->__activate($entity, 0);
 
-        $this->activatePos->execute($id, 0);
+        $this->activatePos->execute($entity, 0);
 
         $this->addFlash('success', "Point de vente désactivé avec succès");
-        return $this->redirectToRoute("pos.show", ["id" => 1]);
+        return $this->redirectToRoute("pos.show", ["id" => $id]);
     }
 
     public function __validate($entity, $status)
@@ -226,10 +226,10 @@ class PosController extends AbstractController
 
         $this->__validate($entity, 1);
 
-        $this->validatePos->execute($id, 1);
+        $this->validatePos->execute($entity, 1);
 
         $this->addFlash('success', "Point de vente validé avec succès");
-        return $this->redirectToRoute("pos.show", ["id" => 1]);
+        return $this->redirectToRoute("pos.show", ["id" => $id]);
     }
 
     public function invalidate(int $id, Request $request)
@@ -242,9 +242,9 @@ class PosController extends AbstractController
 
         $this->__validate($entity, 0);
 
-        $this->validatePos->execute($id, 0);
+        $this->validatePos->execute($entity, 0);
 
         $this->addFlash('success', "Point de vente invalidé avec succès");
-        return $this->redirectToRoute("pos.show", ["id" => 1]);
+        return $this->redirectToRoute("pos.show", ["id" => $id]);
     }
 }

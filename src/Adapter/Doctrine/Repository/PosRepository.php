@@ -19,7 +19,7 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
         parent::__construct($registry, Pos::class);
     }
 
-    public function findOneById(int $id): Pos
+    public function findOneById(int $id): ?Pos
     {
         return parent::find(["id" => $id]);
     }

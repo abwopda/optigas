@@ -27,9 +27,18 @@ class ShowPosTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("pos.show", ["id" => 1])
+            $router->generate("pos.show", ["id" => 5])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        for ($i = 1; $i <= 3; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_GET,
+                $router->generate("pos.show", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        }
     }
 }

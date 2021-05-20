@@ -18,6 +18,12 @@ class UpdateTankTest extends TestCase
     {
         $useCase = new updateTank(new TankRepository());
 
-        $this->assertInstanceOf(Tank::class, $useCase->execute(1));
+        for ($i = 1; $i <= 4; $i++) {
+            $entity = (new TankRepository())
+                ->findOneById($i)
+                ->setName("TANK0" . $i)
+            ;
+            $this->assertInstanceOf(Tank::class, $useCase->execute($entity));
+        }
     }
 }

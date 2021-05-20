@@ -26,17 +26,15 @@ class ValidatePump
         $this->pumpGateway = $pumpGateway;
     }
 
-
     /**
-     * @param Pump $pump
-     * @return Pump
+     * @param Pump|null $pump
+     * @param bool $status
+     * @return Pump|null
      */
-    public function execute(int $pump, bool $status): Pump
+    public function execute(?Pump $pump, bool $status): ?Pump
     {
-        $t = $this->pumpGateway->findOneById($pump);
+        $this->pumpGateway->validate($pump, $status);
 
-        $this->pumpGateway->validate($t, $status);
-
-        return $t;
+        return $pump;
     }
 }

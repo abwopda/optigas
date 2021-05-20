@@ -27,17 +27,34 @@ class ActivateTankTest extends WebTestCase
         $router = $client->getContainer()->get("router");
 
         $crawler = $client->request(
-            Request::METHOD_GET,
-            $router->generate("tank.activate", ["id" => 1])
+            Request::METHOD_POST,
+            $router->generate("tank.activate", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
-            Request::METHOD_GET,
-            $router->generate("tank.disable", ["id" => 1])
+            Request::METHOD_POST,
+            $router->generate("tank.disable", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        for ($i = 1; $i <= 4; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_POST,
+                $router->generate("tank.activate", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+
+
+            $crawler = $client->request(
+                Request::METHOD_POST,
+                $router->generate("tank.disable", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        }
     }
 }

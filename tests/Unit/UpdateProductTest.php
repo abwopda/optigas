@@ -18,6 +18,12 @@ class UpdateProductTest extends TestCase
     {
         $useCase = new updateProduct(new ProductRepository());
 
-        $this->assertInstanceOf(Product::class, $useCase->execute(1));
+        for ($i = 1; $i <= 9; $i++) {
+            $entity = (new ProductRepository())
+                ->findOneById($i)
+                ->setName("PROD0" . $i)
+            ;
+            $this->assertInstanceOf(Product::class, $useCase->execute($entity));
+        }
     }
 }

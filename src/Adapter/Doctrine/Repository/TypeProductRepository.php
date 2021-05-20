@@ -19,7 +19,7 @@ class TypeProductRepository extends ServiceEntityRepository implements TypeProdu
         parent::__construct($registry, TypeProduct::class);
     }
 
-    public function findOneById(int $id): TypeProduct
+    public function findOneById(int $id): ?TypeProduct
     {
         return parent::find(["id" => $id]);
     }

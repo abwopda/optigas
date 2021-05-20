@@ -17,15 +17,17 @@ class ShowProductTest extends TestCase
     public function testSuccessfulProductShowed()
     {
         $useCase = new showProduct(new ProductRepository());
-
-        $this->assertInstanceOf(Product::class, $useCase->execute(1));
+        for ($i = 1; $i <= 9; $i++) {
+            $entity = (new ProductRepository())->findOneById($i);
+            $this->assertInstanceOf(Product::class, $useCase->execute($entity));
+        }
     }
 
     /**
      * @dataProvider provideBadProduct
-     * @param int $product
+     * @param Product|null $product
      */
-    public function testBadProduct(int $product)
+    public function testBadProduct(?Product $product)
     {
         $useCase = new showProduct(new ProductRepository());
 
@@ -38,7 +40,7 @@ class ShowProductTest extends TestCase
     public function provideBadProduct(): \Generator
     {
         yield [
-            20
+            (new ProductRepository())->findOneById(20)
         ];
     }
 }

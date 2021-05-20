@@ -31,8 +31,8 @@ class ShowProduct
      * @param Product $product
      * @return Product|null
      */
-    public function execute(int $product): ?Product
+    public function execute(?Product $product): ?Product
     {
-        return $this->productGateway->findOneById($product);
+        return $product;
     }
 }

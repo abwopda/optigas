@@ -25,16 +25,13 @@ class UpdateProductFamily
         $this->productfamilyGateway = $productfamilyGateway;
     }
 
-
     /**
-     * @param ProductFamily $productfamily
-     * @return ProductFamily
+     * @param ProductFamily|null $productfamily
+     * @return ProductFamily|null
      */
-    public function execute(int $productfamily): ProductFamily
+    public function execute(?ProductFamily $productfamily): ?ProductFamily
     {
-        $entity = $this->productfamilyGateway->findOneById($productfamily);
-
-        $this->productfamilyGateway->update($entity);
-        return $entity;
+        $this->productfamilyGateway->update($productfamily);
+        return $productfamily;
     }
 }

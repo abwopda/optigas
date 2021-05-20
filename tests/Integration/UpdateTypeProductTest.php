@@ -3,7 +3,6 @@
 namespace App\Tests\Integration;
 
 use App\Tests\AuthenticationTrait;
-use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,20 +27,36 @@ class UpdateTypeProductTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("typeproduct.edit", ["id" => 1])
+            $router->generate("typeproduct.edit", ["id" => 5])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        $form = $crawler->filter("form")->form([
-            "type_product[code]" => "00",
-            "type_product[name]" => "Confiserie Beta",
-            "type_product[description]" => "Confitures et autres alpha",
-        ]);
+        $crawler = $client->request(
+            Request::METHOD_GET,
+            $router->generate("typeproduct.update", ["id" => 5])
+        );
 
-        $client->submit($form);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        for ($i = 1; $i <= 3; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_GET,
+                $router->generate("typeproduct.edit", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+
+            $form = $crawler->filter("form")->form([
+                "type_product[code]" => "00" . $i,
+                "type_product[name]" => "Confiserie Beta" . $i,
+                "type_product[description]" => "Confitures et autres alpha" . $i,
+            ]);
+
+            $client->submit($form);
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        }
     }
 
     /**

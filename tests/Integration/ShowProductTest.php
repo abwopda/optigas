@@ -27,9 +27,17 @@ class ShowProductTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("product.show", ["id" => 1])
+            $router->generate("product.show", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+        for ($i = 1; $i <= 3; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_GET,
+                $router->generate("product.show", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        }
     }
 }

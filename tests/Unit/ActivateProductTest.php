@@ -17,16 +17,12 @@ class ActivateProductTest extends TestCase
     public function testSuccessfulProductActivated()
     {
         $useCase = new activateProduct(new ProductRepository());
-        $tank = $useCase->execute(1, 1);
+        for ($i = 1; $i <= 9; $i++) {
+            $entity = (new ProductRepository())->findOneById($i);
 
-        //var_export($tank);
+            $this->assertInstanceOf(Product::class, $useCase->execute($entity, 1));
 
-        $this->assertInstanceOf(Product::class, $tank);
-
-        $tank = $useCase->execute(1, 0);
-
-        //var_export($tank);
-
-        $this->assertInstanceOf(Product::class, $tank);
+            $this->assertInstanceOf(Product::class, $useCase->execute($entity, 0));
+        }
     }
 }

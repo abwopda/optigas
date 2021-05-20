@@ -72,7 +72,14 @@ class ProductController extends AbstractController
 
     public function new(int $productfamily)
     {
-        $entity = new Product($this->productfamilyGateway->findOneById($productfamily));
+        $entity = $this->productfamilyGateway->findOneById($productfamily);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $productfamily);
+        }
+
+        $entity = new Product($entity);
+
         $form = $this->createForm(ProductType::class, $entity);
 
         return $this->render('ui/product/new.html.twig', [
@@ -87,7 +94,13 @@ class ProductController extends AbstractController
      */
     public function create(int $productfamily, Request $request): Response
     {
-        $entity = new Product($this->productfamilyGateway->findOneById($productfamily));
+        $entity = $this->productfamilyGateway->findOneById($productfamily);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $productfamily);
+        }
+
+        $entity = new Product($entity);
 
         $user =  $this->security->getUser();
 
@@ -99,7 +112,7 @@ class ProductController extends AbstractController
             $this->createProduct->execute($entity);
 
             $this->addFlash('success', "Produit créé avec succès");
-            return $this->redirectToRoute("product.show", ["id" => 1]);
+            return $this->redirectToRoute("product.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -144,10 +157,10 @@ class ProductController extends AbstractController
         $form = $this->createForm(ProductType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updateProduct->execute($id);
+            $this->updateProduct->execute($entity);
 
             $this->addFlash('success', "Produit mise à jour avec succès");
-            return $this->redirectToRoute("product.show", ["id" => 2]);
+            return $this->redirectToRoute("product.show", ["id" => $id]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -189,12 +202,12 @@ class ProductController extends AbstractController
 
         $this->__activate($entity, 1);
 
-        $this->activateProduct->execute($id, 1);
+        $this->activateProduct->execute($entity, 1);
 
         //var_export($entity);
 
         $this->addFlash('success', "Produit activé avec succès");
-        return $this->redirectToRoute("product.show", ["id" => 1]);
+        return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
     public function disable(int $id, Request $request)
@@ -207,10 +220,10 @@ class ProductController extends AbstractController
 
         $this->__activate($entity, 0);
 
-        $this->activateProduct->execute($id, 0);
+        $this->activateProduct->execute($entity, 0);
 
         $this->addFlash('success', "Produit désactivé avec succès");
-        return $this->redirectToRoute("product.show", ["id" => 1]);
+        return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
     public function __validate($entity, $status)
@@ -231,12 +244,12 @@ class ProductController extends AbstractController
 
         $this->__validate($entity, 1);
 
-        $this->validateProduct->execute($id, 1);
+        $this->validateProduct->execute($entity, 1);
 
         //var_export($entity);
 
         $this->addFlash('success', "Produit validé avec succès");
-        return $this->redirectToRoute("product.show", ["id" => 1]);
+        return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
     public function invalidate(int $id, Request $request)
@@ -249,9 +262,9 @@ class ProductController extends AbstractController
 
         $this->__validate($entity, 0);
 
-        $this->validateProduct->execute($id, 0);
+        $this->validateProduct->execute($entity, 0);
 
         $this->addFlash('success', "Produit invalidé avec succès");
-        return $this->redirectToRoute("product.show", ["id" => 1]);
+        return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 }

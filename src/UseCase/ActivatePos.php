@@ -28,15 +28,14 @@ class ActivatePos
 
 
     /**
-     * @param Pos $pos
-     * @return Pos
+     * @param Pos|null $pos
+     * @param bool $status
+     * @return Pos|null
      */
-    public function execute(int $pos, bool $status): Pos
+    public function execute(?Pos $pos, bool $status): ?Pos
     {
-        $p = $this->posGateway->findOneById($pos);
+        $this->posGateway->activate($pos, $status);
 
-        $this->posGateway->activate($p, $status);
-
-        return $p;
+        return $pos;
     }
 }

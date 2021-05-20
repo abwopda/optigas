@@ -72,7 +72,14 @@ class ProductFamilyController extends AbstractController
 
     public function new(int $typeproduct)
     {
-        $entity = new ProductFamily($this->typeproductGateway->findOneById($typeproduct));
+        $entity = $this->typeproductGateway->findOneById($typeproduct);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver le type de produit d'id  " . $typeproduct);
+        }
+
+        $entity = new ProductFamily($entity);
+
         $form = $this->createForm(ProductFamilyType::class, $entity);
 
         return $this->render('ui/productfamily/new.html.twig', [
@@ -87,7 +94,13 @@ class ProductFamilyController extends AbstractController
      */
     public function create(int $typeproduct, Request $request): Response
     {
-        $entity = new ProductFamily($this->typeproductGateway->findOneById($typeproduct));
+        $entity = $this->typeproductGateway->findOneById($typeproduct);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver le type de produit d'id  " . $typeproduct);
+        }
+
+        $entity = new ProductFamily($entity);
 
         $user =  $this->security->getUser();
 
@@ -99,7 +112,7 @@ class ProductFamilyController extends AbstractController
             $this->createProductFamily->execute($entity);
 
             $this->addFlash('success', "Famille créée avec succès");
-            return $this->redirectToRoute("productfamily.show", ["id" => 1]);
+            return $this->redirectToRoute("productfamily.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -144,10 +157,10 @@ class ProductFamilyController extends AbstractController
         $form = $this->createForm(ProductFamilyType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updateProductFamily->execute($id);
+            $this->updateProductFamily->execute($entity);
 
             $this->addFlash('success', "Famille mise à jour avec succès");
-            return $this->redirectToRoute("productfamily.show", ["id" => 2]);
+            return $this->redirectToRoute("productfamily.show", ["id" => $id]);
         }
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
@@ -189,12 +202,12 @@ class ProductFamilyController extends AbstractController
 
         $this->__activate($entity, 1);
 
-        $this->activateProductFamily->execute($id, 1);
+        $this->activateProductFamily->execute($entity, 1);
 
         //var_export($entity);
 
         $this->addFlash('success', "Famille activée avec succès");
-        return $this->redirectToRoute("productfamily.show", ["id" => 1]);
+        return $this->redirectToRoute("productfamily.show", ["id" => $id]);
     }
 
     public function disable(int $id, Request $request)
@@ -207,10 +220,10 @@ class ProductFamilyController extends AbstractController
 
         $this->__activate($entity, 0);
 
-        $this->activateProductFamily->execute($id, 0);
+        $this->activateProductFamily->execute($entity, 0);
 
         $this->addFlash('success', "Famille désactivée avec succès");
-        return $this->redirectToRoute("productfamily.show", ["id" => 1]);
+        return $this->redirectToRoute("productfamily.show", ["id" => $id]);
     }
 
     public function __validate($entity, $status)
@@ -231,12 +244,12 @@ class ProductFamilyController extends AbstractController
 
         $this->__validate($entity, 1);
 
-        $this->validateProductFamily->execute($id, 1);
+        $this->validateProductFamily->execute($entity, 1);
 
         //var_export($entity);
 
         $this->addFlash('success', "Famille validée avec succès");
-        return $this->redirectToRoute("productfamily.show", ["id" => 1]);
+        return $this->redirectToRoute("productfamily.show", ["id" => $id]);
     }
 
     public function invalidate(int $id, Request $request)
@@ -249,9 +262,9 @@ class ProductFamilyController extends AbstractController
 
         $this->__validate($entity, 0);
 
-        $this->validateProductFamily->execute($id, 0);
+        $this->validateProductFamily->execute($entity, 0);
 
         $this->addFlash('success', "Famille invalidée avec succès");
-        return $this->redirectToRoute("productfamily.show", ["id" => 1]);
+        return $this->redirectToRoute("productfamily.show", ["id" => $id]);
     }
 }

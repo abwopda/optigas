@@ -2,11 +2,7 @@
 
 namespace App\Tests\Integration;
 
-use App\Adapter\InMemory\Repository\TypeProductRepository;
-use App\Entity\TypeProduct;
-use App\UseCase\UpdateTypeProduct;
 use App\Tests\AuthenticationTrait;
-use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,17 +26,34 @@ class ActivateTypeProductTest extends WebTestCase
         $router = $client->getContainer()->get("router");
 
         $crawler = $client->request(
-            Request::METHOD_GET,
-            $router->generate("typeproduct.activate", ["id" => 1])
+            Request::METHOD_POST,
+            $router->generate("typeproduct.activate", ["id" => 10])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
-            Request::METHOD_GET,
-            $router->generate("typeproduct.disable", ["id" => 1])
+            Request::METHOD_POST,
+            $router->generate("typeproduct.disable", ["id" => 10])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        for ($i = 1; $i <= 3; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_POST,
+                $router->generate("typeproduct.activate", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+
+
+            $crawler = $client->request(
+                Request::METHOD_POST,
+                $router->generate("typeproduct.disable", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        }
     }
 }

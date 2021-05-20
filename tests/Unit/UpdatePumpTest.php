@@ -5,7 +5,6 @@ namespace App\Tests\Unit;
 use App\Adapter\InMemory\Repository\PumpRepository;
 use App\Entity\Pump;
 use App\UseCase\UpdatePump;
-use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,6 +17,12 @@ class UpdatePumpTest extends TestCase
     {
         $useCase = new updatePump(new PumpRepository());
 
-        $this->assertInstanceOf(Pump::class, $useCase->execute(1));
+        for ($i = 1; $i <= 11; $i++) {
+            $entity = (new PumpRepository())
+                ->findOneById($i)
+                ->setName("PUMP0" . $i)
+            ;
+            $this->assertInstanceOf(Pump::class, $useCase->execute($entity));
+        }
     }
 }

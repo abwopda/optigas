@@ -5,7 +5,6 @@ namespace App\Tests\Unit;
 use App\Adapter\InMemory\Repository\PumpRepository;
 use App\Entity\Pump;
 use App\UseCase\showPump;
-use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,15 +16,17 @@ class ShowPumpTest extends TestCase
     public function testSuccessfulPumpShowed()
     {
         $useCase = new showPump(new PumpRepository());
-
-        $this->assertInstanceOf(Pump::class, $useCase->execute(1));
+        for ($i = 1; $i <= 11; $i++) {
+            $entity = (new PumpRepository())->findOneById($i);
+            $this->assertInstanceOf(Pump::class, $useCase->execute($entity));
+        }
     }
 
     /**
      * @dataProvider provideBadPump
-     * @param int $pump
+     * @param Pump|null $pump
      */
-    public function testBadPump(int $pump)
+    public function testBadPump(?Pump $pump)
     {
         $useCase = new showPump(new PumpRepository());
 
@@ -38,7 +39,7 @@ class ShowPumpTest extends TestCase
     public function provideBadPump(): \Generator
     {
         yield [
-            20
+            (new PumpRepository())->findOneById(50)
         ];
     }
 }

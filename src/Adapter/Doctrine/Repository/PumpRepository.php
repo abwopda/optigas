@@ -19,7 +19,7 @@ class PumpRepository extends ServiceEntityRepository implements PumpGateway
         parent::__construct($registry, Pump::class);
     }
 
-    public function findOneById(int $id): Pump
+    public function findOneById(int $id): ?Pump
     {
         return parent::find(["id" => $id]);
     }

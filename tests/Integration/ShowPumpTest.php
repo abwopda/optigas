@@ -27,9 +27,18 @@ class ShowPumpTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_GET,
-            $router->generate("pump.show", ["id" => 1])
+            $router->generate("pump.show", ["id" => 50])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        for ($i = 1; $i <= 11; $i++) {
+            $crawler = $client->request(
+                Request::METHOD_GET,
+                $router->generate("pump.show", ["id" => $i])
+            );
+
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        }
     }
 }
