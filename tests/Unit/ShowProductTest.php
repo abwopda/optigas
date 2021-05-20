@@ -17,6 +17,7 @@ class ShowProductTest extends TestCase
     public function testSuccessfulProductShowed()
     {
         $useCase = new showProduct(new ProductRepository());
+
         for ($i = 1; $i <= 9; $i++) {
             $entity = (new ProductRepository())->findOneById($i);
             $this->assertInstanceOf(Product::class, $useCase->execute($entity));

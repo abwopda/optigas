@@ -18,7 +18,6 @@ class ProductRepository extends ServiceEntityRepository implements ProductGatewa
     {
         parent::__construct($registry, Product::class);
     }
-
     public function findOneById(int $id): ?Product
     {
         return parent::find(["id" => $id]);
