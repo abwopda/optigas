@@ -27,22 +27,22 @@ class TypeProductRepository implements TypeProductGateway
             ->setLastName("Doe")
             ->setEmail("employee@email.com")
         ;
-        $p = (new TypeProduct())
+
+        $entity = (new TypeProduct())
             ->setCode("01")
             ->setName("Carburant")
             ->setDescription("Produits inflammable: Super, Gasoil, Petrole, ...")
             ->setCreateBy($employee)
-
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 1);
+        $reflectionProperty->setValue($entity, 1);
 
-        $this->typeproduct[1] = $p;
+        $this->typeproduct[1] = $entity;
 
-        $p = (new TypeProduct())
+        $entity = (new TypeProduct())
             ->setCode("02")
             ->setName("Lubrifiant")
             ->setDescription("Produits pour la lubrification des pièces en mouvement")
@@ -52,14 +52,14 @@ class TypeProductRepository implements TypeProductGateway
             ->setActivateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 2);
+        $reflectionProperty->setValue($entity, 2);
 
-        $this->typeproduct[2] =  $p;
+        $this->typeproduct[2] =  $entity;
 
-        $p = (new TypeProduct())
+        $entity = (new TypeProduct())
             ->setCode("03")
             ->setName("Divers")
             ->setDescription("Autres produits pour la maintenance")
@@ -69,12 +69,12 @@ class TypeProductRepository implements TypeProductGateway
             ->setValidateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 3);
+        $reflectionProperty->setValue($entity, 3);
 
-        $this->typeproduct[3] =  $p;
+        $this->typeproduct[3] =  $entity;
     }
 
     /**
@@ -118,10 +118,10 @@ class TypeProductRepository implements TypeProductGateway
      */
     public function activate(TypeProduct $typeproduct, bool $status): void
     {
-        $this->typeproduct[1]
+        $typeproduct
             ->setActive($status)
             ->setActivateAt(new \DateTimeImmutable())
-            ->setActivateBy($this->typeproduct[1]->getCreateBy())
+            ->setActivateBy($typeproduct->getCreateBy())
         ;
     }
 
@@ -131,10 +131,10 @@ class TypeProductRepository implements TypeProductGateway
      */
     public function validate(TypeProduct $typeproduct, bool $status): void
     {
-        $this->typeproduct[1]
+        $typeproduct
             ->setValid($status)
             ->setValidateAt(new \DateTimeImmutable())
-            ->setValidateBy($this->typeproduct[1]->getCreateBy())
+            ->setValidateBy($typeproduct->getCreateBy())
         ;
     }
 }

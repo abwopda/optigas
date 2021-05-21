@@ -184,14 +184,6 @@ class ProductFamilyController extends AbstractController
         ]);
     }
 
-    public function __activate($entity, $status)
-    {
-        $entity->setActive($status);
-        $user =  $this->security->getUser();
-        $entity->setActivateBy($user);
-        $entity->setActivateAt(new \DateTimeImmutable());
-    }
-
     public function activate(int $id, Request $request)
     {
         $entity = $this->productfamilyGateway->findOneById($id);
@@ -200,11 +192,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->__activate($entity, 1);
-
-        $this->activateProductFamily->execute($entity, 1);
-
-        //var_export($entity);
+        $this->activateProductFamily->execute($entity, true);
 
         $this->addFlash('success', "Famille activée avec succès");
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
@@ -218,20 +206,10 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->__activate($entity, 0);
-
-        $this->activateProductFamily->execute($entity, 0);
+        $this->activateProductFamily->execute($entity, false);
 
         $this->addFlash('success', "Famille désactivée avec succès");
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
-    }
-
-    public function __validate($entity, $status)
-    {
-        $entity->setValid($status);
-        $user =  $this->security->getUser();
-        $entity->setValidateBy($user);
-        $entity->setValidateAt(new \DateTimeImmutable());
     }
 
     public function validate(int $id, Request $request)
@@ -242,11 +220,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->__validate($entity, 1);
-
-        $this->validateProductFamily->execute($entity, 1);
-
-        //var_export($entity);
+        $this->validateProductFamily->execute($entity, true);
 
         $this->addFlash('success', "Famille validée avec succès");
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
@@ -260,9 +234,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->__validate($entity, 0);
-
-        $this->validateProductFamily->execute($entity, 0);
+        $this->validateProductFamily->execute($entity, false);
 
         $this->addFlash('success', "Famille invalidée avec succès");
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);

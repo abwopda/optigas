@@ -85,10 +85,6 @@ class PosController extends AbstractController
     {
         $entity = new Pos();
 
-        $user =  $this->security->getUser();
-
-        $entity->setCreateBy($user);
-
         $form = $this->createForm(PosType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -132,13 +128,6 @@ class PosController extends AbstractController
             throw $this->createNotFoundException('Impossible de trouver le point de vente d"id' . $id);
         }
 
-        $user =  $this->security->getUser();
-
-        $entity
-            ->setUpdateBy($user)
-            ->setUpdateAt(new \DateTimeImmutable())
-        ;
-
         $form = $this->createForm(PosType::class, $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -168,13 +157,6 @@ class PosController extends AbstractController
             "entity"      => $entity,
         ]);
     }
-    public function __activate($entity, $status)
-    {
-        $entity->setActive($status);
-        $user =  $this->security->getUser();
-        $entity->setActivateBy($user);
-        $entity->setActivateAt(new \DateTimeImmutable());
-    }
 
     public function activate(int $id, Request $request)
     {
@@ -184,9 +166,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->__activate($entity, 1);
-
-        $this->activatePos->execute($entity, 1);
+        $this->activatePos->execute($entity, true);
 
         $this->addFlash('success', "Point de vente activé avec succès");
         return $this->redirectToRoute("pos.show", ["id" => $id]);
@@ -200,20 +180,10 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->__activate($entity, 0);
-
-        $this->activatePos->execute($entity, 0);
+        $this->activatePos->execute($entity, false);
 
         $this->addFlash('success', "Point de vente désactivé avec succès");
         return $this->redirectToRoute("pos.show", ["id" => $id]);
-    }
-
-    public function __validate($entity, $status)
-    {
-        $entity->setValid($status);
-        $user =  $this->security->getUser();
-        $entity->setValidateBy($user);
-        $entity->setValidateAt(new \DateTimeImmutable());
     }
 
     public function validate(int $id, Request $request)
@@ -224,9 +194,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->__validate($entity, 1);
-
-        $this->validatePos->execute($entity, 1);
+        $this->validatePos->execute($entity, true);
 
         $this->addFlash('success', "Point de vente validé avec succès");
         return $this->redirectToRoute("pos.show", ["id" => $id]);
@@ -240,9 +208,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->__validate($entity, 0);
-
-        $this->validatePos->execute($entity, 0);
+        $this->validatePos->execute($entity, false);
 
         $this->addFlash('success', "Point de vente invalidé avec succès");
         return $this->redirectToRoute("pos.show", ["id" => $id]);

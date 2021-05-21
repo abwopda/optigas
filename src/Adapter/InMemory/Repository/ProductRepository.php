@@ -33,22 +33,21 @@ class ProductRepository implements ProductGateway
 
         $this->productfamily = new ProductFamilyRepository();
 
-        $p = (new Product($this->productfamily->findOneById(1)))
+        $entity = (new Product($this->productfamily->findOneById(1)))
             ->setCode("CAR01")
             ->setName("Super")
             ->setDescription("Produits inflammable")
             ->setCreateBy($employee)
-
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 1);
+        $reflectionProperty->setValue($entity, 1);
 
-        $this->product[1] = $p;
+        $this->product[1] = $entity;
 
-        $p = (new Product($this->productfamily->findOneById(1)))
+        $entity = (new Product($this->productfamily->findOneById(1)))
             ->setCode("CAR02")
             ->setName("Gasoil")
             ->setDescription("Produits inflammable")
@@ -56,29 +55,28 @@ class ProductRepository implements ProductGateway
 
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 2);
+        $reflectionProperty->setValue($entity, 2);
 
-        $this->product[2] = $p;
+        $this->product[2] = $entity;
 
-        $p = (new Product($this->productfamily->findOneById(1)))
+        $entity = (new Product($this->productfamily->findOneById(1)))
             ->setCode("CAR03")
             ->setName("Petrole")
             ->setDescription("Produits inflammable")
             ->setCreateBy($employee)
-
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 3);
+        $reflectionProperty->setValue($entity, 3);
 
-        $this->product[3] = $p;
+        $this->product[3] = $entity;
 
-        $p = (new Product($this->productfamily->findOneById(2)))
+        $entity = (new Product($this->productfamily->findOneById(2)))
             ->setCode("LUB01")
             ->setName("Huile 40")
             ->setDescription("Huiles")
@@ -88,14 +86,14 @@ class ProductRepository implements ProductGateway
             ->setActivateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 4);
+        $reflectionProperty->setValue($entity, 4);
 
-        $this->product[4] =  $p;
+        $this->product[4] =  $entity;
 
-        $p = (new Product($this->productfamily->findOneById(2)))
+        $entity = (new Product($this->productfamily->findOneById(2)))
             ->setCode("LUB02")
             ->setName("Huile 15W40")
             ->setDescription("Huiles")
@@ -105,14 +103,14 @@ class ProductRepository implements ProductGateway
             ->setActivateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 5);
+        $reflectionProperty->setValue($entity, 5);
 
-        $this->product[5] =  $p;
+        $this->product[5] =  $entity;
 
-        $p = (new Product($this->productfamily->findOneById(2)))
+        $entity = (new Product($this->productfamily->findOneById(2)))
             ->setCode("LUB03")
             ->setName("Huile 20W40")
             ->setDescription("Huiles")
@@ -122,14 +120,14 @@ class ProductRepository implements ProductGateway
             ->setActivateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 6);
+        $reflectionProperty->setValue($entity, 6);
 
-        $this->product[6] =  $p;
+        $this->product[6] =  $entity;
 
-        $p = (new Product($this->productfamily->findOneById(3)))
+        $entity = (new Product($this->productfamily->findOneById(3)))
             ->setCode("GRA01")
             ->setName("Multifack")
             ->setDescription("Graisses")
@@ -139,14 +137,14 @@ class ProductRepository implements ProductGateway
             ->setValidateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 7);
+        $reflectionProperty->setValue($entity, 7);
 
-        $this->product[7] =  $p;
+        $this->product[7] =  $entity;
 
-        $p = (new Product($this->productfamily->findOneById(4)))
+        $entity = (new Product($this->productfamily->findOneById(4)))
             ->setCode("FIL01")
             ->setName("Filtre Merceds 190")
             ->setDescription("Filtres")
@@ -156,14 +154,14 @@ class ProductRepository implements ProductGateway
             ->setValidateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 8);
+        $reflectionProperty->setValue($entity, 8);
 
-        $this->product[8] =  $p;
+        $this->product[8] =  $entity;
 
-        $p = (new Product($this->productfamily->findOneById(5)))
+        $entity = (new Product($this->productfamily->findOneById(5)))
             ->setCode("DET01")
             ->setName("Lave glace")
             ->setDescription("Detergents")
@@ -173,12 +171,12 @@ class ProductRepository implements ProductGateway
             ->setValidateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 9);
+        $reflectionProperty->setValue($entity, 9);
 
-        $this->product[9] =  $p;
+        $this->product[9] =  $entity;
     }
 
     /**
@@ -222,10 +220,10 @@ class ProductRepository implements ProductGateway
      */
     public function activate(Product $product, bool $status): void
     {
-        $this->product[1]
+        $product
             ->setActive($status)
             ->setActivateAt(new \DateTimeImmutable())
-            ->setActivateBy($this->product[1]->getCreateBy())
+            ->setActivateBy($product->getCreateBy())
         ;
     }
 
@@ -235,10 +233,10 @@ class ProductRepository implements ProductGateway
      */
     public function validate(Product $product, bool $status): void
     {
-        $this->product[1]
+        $product
             ->setValid($status)
             ->setValidateAt(new \DateTimeImmutable())
-            ->setValidateBy($this->product[1]->getCreateBy())
+            ->setValidateBy($product->getCreateBy())
         ;
     }
 }

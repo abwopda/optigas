@@ -129,10 +129,10 @@ class PosRepository implements PosGateway
      */
     public function activate(Pos $pos, bool $status): void
     {
-        $this->pos[1]
+        $pos
             ->setActive($status)
             ->setActivateAt(new \DateTimeImmutable())
-            ->setActivateBy($this->pos[1]->getCreateBy())
+            ->setActivateBy($pos->getCreateBy())
         ;
     }
 
@@ -142,7 +142,7 @@ class PosRepository implements PosGateway
      */
     public function validate(Pos $pos, bool $status): void
     {
-        $this->pos[1]
+        $pos
             ->setValid($status)
             ->setValidateAt(new \DateTimeImmutable())
             ->setValidateBy($this->pos[1]->getCreateBy())

@@ -24,12 +24,14 @@
                             <a class="btn btn-primary btn-xs"  data-toggle="tooltip" data-placement="top" title="afficher" href="{{ path('typeproduct.show', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-search"></span></a>
                             <a class="btn btn-danger btn-xs"  data-toggle="tooltip" data-placement="top" title="modifier" href="{{ path('typeproduct.edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
                             {% if entity.active %}
-                                <span data-toggle="tooltip"  title="activé {{ entity.activateBy  is null ? '' :'par ' ~ entity.activateBy.username     ~ ' le '  ~ (entity.activateAt| date('d/m/Y H:i:s') )}}" class="glyphicon glyphicon-thumbs-up">
+                                <span data-toggle="tooltip"  title="activé {{ entity.activateBy  is null ? '' :'par ' ~ entity.activateBy.username     ~ ' le '  ~ (entity.activateAt| date('d/m/Y H:i:s') )}}" class="glyphicon glyphicon-thumbs-up"></span>
                             {% else %}
-                                <span data-toggle="tooltip"  title="désactivé {{ entity.activateBy  is null ? '' :'par ' ~ entity.activateBy.username     ~ ' le '  ~ (entity.activateAt| date('d/m/Y H:i:s') )}} " class="glyphicon glyphicon-thumbs-down">
+                                <span data-toggle="tooltip"  title="désactivé {{ entity.activateBy  is null ? '' :'par ' ~ entity.activateBy.username     ~ ' le '  ~ (entity.activateAt| date('d/m/Y H:i:s') )}} " class="glyphicon glyphicon-thumbs-down"></span>
                             {% endif %}
                             {% if entity.valid %}
-                                </span><span data-toggle="tooltip" title="validé {{ entity.validateBy  is null ? '' :'par ' ~ entity.validateBy.username     ~ ' le '  ~ (entity.validateAt| date('d/m/Y H:i:s') )}}" class="glyphicon glyphicon-ok-circle"></span>
+                                <span data-toggle="tooltip" title="validé {{ entity.validateBy  is null ? '' :'par ' ~ entity.validateBy.username     ~ ' le '  ~ (entity.validateAt| date('d/m/Y H:i:s') )}}" class="glyphicon glyphicon-ok-circle"></span>
+                            {% else %}
+                                <span data-toggle="tooltip"  title="invalidé {{ entity.validateBy  is null ? '' :'par ' ~ entity.validateBy.username     ~ ' le '  ~ (entity.validateAt| date('d/m/Y H:i:s') )}} " class="glyphicon glyphicon-minus-sign"></span>
                             {% endif %}
                         </div>
                     </td>

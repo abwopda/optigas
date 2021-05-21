@@ -182,14 +182,6 @@ class TankController extends AbstractController
         ]);
     }
 
-    public function __activate($entity, $status)
-    {
-        $entity->setActive($status);
-        $user =  $this->security->getUser();
-        $entity->setActivateBy($user);
-        $entity->setActivateAt(new \DateTimeImmutable());
-    }
-
     public function activate(int $id, Request $request)
     {
         $entity = $this->tankGateway->findOneById($id);
@@ -198,11 +190,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->__activate($entity, 1);
-
-        $this->activateTank->execute($entity, 1);
-
-        //var_export($entity);
+        $this->activateTank->execute($entity, true);
 
         $this->addFlash('success', "Cuve activée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);
@@ -216,20 +204,10 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->__activate($entity, 0);
-
-        $this->activateTank->execute($entity, 0);
+        $this->activateTank->execute($entity, false);
 
         $this->addFlash('success', "Cuve désactivée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);
-    }
-
-    public function __validate($entity, $status)
-    {
-        $entity->setValid($status);
-        $user =  $this->security->getUser();
-        $entity->setValidateBy($user);
-        $entity->setValidateAt(new \DateTimeImmutable());
     }
 
     public function validate(int $id, Request $request)
@@ -240,11 +218,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->__validate($entity, 1);
-
-        $this->validateTank->execute($entity, 1);
-
-        //var_export($entity);
+        $this->validateTank->execute($entity, true);
 
         $this->addFlash('success', "Cuve validée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);
@@ -258,9 +232,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->__validate($entity, 0);
-
-        $this->validateTank->execute($entity, 0);
+        $this->validateTank->execute($entity, false);
 
         $this->addFlash('success', "Cuve invalidée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);

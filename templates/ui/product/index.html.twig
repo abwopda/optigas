@@ -32,6 +32,8 @@
                             {% endif %}
                             {% if entity.valid %}
                                 <span data-toggle="tooltip" title="validé {{ entity.validateBy  is null ? '' :'par ' ~ entity.validateBy.username     ~ ' le '  ~ (entity.validateAt| date('d/m/Y H:i:s') )}}" class="glyphicon glyphicon-ok-circle"></span>
+                            {% else %}
+                                <span data-toggle="tooltip"  title="invalidé {{ entity.validateBy  is null ? '' :'par ' ~ entity.validateBy.username     ~ ' le '  ~ (entity.validateAt| date('d/m/Y H:i:s') )}} " class="glyphicon glyphicon-minus-sign"></span>
                             {% endif %}
                         </div>
                     </td>

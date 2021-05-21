@@ -7,16 +7,16 @@
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ path('pump.edit', { 'id': 1 }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>
+            <li><a href="{{ path('pump.edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>
             {% if entity.active %}
-                <li><a href="{{ path('pump.disable', { 'id': 1 }) }}"><span class="glyphicon glyphicon-thumbs-down"></span> Desactiver </a></li>
+                <li><a href="{{ path('pump.disable', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-thumbs-down"></span> Desactiver </a></li>
             {% else %}
-                <li><a href="{{ path('pump.activate', { 'id': 1 }) }}"><span class="glyphicon glyphicon-thumbs-up"></span> Activer </a></li>
+                <li><a href="{{ path('pump.activate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-thumbs-up"></span> Activer </a></li>
             {% endif %}
             {% if entity.valid %}
-                <li><a href="{{ path('pump.invalidate', { 'id': 1 }) }}"><span class="glyphicon glyphicon-remove-sign"></span> Valider </a></li>
+                <li><a href="{{ path('pump.invalidate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-remove-sign"></span> Valider </a></li>
             {% else %}
-                <li><a href="{{ path('pump.validate', { 'id': 1 }) }}"><span class="glyphicon glyphicon-ok-sign"></span> Invalider </a></li>
+                <li><a href="{{ path('pump.validate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-ok-sign"></span> Invalider </a></li>
             {% endif %}
         </ul>
     </div>

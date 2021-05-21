@@ -20,9 +20,9 @@ class ValidateTankTest extends TestCase
         for ($i = 1; $i <= 3; $i++) {
             $entity = (new TankRepository())->findOneById($i);
 
-            $this->assertInstanceOf(Tank::class, $useCase->execute($entity, 1));
+            $this->assertInstanceOf(Tank::class, $useCase->execute($entity, true));
 
-            $this->assertInstanceOf(Tank::class, $useCase->execute($entity, 0));
+            $this->assertInstanceOf(Tank::class, $useCase->execute($entity, false));
         }
     }
 }

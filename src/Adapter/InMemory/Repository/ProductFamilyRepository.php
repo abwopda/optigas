@@ -33,7 +33,7 @@ class ProductFamilyRepository implements ProductFamilyGateway
 
         $this->typeproduct = new TypeProductRepository();
 
-        $p = (new ProductFamily($this->typeproduct->findOneById(1)))
+        $entity = (new ProductFamily($this->typeproduct->findOneById(1)))
             ->setCode("CAR")
             ->setName("Carburant")
             ->setDescription("Produits inflammable: Super, Gasoil, Petrole, ...")
@@ -41,14 +41,14 @@ class ProductFamilyRepository implements ProductFamilyGateway
 
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 1);
+        $reflectionProperty->setValue($entity, 1);
 
-        $this->productfamily[1] = $p;
+        $this->productfamily[1] = $entity;
 
-        $p = (new ProductFamily($this->typeproduct->findOneById(2)))
+        $entity = (new ProductFamily($this->typeproduct->findOneById(2)))
             ->setCode("LUB")
             ->setName("Lubrifiant")
             ->setDescription("Huiles")
@@ -58,14 +58,14 @@ class ProductFamilyRepository implements ProductFamilyGateway
             ->setActivateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 2);
+        $reflectionProperty->setValue($entity, 2);
 
-        $this->productfamily[2] =  $p;
+        $this->productfamily[2] =  $entity;
 
-        $p = (new ProductFamily($this->typeproduct->findOneById(2)))
+        $entity = (new ProductFamily($this->typeproduct->findOneById(2)))
             ->setCode("GRA")
             ->setName("Graisse")
             ->setDescription("Graisses")
@@ -75,14 +75,14 @@ class ProductFamilyRepository implements ProductFamilyGateway
             ->setValidateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 3);
+        $reflectionProperty->setValue($entity, 3);
 
-        $this->productfamily[3] =  $p;
+        $this->productfamily[3] =  $entity;
 
-        $p = (new ProductFamily($this->typeproduct->findOneById(3)))
+        $entity = (new ProductFamily($this->typeproduct->findOneById(3)))
             ->setCode("FIL")
             ->setName("Filtre")
             ->setDescription("Filtres")
@@ -92,14 +92,14 @@ class ProductFamilyRepository implements ProductFamilyGateway
             ->setValidateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 4);
+        $reflectionProperty->setValue($entity, 4);
 
-        $this->productfamily[4] =  $p;
+        $this->productfamily[4] =  $entity;
 
-        $p = (new ProductFamily($this->typeproduct->findOneById(3)))
+        $entity = (new ProductFamily($this->typeproduct->findOneById(3)))
             ->setCode("DET")
             ->setName("Detergent")
             ->setDescription("Detergents")
@@ -109,12 +109,12 @@ class ProductFamilyRepository implements ProductFamilyGateway
             ->setValidateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 5);
+        $reflectionProperty->setValue($entity, 5);
 
-        $this->productfamily[5] =  $p;
+        $this->productfamily[5] =  $entity;
     }
 
     /**
@@ -158,10 +158,10 @@ class ProductFamilyRepository implements ProductFamilyGateway
      */
     public function activate(ProductFamily $productfamily, bool $status): void
     {
-        $this->productfamily[1]
+        $productfamily
             ->setActive($status)
             ->setActivateAt(new \DateTimeImmutable())
-            ->setActivateBy($this->productfamily[1]->getCreateBy())
+            ->setActivateBy($productfamily->getCreateBy())
         ;
     }
 
@@ -171,10 +171,10 @@ class ProductFamilyRepository implements ProductFamilyGateway
      */
     public function validate(ProductFamily $productfamily, bool $status): void
     {
-        $this->productfamily[1]
+        $productfamily
             ->setValid($status)
             ->setValidateAt(new \DateTimeImmutable())
-            ->setValidateBy($this->productfamily[1]->getCreateBy())
+            ->setValidateBy($productfamily->getCreateBy())
         ;
     }
 }
