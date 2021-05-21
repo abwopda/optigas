@@ -20,9 +20,9 @@ class ValidateProductTest extends TestCase
         for ($i = 1; $i <= 9; $i++) {
             $entity = (new ProductRepository())->findOneById($i);
 
-            $this->assertInstanceOf(Product::class, $useCase->execute($entity, 1));
+            $this->assertInstanceOf(Product::class, $useCase->execute($entity, true));
 
-            $this->assertInstanceOf(Product::class, $useCase->execute($entity, 0));
+            $this->assertInstanceOf(Product::class, $useCase->execute($entity, false));
         }
     }
 }

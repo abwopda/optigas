@@ -19,9 +19,9 @@ class ActivateTypeProductTest extends TestCase
         for ($i = 1; $i <= 3; $i++) {
             $entity = (new TypeProductRepository())->findOneById($i);
 
-            $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, 1));
+            $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, true));
 
-            $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, 0));
+            $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, false));
         }
     }
 }

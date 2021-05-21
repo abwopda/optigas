@@ -183,14 +183,6 @@ class ProductController extends AbstractController
         ]);
     }
 
-    public function __activate($entity, $status)
-    {
-        $entity->setActive($status);
-        $user =  $this->security->getUser();
-        $entity->setActivateBy($user);
-        $entity->setActivateAt(new \DateTimeImmutable());
-    }
-
     public function activate(int $id, Request $request)
     {
         $entity = $this->productGateway->findOneById($id);
@@ -199,11 +191,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->__activate($entity, 1);
-
-        $this->activateProduct->execute($entity, 1);
-
-        //var_export($entity);
+        $this->activateProduct->execute($entity, true);
 
         $this->addFlash('success', "Produit activé avec succès");
 
@@ -218,20 +206,10 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->__activate($entity, 0);
-
-        $this->activateProduct->execute($entity, 0);
+        $this->activateProduct->execute($entity, false);
 
         $this->addFlash('success', "Produit désactivé avec succès");
         return $this->redirectToRoute("product.show", ["id" => $id]);
-    }
-
-    public function __validate($entity, $status)
-    {
-        $entity->setValid($status);
-        $user =  $this->security->getUser();
-        $entity->setValidateBy($user);
-        $entity->setValidateAt(new \DateTimeImmutable());
     }
 
     public function validate(int $id, Request $request)
@@ -242,11 +220,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->__validate($entity, 1);
-
-        $this->validateProduct->execute($entity, 1);
-
-        //var_export($entity);
+        $this->validateProduct->execute($entity, true);
 
         $this->addFlash('success', "Produit validé avec succès");
         return $this->redirectToRoute("product.show", ["id" => $id]);
@@ -260,9 +234,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->__validate($entity, 0);
-
-        $this->validateProduct->execute($entity, 0);
+        $this->validateProduct->execute($entity, false);
 
         $this->addFlash('success', "Produit invalidé avec succès");
         return $this->redirectToRoute("product.show", ["id" => $id]);

@@ -19,9 +19,9 @@ class ValidatePosTest extends TestCase
         for ($i = 1; $i <= 3; $i++) {
             $entity = (new PosRepository())->findOneById($i);
 
-            $this->assertInstanceOf(Pos::class, $useCase->execute($entity, 1));
+            $this->assertInstanceOf(Pos::class, $useCase->execute($entity, true));
 
-            $this->assertInstanceOf(Pos::class, $useCase->execute($entity, 0));
+            $this->assertInstanceOf(Pos::class, $useCase->execute($entity, false));
         }
     }
 }

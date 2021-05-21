@@ -176,13 +176,6 @@ class PumpController extends AbstractController
         ]);
     }
 
-    public function __activate($entity, $status)
-    {
-        $entity->setActive($status);
-        $user =  $this->security->getUser();
-        $entity->setActivateBy($user);
-        $entity->setActivateAt(new \DateTimeImmutable());
-    }
 
     public function activate(int $id, Request $request)
     {
@@ -192,11 +185,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->__activate($entity, 1);
-
-        $this->activatePump->execute($entity, 1);
-
-        //var_export($entity);
+        $this->activatePump->execute($entity, true);
 
         $this->addFlash('success', "Pompe activée avec succès");
         return $this->redirectToRoute("pump.show", ["id" => $id]);
@@ -210,20 +199,10 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->__activate($entity, 0);
-
-        $this->activatePump->execute($entity, 0);
+        $this->activatePump->execute($entity, false);
 
         $this->addFlash('success', "Pompe désactivée avec succès");
         return $this->redirectToRoute("pump.show", ["id" => $id]);
-    }
-
-    public function __validate($entity, $status)
-    {
-        $entity->setValid($status);
-        $user =  $this->security->getUser();
-        $entity->setValidateBy($user);
-        $entity->setValidateAt(new \DateTimeImmutable());
     }
 
     public function validate(int $id, Request $request)
@@ -234,11 +213,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->__validate($entity, 1);
-
-        $this->validatePump->execute($entity, 1);
-
-        //var_export($entity);
+        $this->validatePump->execute($entity, true);
 
         $this->addFlash('success', "Pompe validée avec succès");
         return $this->redirectToRoute("pump.show", ["id" => $id]);
@@ -252,9 +227,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->__validate($entity, 0);
-
-        $this->validatePump->execute($entity, 0);
+        $this->validatePump->execute($entity, false);
 
         $this->addFlash('success', "Pompe invalidée avec succès");
         return $this->redirectToRoute("pump.show", ["id" => $id]);

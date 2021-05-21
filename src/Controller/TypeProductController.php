@@ -166,13 +166,6 @@ class TypeProductController extends AbstractController
             "entity"      => $entity,
         ]);
     }
-    public function __activate($entity, $status)
-    {
-        $entity->setActive($status);
-        $user =  $this->security->getUser();
-        $entity->setActivateBy($user);
-        $entity->setActivateAt(new \DateTimeImmutable());
-    }
 
     public function activate(int $id, Request $request)
     {
@@ -182,11 +175,7 @@ class TypeProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le type produit d'id  " . $id);
         }
 
-        $this->__activate($entity, 1);
-
-        $this->activateTypeProduct->execute($entity, 1);
-
-        //var_export($entity);
+        $this->activateTypeProduct->execute($entity, true);
 
         $this->addFlash('success', "Type produit activé avec succès");
         return $this->redirectToRoute("typeproduct.show", ["id" => $id]);
@@ -200,20 +189,10 @@ class TypeProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le type produit d'id  " . $id);
         }
 
-        $this->__activate($entity, 0);
-
-        $this->activateTypeProduct->execute($entity, 0);
+        $this->activateTypeProduct->execute($entity, false);
 
         $this->addFlash('success', "Type produit désactivé avec succès");
         return $this->redirectToRoute("typeproduct.show", ["id" => $id]);
-    }
-
-    public function __validate($entity, $status)
-    {
-        $entity->setValid($status);
-        $user =  $this->security->getUser();
-        $entity->setValidateBy($user);
-        $entity->setValidateAt(new \DateTimeImmutable());
     }
 
     public function validate(int $id, Request $request)
@@ -224,9 +203,7 @@ class TypeProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le type produit d'id  " . $id);
         }
 
-        $this->__validate($entity, 1);
-
-        $this->validateTypeProduct->execute($entity, 1);
+        $this->validateTypeProduct->execute($entity, true);
 
         $this->addFlash('success', "Type produit validé avec succès");
         return $this->redirectToRoute("typeproduct.show", ["id" => $id]);
@@ -240,9 +217,7 @@ class TypeProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le type produit d'id  " . $id);
         }
 
-        $this->__validate($entity, 0);
-
-        $this->validateTypeProduct->execute($entity, 0);
+        $this->validateTypeProduct->execute($entity, false);
 
         $this->addFlash('success', "Type produit invalidé avec succès");
         return $this->redirectToRoute("typeproduct.show", ["id" => $id]);

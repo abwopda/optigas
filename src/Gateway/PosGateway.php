@@ -27,6 +27,12 @@ interface PosGateway
     public function activate(Pos $pos, bool $status): void;
 
     /**
+     * @param Pos $pos
+     * @param bool $status
+     */
+    public function validate(Pos $pos, bool $status): void;
+
+    /**
      * @param int $id
      * @return Pos|null
      */

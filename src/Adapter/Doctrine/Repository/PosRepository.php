@@ -6,6 +6,7 @@ use App\Entity\Pos;
 use App\Gateway\PosGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class PosRepository
@@ -13,10 +14,14 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PosRepository extends ServiceEntityRepository implements PosGateway
 {
+    private Security $security;
 
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        Security $security
+    ) {
         parent::__construct($registry, Pos::class);
+        $this->security = $security;
     }
 
     public function findOneById(int $id): ?Pos
@@ -31,24 +36,43 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
 
     public function create(Pos $pos): void
     {
+        $user =  $this->security->getUser();
+
+        $pos->setCreateBy($user);
         $this->_em->persist($pos);
         $this->_em->flush();
     }
 
     public function update(Pos $pos): void
     {
+        $user =  $this->security->getUser();
+
+        $pos
+            ->setUpdateBy($user)
+            ->setUpdateAt(new \DateTimeImmutable())
+        ;
         $this->_em->persist($pos);
         $this->_em->flush();
     }
 
     public function activate(Pos $pos, bool $status): void
     {
+        $pos->setActive($status);
+        $user =  $this->security->getUser();
+        $pos->setActivateBy($user);
+        $pos->setActivateAt(new \DateTimeImmutable());
+
         $this->_em->persist($pos);
         $this->_em->flush();
     }
 
     public function validate(Pos $pos, bool $status): void
     {
+        $pos->setValid($status);
+        $user =  $this->security->getUser();
+        $pos->setValidateBy($user);
+        $pos->setValidateAt(new \DateTimeImmutable());
+
         $this->_em->persist($pos);
         $this->_em->flush();
     }

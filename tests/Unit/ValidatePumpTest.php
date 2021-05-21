@@ -19,9 +19,9 @@ class ValidatePumpTest extends TestCase
         for ($i = 1; $i <= 11; $i++) {
             $entity = (new PumpRepository())->findOneById($i);
 
-            $this->assertInstanceOf(Pump::class, $useCase->execute($entity, 1));
+            $this->assertInstanceOf(Pump::class, $useCase->execute($entity, true));
 
-            $this->assertInstanceOf(Pump::class, $useCase->execute($entity, 0));
+            $this->assertInstanceOf(Pump::class, $useCase->execute($entity, false));
         }
     }
 }

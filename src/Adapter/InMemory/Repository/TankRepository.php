@@ -144,10 +144,10 @@ class TankRepository implements TankGateway
      */
     public function activate(Tank $tank, bool $status): void
     {
-        $this->tank[1]
+        $tank
             ->setActive($status)
             ->setActivateAt(new \DateTimeImmutable())
-            ->setActivateBy($this->tank[1]->getCreateBy())
+            ->setActivateBy($tank->getCreateBy())
         ;
     }
 
@@ -157,10 +157,10 @@ class TankRepository implements TankGateway
      */
     public function validate(Tank $tank, bool $status): void
     {
-        $this->tank[1]
+        $tank
             ->setValid($status)
             ->setValidateAt(new \DateTimeImmutable())
-            ->setValidateBy($this->tank[1]->getCreateBy())
+            ->setValidateBy($tank->getCreateBy())
         ;
     }
 }

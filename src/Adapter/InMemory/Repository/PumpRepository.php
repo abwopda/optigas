@@ -130,10 +130,10 @@ class PumpRepository implements PumpGateway
      */
     public function activate(Pump $pump, bool $status): void
     {
-        $this->pump[1]
+        $pump
             ->setActive($status)
             ->setActivateAt(new \DateTimeImmutable())
-            ->setActivateBy($this->pump[1]->getCreateBy())
+            ->setActivateBy($pump->getCreateBy())
         ;
     }
 
@@ -143,10 +143,10 @@ class PumpRepository implements PumpGateway
      */
     public function validate(Pump $pump, bool $status): void
     {
-        $this->pump[1]
+        $pump
             ->setValid($status)
             ->setValidateAt(new \DateTimeImmutable())
-            ->setValidateBy($this->pump[1]->getCreateBy())
+            ->setValidateBy($pump->getCreateBy())
         ;
     }
 }
