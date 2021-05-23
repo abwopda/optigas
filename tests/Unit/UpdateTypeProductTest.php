@@ -17,7 +17,7 @@ class UpdateTypeProductTest extends TestCase
     {
         $useCase = new UpdateTypeProduct(new TypeProductRepository());
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $entity = (new TypeProductRepository())
                 ->findOneById($i)
                 ->setName("TYP0" . $i)

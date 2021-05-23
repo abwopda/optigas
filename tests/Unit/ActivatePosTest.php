@@ -17,7 +17,7 @@ class ActivatePosTest extends TestCase
     public function testSuccessfulPosActivated()
     {
         $useCase = new activatePos(new PosRepository());
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $entity = (new PosRepository())->findOneById($i);
 
             $this->assertInstanceOf(Pos::class, $useCase->execute($entity, true));

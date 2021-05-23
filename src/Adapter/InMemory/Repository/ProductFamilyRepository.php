@@ -5,6 +5,7 @@ namespace App\Adapter\InMemory\Repository;
 use App\Entity\Employee;
 use App\Entity\ProductFamily;
 use App\Entity\TypeProduct;
+use App\Form\InMemory\ProductFamilyType;
 use App\Gateway\ProductFamilyGateway;
 
 /**
@@ -143,6 +144,14 @@ class ProductFamilyRepository implements ProductFamilyGateway
      */
     public function create(ProductFamily $productfamily): void
     {
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return ProductFamilyType::class;
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Pos;
-use App\Form\PosType;
 use App\Gateway\PosGateway;
 use App\Gateway\TankGateway;
 use App\UseCase\ActivatePos;
@@ -69,7 +68,7 @@ class PosController extends AbstractController
     public function new()
     {
         $entity = new Pos();
-        $form = $this->createForm(PosType::class, $entity);
+        $form = $this->createForm($this->posGateway->getTypeClass(), $entity);
 
         return $this->render('ui/pos/new.html.twig', [
             'entity' => $entity,
@@ -85,7 +84,7 @@ class PosController extends AbstractController
     {
         $entity = new Pos();
 
-        $form = $this->createForm(PosType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->posGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createPos->execute($entity);
@@ -112,7 +111,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $form = $this->createForm(PosType::class, $entity);
+        $form = $this->createForm($this->posGateway->getTypeClass(), $entity);
 
         return $this->render('ui/pos/edit.html.twig', [
             'entity' => $entity,
@@ -128,7 +127,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException('Impossible de trouver le point de vente d"id' . $id);
         }
 
-        $form = $this->createForm(PosType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->posGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->updatePos->execute($entity);

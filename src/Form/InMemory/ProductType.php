@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\InMemory;
 
-use App\Entity\Tank;
-use App\Entity\Pump;
-use Doctrine\ORM\EntityRepository;
+use App\Adapter\InMemory\Repository\ProductFamilyRepository;
+use App\Entity\Product;
+use App\Entity\ProductFamily;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
- * Class PumpType
+ * Class ProductType
  * @package App\Form
  */
-class PumpType extends AbstractType
+class ProductType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -27,20 +26,16 @@ class PumpType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("tank", TankType::class, [
-                "disabled" => true,
-                "label" => "Cuve",
+            ->add("productfamily", ChoiceType::class, [
+                "choices" => (new ProductFamilyRepository())->findAll(),
+                "choice_label" => function ($productfamily, $key, $value) {
+                    /** @var ProductFamily $productfamily */
+                    return strtoupper($productfamily->getCode() . "-" . $productfamily->getName());
+                },
                 "constraints" => [
                     new NotBlank()
                 ]
             ])
-            /*->add("pos",EntityType::class,[
-                "class" => CreatePos::class,
-                "choice_label" => "name",
-                "constraints" => [
-                    new NotBlank()
-                ]
-            ])*/
             ->add("code", TextType::class, [
                 "label" => "Code",
                 "constraints" => [
@@ -59,12 +54,6 @@ class PumpType extends AbstractType
                     new NotBlank()
                 ]
             ])
-            ->add("counter", NumberType::class, [
-                "label" => "Counter",
-                "constraints" => [
-                    new NotBlank()
-                ]
-            ])
         ;
     }
 
@@ -73,6 +62,6 @@ class PumpType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault("data_class", Pump::class);
+        $resolver->setDefault("data_class", Product::class);
     }
 }

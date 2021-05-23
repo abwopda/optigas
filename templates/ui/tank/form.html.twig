@@ -1,8 +1,5 @@
-<legend>Données du point de vente</legend>
-    {{ form_row(form.pos.code, { 'label': 'Point de vente'}) }}
-    {{ form_row(form.pos.name, { 'label': 'Designation'}) }}
-
 <legend>Données de la cuve</legend>
+    {{ form_row(form.pos, { 'label': 'Point de vente'}) }}
     {{ form_row(form.code, { 'label': 'Cuve'}) }}
     {{ form_row(form.name, { 'label': 'Designation'}) }}
     {{ form_row(form.description, { 'label': 'Description'}) }}

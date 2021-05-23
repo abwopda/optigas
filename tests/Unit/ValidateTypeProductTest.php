@@ -16,7 +16,7 @@ class ValidateTypeProductTest extends TestCase
     public function testSuccessfulTypeProductValidated()
     {
         $useCase = new ValidateTypeProduct(new TypeProductRepository());
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $entity = (new TypeProductRepository())->findOneById($i);
 
             $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, true));

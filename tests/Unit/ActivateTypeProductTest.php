@@ -16,7 +16,7 @@ class ActivateTypeProductTest extends TestCase
     public function testSuccessfulTypeProductActivated()
     {
         $useCase = new ActivateTypeProduct(new TypeProductRepository());
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $entity = (new TypeProductRepository())->findOneById($i);
 
             $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, true));

@@ -5,6 +5,7 @@ namespace App\Adapter\InMemory\Repository;
 use App\Entity\Employee;
 use App\Entity\Pos;
 use App\Entity\Tank;
+use App\Form\InMemory\TankType;
 use App\Gateway\PosGateway;
 use App\Gateway\TankGateway;
 
@@ -122,6 +123,14 @@ class TankRepository implements TankGateway
     public function findAll(): ?array
     {
         return $this->tank;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return TankType::class;
     }
 
     /**

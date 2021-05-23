@@ -1,8 +1,5 @@
-<legend>Données de la famille de produit</legend>
-    {{ form_row(form.productfamily.code, { 'label': 'Famille de produit'}) }}
-    {{ form_row(form.productfamily.name, { 'label': 'Designation'}) }}
-
 <legend>Données du produit</legend>
+    {{ form_row(form.productfamily, { 'label': 'Famille'}) }}
     {{ form_row(form.code, { 'label': 'Produit'}) }}
     {{ form_row(form.name, { 'label': 'Designation'}) }}
     {{ form_row(form.description, { 'label': 'Description'}) }}

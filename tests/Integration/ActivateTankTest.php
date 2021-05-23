@@ -40,7 +40,7 @@ class ActivateTankTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        for ($i = 1; $i <= 4; $i++) {
+        for ($i = 4; $i <= 4; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
                 $router->generate("tank.activate", ["id" => $i])

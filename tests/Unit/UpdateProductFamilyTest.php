@@ -18,7 +18,7 @@ class UpdateProductFamilyTest extends TestCase
     {
         $useCase = new updateProductFamily(new ProductFamilyRepository());
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 5; $i <= 5; $i++) {
             $entity = (new ProductFamilyRepository())
                 ->findOneById($i)
                 ->setName("FAM0" . $i)

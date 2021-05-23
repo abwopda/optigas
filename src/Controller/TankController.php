@@ -79,7 +79,7 @@ class TankController extends AbstractController
         }
 
         $entity = new Tank($entity);
-        $form = $this->createForm(TankType::class, $entity);
+        $form = $this->createForm($this->tankGateway->getTypeClass(), $entity);
 
         return $this->render('ui/tank/new.html.twig', [
             'entity' => $entity,
@@ -104,7 +104,7 @@ class TankController extends AbstractController
 
         $entity->setCreateBy($user);
 
-        $form = $this->createForm(TankType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->tankGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createTank->execute($entity);
@@ -129,7 +129,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve  " . $id);
         }
 
-        $form = $this->createForm(TankType::class, $entity);
+        $form = $this->createForm($this->tankGateway->getTypeClass(), $entity);
 
         return $this->render('ui/tank/edit.html.twig', [
             'entity' => $entity,
@@ -152,7 +152,7 @@ class TankController extends AbstractController
             ->setUpdateAt(new \DateTimeImmutable())
         ;
 
-        $form = $this->createForm(TankType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->tankGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->updateTank->execute($entity);

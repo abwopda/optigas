@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Doctrine;
 
 use App\Entity\Pos;
 use App\Entity\Tank;
@@ -27,20 +27,13 @@ class TankType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("pos", PosType::class, [
-                "disabled" => true,
-                "label" => "Point de vente",
-                "constraints" => [
-                    new NotBlank()
-                ]
-            ])
-            /*->add("pos",EntityType::class,[
-                "class" => CreatePos::class,
+            ->add("pos", EntityType::class, [
+                "class" => Pos::class,
                 "choice_label" => "name",
                 "constraints" => [
                     new NotBlank()
                 ]
-            ])*/
+            ])
             ->add("code", TextType::class, [
                 "label" => "Code",
                 "constraints" => [

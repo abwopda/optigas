@@ -16,6 +16,11 @@ interface TypeProductGateway
     public function create(TypeProduct $typeproduct): void;
 
     /**
+     * @return string
+     */
+    public function getTypeClass(): string;
+
+    /**
      * @param TypeProduct $typeproduct
      */
     public function update(TypeProduct $typeproduct): void;

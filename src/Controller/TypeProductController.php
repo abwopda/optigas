@@ -69,7 +69,7 @@ class TypeProductController extends AbstractController
     public function new()
     {
         $entity = new TypeProduct();
-        $form = $this->createForm(TypeProductType::class, $entity);
+        $form = $this->createForm($this->typeproductGateway->getTypeClass(), $entity);
 
         return $this->render('ui/typeproduct/new.html.twig', [
             'entity' => $entity,
@@ -89,7 +89,7 @@ class TypeProductController extends AbstractController
 
         $entity->setCreateBy($user);
 
-        $form = $this->createForm(TypeProductType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->typeproductGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createTypeProduct->execute($entity);
@@ -114,7 +114,7 @@ class TypeProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le type produit d'id  " . $id);
         }
 
-        $form = $this->createForm(TypeProductType::class, $entity);
+        $form = $this->createForm($this->typeproductGateway->getTypeClass(), $entity);
 
         return $this->render('ui/typeproduct/edit.html.twig', [
             'entity' => $entity,
@@ -137,7 +137,7 @@ class TypeProductController extends AbstractController
             ->setUpdateAt(new \DateTimeImmutable())
         ;
 
-        $form = $this->createForm(TypeProductType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->typeproductGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->updateTypeProduct->execute($entity);

@@ -17,7 +17,7 @@ class ShowProductFamilyTest extends TestCase
     public function testSuccessfulProductFamilyShowed()
     {
         $useCase = new showProductFamily(new ProductFamilyRepository());
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 5; $i <= 5; $i++) {
             $entity = (new ProductFamilyRepository())->findOneById($i);
             $this->assertInstanceOf(ProductFamily::class, $useCase->execute($entity));
         }

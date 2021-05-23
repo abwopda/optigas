@@ -17,7 +17,7 @@ class ShowTankTest extends TestCase
     public function testSuccessfulTankShowed()
     {
         $useCase = new showTank(new TankRepository());
-        for ($i = 1; $i <= 4; $i++) {
+        for ($i = 4; $i <= 4; $i++) {
             $entity = (new TankRepository())->findOneById($i);
             $this->assertInstanceOf(Tank::class, $useCase->execute($entity));
         }

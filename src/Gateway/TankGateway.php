@@ -16,6 +16,11 @@ interface TankGateway
     public function create(Tank $tank): void;
 
     /**
+     * @return string
+     */
+    public function getTypeClass(): string;
+
+    /**
      * @param int $id
      * @return Tank|null
      */

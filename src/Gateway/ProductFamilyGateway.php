@@ -16,6 +16,11 @@ interface ProductFamilyGateway
     public function create(ProductFamily $productfamily): void;
 
     /**
+     * @return string
+     */
+    public function getTypeClass(): string;
+
+    /**
      * @param int $id
      * @return ProductFamily|null
      */

@@ -80,7 +80,7 @@ class ProductFamilyController extends AbstractController
 
         $entity = new ProductFamily($entity);
 
-        $form = $this->createForm(ProductFamilyType::class, $entity);
+        $form = $this->createForm($this->productfamilyGateway->getTypeClass(), $entity);
 
         return $this->render('ui/productfamily/new.html.twig', [
             'entity' => $entity,
@@ -106,7 +106,7 @@ class ProductFamilyController extends AbstractController
 
         $entity->setCreateBy($user);
 
-        $form = $this->createForm(ProductFamilyType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->productfamilyGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createProductFamily->execute($entity);
@@ -131,7 +131,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille  " . $id);
         }
 
-        $form = $this->createForm(ProductFamilyType::class, $entity);
+        $form = $this->createForm($this->productfamilyGateway->getTypeClass(), $entity);
 
         return $this->render('ui/productfamily/edit.html.twig', [
             'entity' => $entity,
@@ -154,7 +154,7 @@ class ProductFamilyController extends AbstractController
             ->setUpdateAt(new \DateTimeImmutable())
         ;
 
-        $form = $this->createForm(ProductFamilyType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->productfamilyGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->updateProductFamily->execute($entity);

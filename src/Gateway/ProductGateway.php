@@ -16,6 +16,11 @@ interface ProductGateway
     public function create(Product $product): void;
 
     /**
+     * @return string
+     */
+    public function getTypeClass(): string;
+
+    /**
      * @param int $id
      * @return Product|null
      */

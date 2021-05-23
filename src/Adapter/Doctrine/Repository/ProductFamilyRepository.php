@@ -3,6 +3,7 @@
 namespace App\Adapter\Doctrine\Repository;
 
 use App\Entity\ProductFamily;
+use App\Form\Doctrine\ProductFamilyType;
 use App\Gateway\ProductFamilyGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,6 +42,14 @@ class ProductFamilyRepository extends ServiceEntityRepository implements Product
         $productfamily->setCreateBy($user);
         $this->_em->persist($productfamily);
         $this->_em->flush();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return ProductFamilyType::class;
     }
 
     public function update(ProductFamily $productfamily): void

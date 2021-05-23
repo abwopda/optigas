@@ -17,6 +17,11 @@ interface PumpGateway
     public function create(Pump $pump): void;
 
     /**
+     * @return string
+     */
+    public function getTypeClass(): string;
+
+    /**
      * @param int $id
      * @return Pump|null
      */
