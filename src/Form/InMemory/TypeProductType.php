@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\InMemory;
 
 use App\Entity\TypeProduct;
 use Symfony\Component\Form\AbstractType;

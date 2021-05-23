@@ -3,6 +3,7 @@
 namespace App\Adapter\Doctrine\Repository;
 
 use App\Entity\Product;
+use App\Form\Doctrine\ProductType;
 use App\Gateway\ProductGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,6 +42,14 @@ class ProductRepository extends ServiceEntityRepository implements ProductGatewa
         $product->setCreateBy($user);
         $this->_em->persist($product);
         $this->_em->flush();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return ProductType::class;
     }
 
     public function update(Product $product): void

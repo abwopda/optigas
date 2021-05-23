@@ -16,7 +16,7 @@ class ShowPumpTest extends TestCase
     public function testSuccessfulPumpShowed()
     {
         $useCase = new showPump(new PumpRepository());
-        for ($i = 1; $i <= 11; $i++) {
+        for ($i = 11; $i <= 11; $i++) {
             $entity = (new PumpRepository())->findOneById($i);
             $this->assertInstanceOf(Pump::class, $useCase->execute($entity));
         }

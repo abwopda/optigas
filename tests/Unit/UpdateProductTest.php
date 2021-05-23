@@ -18,7 +18,7 @@ class UpdateProductTest extends TestCase
     {
         $useCase = new updateProduct(new ProductRepository());
 
-        for ($i = 1; $i <= 9; $i++) {
+        for ($i = 9; $i <= 9; $i++) {
             $entity = (new ProductRepository())
                 ->findOneById($i)
                 ->setName("PROD0" . $i)

@@ -39,7 +39,7 @@ class ValidateProductFamilyTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 5; $i <= 5; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
                 $router->generate("productfamily.validate", ["id" => $i])

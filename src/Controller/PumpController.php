@@ -75,7 +75,7 @@ class PumpController extends AbstractController
 
         $entity = new Pump($entity);
 
-        $form = $this->createForm(PumpType::class, $entity);
+        $form = $this->createForm($this->pumpGateway->getTypeClass(), $entity);
 
         return $this->render('ui/pump/new.html.twig', [
             'entity' => $entity,
@@ -100,7 +100,7 @@ class PumpController extends AbstractController
 
         $entity->setCreateBy($user);
 
-        $form = $this->createForm(PumpType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->pumpGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createPump->execute($entity);
@@ -123,7 +123,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe  " . $id);
         }
 
-        $form = $this->createForm(PumpType::class, $entity);
+        $form = $this->createForm($this->pumpGateway->getTypeClass(), $entity);
 
         return $this->render('ui/pump/edit.html.twig', [
             'entity' => $entity,
@@ -146,7 +146,7 @@ class PumpController extends AbstractController
             ->setUpdateAt(new \DateTimeImmutable())
         ;
 
-        $form = $this->createForm(PumpType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->pumpGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->updatePump->execute($entity);

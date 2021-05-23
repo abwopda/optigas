@@ -17,7 +17,7 @@ class ShowPosTest extends TestCase
     public function testSuccessfulPosShowed()
     {
         $useCase = new ShowPos(new PosRepository());
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $entity = (new PosRepository())->findOneById($i);
             $this->assertInstanceOf(Pos::class, $useCase->execute($entity));
         }

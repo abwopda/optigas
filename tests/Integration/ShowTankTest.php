@@ -32,7 +32,7 @@ class ShowTankTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        for ($i = 1; $i <= 4; $i++) {
+        for ($i = 4; $i <= 4; $i++) {
             $crawler = $client->request(
                 Request::METHOD_GET,
                 $router->generate("tank.show", ["id" => $i])

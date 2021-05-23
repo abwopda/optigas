@@ -3,6 +3,7 @@
 namespace App\Adapter\Doctrine\Repository;
 
 use App\Entity\Pos;
+use App\Form\Doctrine\PosType;
 use App\Gateway\PosGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -32,6 +33,14 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
     public function findAll(): ?array
     {
         return parent::findAll();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return PosType::class;
     }
 
     public function create(Pos $pos): void

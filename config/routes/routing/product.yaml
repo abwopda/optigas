@@ -12,7 +12,7 @@ product.create:
   requirements: { _method: post }
 
 product.show:
-  path: /{id}/show
+  path: /{id}
   controller: App\Controller\ProductController::show
 
 product.edit:

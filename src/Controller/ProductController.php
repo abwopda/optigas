@@ -79,7 +79,7 @@ class ProductController extends AbstractController
 
         $entity = new Product($entity);
 
-        $form = $this->createForm(ProductType::class, $entity);
+        $form = $this->createForm($this->productGateway->getTypeClass(), $entity);
 
         return $this->render('ui/product/new.html.twig', [
             'entity' => $entity,
@@ -105,7 +105,7 @@ class ProductController extends AbstractController
 
         $entity->setCreateBy($user);
 
-        $form = $this->createForm(ProductType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->productGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->createProduct->execute($entity);
@@ -130,7 +130,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit  " . $id);
         }
 
-        $form = $this->createForm(ProductType::class, $entity);
+        $form = $this->createForm($this->productGateway->getTypeClass(), $entity);
 
         return $this->render('ui/product/edit.html.twig', [
             'entity' => $entity,
@@ -153,7 +153,7 @@ class ProductController extends AbstractController
             ->setUpdateAt(new \DateTimeImmutable())
         ;
 
-        $form = $this->createForm(ProductType::class, $entity)->handleRequest($request);
+        $form = $this->createForm($this->productGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->updateProduct->execute($entity);

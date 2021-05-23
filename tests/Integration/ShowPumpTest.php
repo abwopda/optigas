@@ -32,7 +32,7 @@ class ShowPumpTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        for ($i = 1; $i <= 11; $i++) {
+        for ($i = 11; $i <= 11; $i++) {
             $crawler = $client->request(
                 Request::METHOD_GET,
                 $router->generate("pump.show", ["id" => $i])

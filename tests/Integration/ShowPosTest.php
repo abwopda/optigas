@@ -32,7 +32,7 @@ class ShowPosTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $crawler = $client->request(
                 Request::METHOD_GET,
                 $router->generate("pos.show", ["id" => $i])

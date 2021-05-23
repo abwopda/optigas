@@ -3,6 +3,7 @@
 namespace App\Adapter\Doctrine\Repository;
 
 use App\Entity\Pump;
+use App\Form\Doctrine\PumpType;
 use App\Gateway\PumpGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,6 +42,15 @@ class PumpRepository extends ServiceEntityRepository implements PumpGateway
         $pump->setCreateBy($user);
         $this->_em->persist($pump);
         $this->_em->flush();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return PumpType::class;
     }
 
     public function update(Pump $pump): void

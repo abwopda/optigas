@@ -3,6 +3,7 @@
 namespace App\Adapter\Doctrine\Repository;
 
 use App\Entity\Tank;
+use App\Form\Doctrine\TankType;
 use App\Gateway\TankGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,6 +34,14 @@ class TankRepository extends ServiceEntityRepository implements TankGateway
     public function findAll(): ?array
     {
         return parent::findAll();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return TankType::class;
     }
 
     public function create(Tank $tank): void

@@ -3,6 +3,7 @@
 namespace App\Adapter\Doctrine\Repository;
 
 use App\Entity\TypeProduct;
+use App\Form\Doctrine\TypeProductType;
 use App\Gateway\TypeProductGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,6 +42,14 @@ class TypeProductRepository extends ServiceEntityRepository implements TypeProdu
         $typeproduct->setCreateBy($user);
         $this->_em->persist($typeproduct);
         $this->_em->flush();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return TypeProductType::class;
     }
 
     public function update(TypeProduct $typeproduct): void

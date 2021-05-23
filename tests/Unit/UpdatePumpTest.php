@@ -17,7 +17,7 @@ class UpdatePumpTest extends TestCase
     {
         $useCase = new updatePump(new PumpRepository());
 
-        for ($i = 1; $i <= 11; $i++) {
+        for ($i = 11; $i <= 11; $i++) {
             $entity = (new PumpRepository())
                 ->findOneById($i)
                 ->setName("PUMP0" . $i)

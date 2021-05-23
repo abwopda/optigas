@@ -39,7 +39,7 @@ class ActivatePosTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
                 $router->generate("pos.activate", ["id" => $i])

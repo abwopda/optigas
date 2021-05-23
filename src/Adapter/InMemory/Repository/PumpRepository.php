@@ -4,6 +4,7 @@ namespace App\Adapter\InMemory\Repository;
 
 use App\Entity\Employee;
 use App\Entity\Pump;
+use App\Form\InMemory\PumpType;
 use App\Gateway\PumpGateway;
 
 /**
@@ -21,6 +22,14 @@ class PumpRepository implements PumpGateway
 
     public function create(Pump $pump): void
     {
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return PumpType::class;
     }
 
     /**

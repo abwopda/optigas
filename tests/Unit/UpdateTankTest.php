@@ -18,7 +18,7 @@ class UpdateTankTest extends TestCase
     {
         $useCase = new updateTank(new TankRepository());
 
-        for ($i = 1; $i <= 4; $i++) {
+        for ($i = 4; $i <= 4; $i++) {
             $entity = (new TankRepository())
                 ->findOneById($i)
                 ->setName("TANK0" . $i)

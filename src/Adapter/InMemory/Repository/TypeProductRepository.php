@@ -4,6 +4,7 @@ namespace App\Adapter\InMemory\Repository;
 
 use App\Entity\Employee;
 use App\Entity\TypeProduct;
+use App\Form\InMemory\TypeProductType;
 use App\Gateway\TypeProductGateway;
 
 /**
@@ -103,6 +104,14 @@ class TypeProductRepository implements TypeProductGateway
      */
     public function create(TypeProduct $typeproduct): void
     {
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return TypeProductType::class;
     }
 
     /**

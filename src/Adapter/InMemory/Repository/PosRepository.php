@@ -4,6 +4,7 @@ namespace App\Adapter\InMemory\Repository;
 
 use App\Entity\Employee;
 use App\Entity\Pos;
+use App\Form\InMemory\PosType;
 use App\Gateway\PosGateway;
 
 /**
@@ -114,6 +115,14 @@ class PosRepository implements PosGateway
      */
     public function create(Pos $pos): void
     {
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeClass(): string
+    {
+        return PosType::class;
     }
 
     /**

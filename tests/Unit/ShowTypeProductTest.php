@@ -17,7 +17,7 @@ class ShowTypeProductTest extends TestCase
     public function testSuccessfulTypeProductShowed()
     {
         $useCase = new ShowTypeProduct(new TypeProductRepository());
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $entity = (new TypeProductRepository())->findOneById($i);
             $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity));
         }

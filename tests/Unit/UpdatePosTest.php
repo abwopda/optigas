@@ -16,7 +16,7 @@ class UpdatePosTest extends TestCase
     public function testSuccessfulPosUpdated()
     {
         $useCase = new updatePos(new PosRepository());
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 3; $i <= 3; $i++) {
             $pos = (new PosRepository())
                 ->findOneById($i)
                 ->setName("TAWAAL OIL " . $i)

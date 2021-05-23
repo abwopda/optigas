@@ -32,7 +32,7 @@ class ShowProductFamilyTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 5; $i <= 5; $i++) {
             $crawler = $client->request(
                 Request::METHOD_GET,
                 $router->generate("productfamily.show", ["id" => $i])
