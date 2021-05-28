@@ -6,10 +6,6 @@ use App\Entity\Tank;
 use App\Form\TankType;
 use App\Gateway\PosGateway;
 use App\Gateway\TankGateway;
-use App\UseCase\ActivateTank;
-use App\UseCase\CreateTank;
-use App\UseCase\UpdateTank;
-use App\UseCase\ValidateTank;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,37 +17,21 @@ use Symfony\Component\Security\Core\Security;
  */
 class TankController extends AbstractController
 {
-    private CreateTank $createTank;
-    private UpdateTank $updateTank;
-    private ActivateTank $activateTank;
-    private ValidateTank $validateTank;
     private Security $security;
     private PosGateway $posGateway;
     private TankGateway $tankGateway;
 
     /**
      * TankController constructor.
-     * @param CreateTank $createTank
-     * @param UpdateTank $updateTank
-     * @param ActivateTank $activateTank
-     * @param ValidateTank $validateTank
      * @param Security $security
      * @param PosGateway $posGateway
      * @param TankGateway $tankGateway
      */
     public function __construct(
-        CreateTank $createTank,
-        UpdateTank $updateTank,
-        ActivateTank $activateTank,
-        ValidateTank $validateTank,
         Security $security,
         PosGateway $posGateway,
         TankGateway $tankGateway
     ) {
-        $this->createTank = $createTank;
-        $this->updateTank = $updateTank;
-        $this->activateTank = $activateTank;
-        $this->validateTank = $validateTank;
         $this->security = $security;
         $this->posGateway = $posGateway;
         $this->tankGateway = $tankGateway;
@@ -107,7 +87,7 @@ class TankController extends AbstractController
         $form = $this->createForm($this->tankGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->createTank->execute($entity);
+            $this->tankGateway->create($entity);
 
             $this->addFlash('success', "Cuve créée avec succès");
             return $this->redirectToRoute("tank.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
@@ -155,7 +135,7 @@ class TankController extends AbstractController
         $form = $this->createForm($this->tankGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updateTank->execute($entity);
+            $this->tankGateway->update($entity);
 
             $this->addFlash('success', "Cuve mise à jour avec succès");
             return $this->redirectToRoute("tank.show", ["id" => $id]);
@@ -190,7 +170,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->activateTank->execute($entity, true);
+        $this->tankGateway->activate($entity, true);
 
         $this->addFlash('success', "Cuve activée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);
@@ -204,7 +184,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->activateTank->execute($entity, false);
+        $this->tankGateway->activate($entity, false);
 
         $this->addFlash('success', "Cuve désactivée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);
@@ -218,7 +198,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->validateTank->execute($entity, true);
+        $this->tankGateway->validate($entity, true);
 
         $this->addFlash('success', "Cuve validée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);
@@ -232,7 +212,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->validateTank->execute($entity, false);
+        $this->tankGateway->validate($entity, false);
 
         $this->addFlash('success', "Cuve invalidée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);

@@ -6,10 +6,6 @@ use App\Entity\Pump;
 use App\Form\PumpType;
 use App\Gateway\PumpGateway;
 use App\Gateway\TankGateway;
-use App\UseCase\ActivatePump;
-use App\UseCase\CreatePump;
-use App\UseCase\UpdatePump;
-use App\UseCase\ValidatePump;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,37 +17,21 @@ use Symfony\Component\Security\Core\Security;
  */
 class PumpController extends AbstractController
 {
-    private CreatePump $createPump;
-    private UpdatePump $updatePump;
-    private ActivatePump $activatePump;
-    private ValidatePump $validatePump;
     private Security $security;
     private TankGateway $tankGateway;
     private PumpGateway $pumpGateway;
 
     /**
      * PumpController constructor.
-     * @param CreatePump $createPump
-     * @param UpdatePump $updatePump
-     * @param ActivatePump $activatePump
-     * @param ValidatePump $validatePump
      * @param Security $security
      * @param TankGateway $tankGateway
      * @param PumpGateway $pumpGateway
      */
     public function __construct(
-        CreatePump $createPump,
-        UpdatePump $updatePump,
-        ActivatePump $activatePump,
-        ValidatePump $validatePump,
         Security $security,
         TankGateway $tankGateway,
         PumpGateway $pumpGateway
     ) {
-        $this->createPump = $createPump;
-        $this->updatePump = $updatePump;
-        $this->activatePump = $activatePump;
-        $this->validatePump = $validatePump;
         $this->security = $security;
         $this->tankGateway = $tankGateway;
         $this->pumpGateway = $pumpGateway;
@@ -103,7 +83,7 @@ class PumpController extends AbstractController
         $form = $this->createForm($this->pumpGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->createPump->execute($entity);
+            $this->pumpGateway->create($entity);
             $this->addFlash('success', "Pompe créée avec succès");
 
             return $this->redirectToRoute("pump.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
@@ -149,7 +129,7 @@ class PumpController extends AbstractController
         $form = $this->createForm($this->pumpGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updatePump->execute($entity);
+            $this->pumpGateway->update($entity);
 
             $this->addFlash('success', "Pompe mise à jour avec succès");
             return $this->redirectToRoute("pump.show", ["id" => $id]);
@@ -185,7 +165,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->activatePump->execute($entity, true);
+        $this->pumpGateway->activate($entity, true);
 
         $this->addFlash('success', "Pompe activée avec succès");
         return $this->redirectToRoute("pump.show", ["id" => $id]);
@@ -199,7 +179,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->activatePump->execute($entity, false);
+        $this->pumpGateway->activate($entity, false);
 
         $this->addFlash('success', "Pompe désactivée avec succès");
         return $this->redirectToRoute("pump.show", ["id" => $id]);
@@ -213,7 +193,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->validatePump->execute($entity, true);
+        $this->pumpGateway->validate($entity, true);
 
         $this->addFlash('success', "Pompe validée avec succès");
         return $this->redirectToRoute("pump.show", ["id" => $id]);
@@ -227,7 +207,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->validatePump->execute($entity, false);
+        $this->pumpGateway->validate($entity, false);
 
         $this->addFlash('success', "Pompe invalidée avec succès");
         return $this->redirectToRoute("pump.show", ["id" => $id]);

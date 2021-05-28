@@ -32,6 +32,12 @@ interface TypeProductGateway
     public function activate(TypeProduct $typeproduct, bool $status): void;
 
     /**
+     * @param TypeProduct $typeproduct
+     * @param bool $status
+     */
+    public function validate(TypeProduct $typeproduct, bool $status): void;
+
+    /**
      * @param int $id
      * @return TypeProduct|null
      */
