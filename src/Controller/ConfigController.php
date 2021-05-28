@@ -127,7 +127,7 @@ class ConfigController extends AbstractController
 
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
 
-        return $this->render("ui/config/edit.html.twig", [
+        return $this->render("ui/Config/edit.html.twig", [
             "entity" => $entity,
             "edit_form" => $editform->createView(),
             'delete_form' => $deleteForm->createView(),
