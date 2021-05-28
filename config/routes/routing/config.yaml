@@ -1,0 +1,34 @@
+config:
+  path:     /
+  controller: App\Controller\ConfigController::index
+
+config.new:
+  path:     /new
+  controller: App\Controller\ConfigController::new
+
+config.create:
+  path: /create
+  controller: App\Controller\ConfigController::create
+  requirements: { _method: post }
+
+config.update:
+  path: /update
+  controller: App\Controller\ConfigController::update
+  requirements: { _method: post|put }
+
+config.show:
+  path: /{id}
+  controller: App\Controller\ConfigController::show
+
+config.edit:
+  path:     /{id}/edit
+  controller: App\Controller\ConfigController::edit
+
+config.update.one:
+  path:     /{id}/update
+  controller: App\Controller\ConfigController::updateone
+
+config.delete:
+  path:  /{id}/delete
+  controller: App\Controller\ConfigController::delete
+  requirements: { _method: post }

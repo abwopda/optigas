@@ -16,7 +16,7 @@ class PosRepository implements PosGateway
     /**
      * @var array
      */
-    public array $pos = [];
+    public array $entity = [];
 
     /**
      * PosRepository constructor.
@@ -28,7 +28,7 @@ class PosRepository implements PosGateway
             ->setLastName("Doe")
             ->setEmail("employee@email.com")
         ;
-        $p = (new Pos())
+        $entity = (new Pos())
             ->setCode("01")
             ->setName("TAWAAL OIL AKAK")
             ->setDescription("Station Service")
@@ -39,14 +39,14 @@ class PosRepository implements PosGateway
 
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 1);
+        $reflectionProperty->setValue($entity, 1);
 
-        $this->pos[1] = $p;
+        $this->pos[1] = $entity;
 
-        $p = (new Pos())
+        $entity = (new Pos())
             ->setCode("02")
             ->setName("TAWAAL OIL SANGMELIMA")
             ->setDescription("Station Service")
@@ -59,14 +59,14 @@ class PosRepository implements PosGateway
             ->setActivateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 2);
+        $reflectionProperty->setValue($entity, 2);
 
-        $this->pos[2] =  $p;
+        $this->pos[2] =  $entity;
 
-        $p = (new Pos())
+        $entity = (new Pos())
             ->setCode("03")
             ->setName("TAWAAL OIL NGOYA 1")
             ->setDescription("Station Service")
@@ -81,12 +81,12 @@ class PosRepository implements PosGateway
             ->setValidateAt(new \DateTimeImmutable())
         ;
 
-        $reflectionClass = new \ReflectionClass($p);
+        $reflectionClass = new \ReflectionClass($entity);
         $reflectionProperty = $reflectionClass->getProperty("id");
         $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($p, 3);
+        $reflectionProperty->setValue($entity, 3);
 
-        $this->pos[3] =  $p;
+        $this->pos[3] =  $entity;
     }
 
     /**
