@@ -28,6 +28,8 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    App\Gateway\ImageGateway: '@App\Adapter\InMemory\Repository\ImageRepository'
+    App\Gateway\ConfigGateway: '@App\Adapter\InMemory\Repository\ConfigRepository'
     App\Gateway\EmployeeGateway: '@App\Adapter\InMemory\Repository\EmployeeRepository'
     App\Gateway\ContactGateway: '@App\Adapter\InMemory\Repository\ContactRepository'
     App\Gateway\UserGateway: '@App\Adapter\InMemory\Repository\UserRepository'

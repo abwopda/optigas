@@ -6,6 +6,10 @@ contact:
   resource: "routing/contact.yaml"
   prefix:   /contact
 
+config:
+  resource: "routing/config.yaml"
+  prefix:   /config
+
 pos:
   resource: "routing/pos.yaml"
   prefix:   /pos
