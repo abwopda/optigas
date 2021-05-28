@@ -6,10 +6,6 @@ use App\Entity\ProductFamily;
 use App\Form\ProductFamilyType;
 use App\Gateway\TypeProductGateway;
 use App\Gateway\ProductFamilyGateway;
-use App\UseCase\ActivateProductFamily;
-use App\UseCase\CreateProductFamily;
-use App\UseCase\UpdateProductFamily;
-use App\UseCase\ValidateProductFamily;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,37 +17,21 @@ use Symfony\Component\Security\Core\Security;
  */
 class ProductFamilyController extends AbstractController
 {
-    private CreateProductFamily $createProductFamily;
-    private UpdateProductFamily $updateProductFamily;
-    private ActivateProductFamily $activateProductFamily;
-    private ValidateProductFamily $validateProductFamily;
     private Security $security;
     private TypeProductGateway $typeproductGateway;
     private ProductFamilyGateway $productfamilyGateway;
 
     /**
      * ProductFamilyController constructor.
-     * @param CreateProductFamily $createProductFamily
-     * @param UpdateProductFamily $updateProductFamily
-     * @param ActivateProductFamily $activateProductFamily
-     * @param ValidateProductFamily $validateProductFamily
      * @param Security $security
      * @param TypeProductGateway $typeproductGateway
      * @param ProductFamilyGateway $productfamilyGateway
      */
     public function __construct(
-        CreateProductFamily $createProductFamily,
-        UpdateProductFamily $updateProductFamily,
-        ActivateProductFamily $activateProductFamily,
-        ValidateProductFamily $validateProductFamily,
         Security $security,
         TypeProductGateway $typeproductGateway,
         ProductFamilyGateway $productfamilyGateway
     ) {
-        $this->createProductFamily = $createProductFamily;
-        $this->updateProductFamily = $updateProductFamily;
-        $this->activateProductFamily = $activateProductFamily;
-        $this->validateProductFamily = $validateProductFamily;
         $this->security = $security;
         $this->typeproductGateway = $typeproductGateway;
         $this->productfamilyGateway = $productfamilyGateway;
@@ -109,7 +89,7 @@ class ProductFamilyController extends AbstractController
         $form = $this->createForm($this->productfamilyGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->createProductFamily->execute($entity);
+            $this->productfamilyGateway->create($entity);
 
             $this->addFlash('success', "Famille créée avec succès");
             return $this->redirectToRoute("productfamily.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
@@ -157,7 +137,7 @@ class ProductFamilyController extends AbstractController
         $form = $this->createForm($this->productfamilyGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updateProductFamily->execute($entity);
+            $this->productfamilyGateway->update($entity);
 
             $this->addFlash('success', "Famille mise à jour avec succès");
             return $this->redirectToRoute("productfamily.show", ["id" => $id]);
@@ -192,7 +172,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->activateProductFamily->execute($entity, true);
+        $this->productfamilyGateway->activate($entity, true);
 
         $this->addFlash('success', "Famille activée avec succès");
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
@@ -206,7 +186,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->activateProductFamily->execute($entity, false);
+        $this->productfamilyGateway->activate($entity, false);
 
         $this->addFlash('success', "Famille désactivée avec succès");
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
@@ -220,7 +200,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->validateProductFamily->execute($entity, true);
+        $this->productfamilyGateway->validate($entity, true);
 
         $this->addFlash('success', "Famille validée avec succès");
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
@@ -234,7 +214,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->validateProductFamily->execute($entity, false);
+        $this->productfamilyGateway->validate($entity, false);
 
         $this->addFlash('success', "Famille invalidée avec succès");
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);

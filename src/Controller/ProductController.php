@@ -6,10 +6,6 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Gateway\ProductFamilyGateway;
 use App\Gateway\ProductGateway;
-use App\UseCase\ActivateProduct;
-use App\UseCase\CreateProduct;
-use App\UseCase\UpdateProduct;
-use App\UseCase\ValidateProduct;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,37 +17,21 @@ use Symfony\Component\Security\Core\Security;
  */
 class ProductController extends AbstractController
 {
-    private CreateProduct $createProduct;
-    private UpdateProduct $updateProduct;
-    private ActivateProduct $activateProduct;
-    private ValidateProduct $validateProduct;
     private Security $security;
     private ProductFamilyGateway $productfamilyGateway;
     private ProductGateway $productGateway;
 
     /**
      * ProductController constructor.
-     * @param CreateProduct $createProduct
-     * @param UpdateProduct $updateProduct
-     * @param ActivateProduct $activateProduct
-     * @param ValidateProduct $validateProduct
      * @param Security $security
      * @param ProductFamilyGateway $productfamilyGateway
      * @param ProductGateway $productGateway
      */
     public function __construct(
-        CreateProduct $createProduct,
-        UpdateProduct $updateProduct,
-        ActivateProduct $activateProduct,
-        ValidateProduct $validateProduct,
         Security $security,
         ProductFamilyGateway $productfamilyGateway,
         ProductGateway $productGateway
     ) {
-        $this->createProduct = $createProduct;
-        $this->updateProduct = $updateProduct;
-        $this->activateProduct = $activateProduct;
-        $this->validateProduct = $validateProduct;
         $this->security = $security;
         $this->productfamilyGateway = $productfamilyGateway;
         $this->productGateway = $productGateway;
@@ -108,7 +88,7 @@ class ProductController extends AbstractController
         $form = $this->createForm($this->productGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->createProduct->execute($entity);
+            $this->productGateway->create($entity);
 
             $this->addFlash('success', "Produit créé avec succès");
             return $this->redirectToRoute("product.show", ["id" => ($entity->getId() ? $entity->getId() : 1)]);
@@ -156,7 +136,7 @@ class ProductController extends AbstractController
         $form = $this->createForm($this->productGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updateProduct->execute($entity);
+            $this->productGateway->update($entity);
 
             $this->addFlash('success', "Produit mise à jour avec succès");
             return $this->redirectToRoute("product.show", ["id" => $id]);
@@ -191,7 +171,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->activateProduct->execute($entity, true);
+        $this->productGateway->activate($entity, true);
 
         $this->addFlash('success', "Produit activé avec succès");
 
@@ -206,7 +186,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->activateProduct->execute($entity, false);
+        $this->productGateway->activate($entity, false);
 
         $this->addFlash('success', "Produit désactivé avec succès");
         return $this->redirectToRoute("product.show", ["id" => $id]);
@@ -220,7 +200,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->validateProduct->execute($entity, true);
+        $this->productGateway->validate($entity, true);
 
         $this->addFlash('success', "Produit validé avec succès");
         return $this->redirectToRoute("product.show", ["id" => $id]);
@@ -234,7 +214,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->validateProduct->execute($entity, false);
+        $this->productGateway->validate($entity, false);
 
         $this->addFlash('success', "Produit invalidé avec succès");
         return $this->redirectToRoute("product.show", ["id" => $id]);

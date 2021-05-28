@@ -5,10 +5,6 @@ namespace App\Controller;
 use App\Entity\Pos;
 use App\Gateway\PosGateway;
 use App\Gateway\TankGateway;
-use App\UseCase\ActivatePos;
-use App\UseCase\ValidatePos;
-use App\UseCase\CreatePos;
-use App\UseCase\UpdatePos;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,37 +16,21 @@ use Symfony\Component\Security\Core\Security;
  */
 class PosController extends AbstractController
 {
-    private CreatePos $createPos;
-    private UpdatePos $updatePos;
-    private ActivatePos $activatePos;
-    private ValidatePos $validatePos;
     private PosGateway $posGateway;
     private TankGateway $tankGateway;
     private Security $security;
 
     /**
      * PosController constructor.
-     * @param CreatePos $createPos
-     * @param UpdatePos $updatePos
-     * @param ActivatePos $activatePos
-     * @param ValidatePos $validatePos ;
      * @param PosGateway $posGateway
      * @param TankGateway $tankGateway
      * @param Security $security
      */
     public function __construct(
-        CreatePos $createPos,
-        UpdatePos $updatePos,
-        ActivatePos $activatePos,
-        ValidatePos $validatePos,
         PosGateway $posGateway,
         TankGateway $tankGateway,
         Security $security
     ) {
-        $this->createPos = $createPos;
-        $this->updatePos = $updatePos;
-        $this->activatePos = $activatePos;
-        $this->validatePos = $validatePos;
         $this->posGateway = $posGateway;
         $this->tankGateway = $tankGateway;
         $this->security = $security;
@@ -87,7 +67,7 @@ class PosController extends AbstractController
         $form = $this->createForm($this->posGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->createPos->execute($entity);
+            $this->posGateway->create($entity);
 
             //var_export($entity);
 
@@ -130,7 +110,7 @@ class PosController extends AbstractController
         $form = $this->createForm($this->posGateway->getTypeClass(), $entity)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updatePos->execute($entity);
+            $this->posGateway->update($entity);
 
             $this->addFlash('success', "Point de vente mis à jour avec succès");
             return $this->redirectToRoute("pos.show", ["id" => $id]);
@@ -165,7 +145,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->activatePos->execute($entity, true);
+        $this->posGateway->activate($entity, true);
 
         $this->addFlash('success', "Point de vente activé avec succès");
         return $this->redirectToRoute("pos.show", ["id" => $id]);
@@ -179,7 +159,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->activatePos->execute($entity, false);
+        $this->posGateway->activate($entity, false);
 
         $this->addFlash('success', "Point de vente désactivé avec succès");
         return $this->redirectToRoute("pos.show", ["id" => $id]);
@@ -193,7 +173,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->validatePos->execute($entity, true);
+        $this->posGateway->validate($entity, true);
 
         $this->addFlash('success', "Point de vente validé avec succès");
         return $this->redirectToRoute("pos.show", ["id" => $id]);
@@ -207,7 +187,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->validatePos->execute($entity, false);
+        $this->posGateway->validate($entity, false);
 
         $this->addFlash('success', "Point de vente invalidé avec succès");
         return $this->redirectToRoute("pos.show", ["id" => $id]);
