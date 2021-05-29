@@ -87,7 +87,7 @@ class Image
      * @param image $path
      * @return profil
      */
-    public function setPath(image $path): profil
+    public function setPath(image $path)
     {
         $this->path = $path;
         return $this;

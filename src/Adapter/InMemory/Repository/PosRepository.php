@@ -6,6 +6,7 @@ use App\Entity\Employee;
 use App\Entity\Pos;
 use App\Form\InMemory\PosType;
 use App\Gateway\PosGateway;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * Class PosRepository
@@ -156,5 +157,12 @@ class PosRepository implements PosGateway
             ->setValidateAt(new \DateTimeImmutable())
             ->setValidateBy($this->pos[1]->getCreateBy())
         ;
+    }
+    public function search($searchParam): Paginator
+    {
+    }
+
+    public function counter()
+    {
     }
 }

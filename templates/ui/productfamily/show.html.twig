@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block body %}
     <div class="btn-group pull-right" style="margin-top: 15px;">
@@ -14,9 +14,9 @@
                 <li><a href="{{ path('productfamily.activate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-ok-sign"></span> Activer </a></li>
             {% endif %}
             {% if entity.valid %}
-                <li><a href="{{ path('productfamily.invalidate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-minus-sign"></span> Valider </a></li>
+                <li><a href="{{ path('productfamily.invalidate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-minus-sign"></span> Invalider </a></li>
             {% else %}
-                <li><a href="{{ path('productfamily.validate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-ok-sign"></span> Invalider </a></li>
+                <li><a href="{{ path('productfamily.validate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-ok-sign"></span> Valider </a></li>
             {% endif %}
         </ul>
     </div>
