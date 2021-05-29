@@ -3,24 +3,27 @@
 {% set posMenu = ['pos','pos.show','pos.new','pos.edit','pos.activate','pos.validate'] %}
 {% set tankMenu = ['tank','tank.show','tank.new','tank.edit','tank.activate','tank.validate'] %}
 {% set pumpMenu = ['pump','pump.show','pump.new','pump.edit','pump.activate','pump.validate'] %}
-{% set configMenu = ['config'] %} 
+{% set configMenu = ['config'] %}
+{% set userMenu = ['users','show_user','new_user','edit_user'] %}
 
 
 <nav id="adminmenu">
     <ul class="top-menu">
-        <li class="{% if route!='eneo_dashboard' %}not-{% endif %}current"><a href="#{#{ path('eneo_dashboard') }#}"><span class="glyphicon glyphicon-stats block"></span> <span class="menu-title">Statistiques</span></a></li>
-          <li class ="dropdown">
-            <a data-toggle="dropdown"><span class="glyphicon glyphicon-tasks"></span> <span class="menu-title">Bases</span> <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a href="{{ path('pos') }}">Points de vente</a></li>
-                <li><a href="{{ path('tank') }}">Cuves</a></li>
-                <li><a href="{{ path('pump') }}">Pompes</a></li>
-                <li class="divider"></li>
-                <li><a href="{{ path('typeproduct') }}">Types Produit</a></li>
-                <li><a href="{{ path('productfamily') }}">Familles Produit</a></li>
-                <li><a href="{{ path('product') }}">Produits</a></li>
+        <li class="{% if route!='dashboard' %}not-{% endif %}current"><a href="{{ path('dashboard') }}"><span class="glyphicon glyphicon-stats block"></span> <span class="menu-title">Statistiques</span></a></li>
+            <li class ="dropdown">
+                {#% if is_granted('ROLE_BASE') %#}
+                    <a data-toggle="dropdown"><span class="glyphicon glyphicon-tasks"></span> <span class="menu-title">Bases</span> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {#% if is_granted('ROLE_POS_LIST')  %#}  <li><a href="{{ path('pos') }}">Points de vente</a></li> {#% endif %#}
+                        {#% if is_granted('ROLE_TANK_LIST')  %#} <li><a href="{{ path('tank') }}">Cuves</a></li> {#% endif %#}
+                        {#% if is_granted('ROLE_PUMP_LIST')  %#} <li><a href="{{ path('pump') }}">Pompes</a></li> {#% endif %#}
+                        <li class="divider"></li>
+                        {#% if is_granted('ROLE_TYPEPRODUCT_LIST')  %#} <li><a href="{{ path('typeproduct') }}">Types Produit</a></li> {#% endif %#}
+                        {#% if is_granted('ROLE_PRODUCTFAMILY_LIST')  %#} <li><a href="{{ path('productfamily') }}">Familles Produit</a></li> {#% endif %#}
+                        {#% if is_granted('ROLE_PRODUCT_LIST')  %#} <li><a href="{{ path('product') }}">Produits</a></li> {#% endif %#}
 
-            </ul>
+                    </ul>
+                {#% endif %#}
           </li>
         <li class="not-current"><a href="#" id="trigger-shelf"><span class="glyphicon glyphicon-chevron-left block"></span>  <span class="menu-title">Collapse menu</span></a></li>
     </ul>

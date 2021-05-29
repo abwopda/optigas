@@ -39,6 +39,8 @@ class TankController extends AbstractController
 
     public function index()
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_LIST', null, 'Cannot access this page');
+
         $entities = $this->tankGateway->findAll();
         return $this->render("ui/tank/index.html.twig", [
             "entities"  => $entities,
@@ -52,6 +54,8 @@ class TankController extends AbstractController
 
     public function new(int $pos)
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_ADD', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($pos);
 
         if (!$entity) {
@@ -73,6 +77,8 @@ class TankController extends AbstractController
      */
     public function create(int $pos, Request $request): Response
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_ADD', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($pos);
 
         if (!$entity) {
@@ -103,6 +109,8 @@ class TankController extends AbstractController
 
     public function edit(int $id)
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_EDIT', null, 'Cannot access this page');
+
         $entity = $this->tankGateway->findOneById($id);
 
         if (!$entity) {
@@ -119,6 +127,8 @@ class TankController extends AbstractController
 
     public function update(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_EDIT', null, 'Cannot access this page');
+
         $entity = $this->tankGateway->findOneById($id);
 
         if (!$entity) {
@@ -151,6 +161,8 @@ class TankController extends AbstractController
 
     public function show(int $id)
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_VIEW', null, 'Cannot access this page');
+
         $entity = $this->tankGateway->findOneById($id);
 
         if (!$entity) {
@@ -164,6 +176,8 @@ class TankController extends AbstractController
 
     public function activate(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_ACTIVATE', null, 'Cannot access this page');
+
         $entity = $this->tankGateway->findOneById($id);
 
         if (!$entity) {
@@ -178,6 +192,8 @@ class TankController extends AbstractController
 
     public function disable(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_ACTIVATE', null, 'Cannot access this page');
+
         $entity = $this->tankGateway->findOneById($id);
 
         if (!$entity) {
@@ -192,6 +208,8 @@ class TankController extends AbstractController
 
     public function validate(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_VALIDATE', null, 'Cannot access this page');
+
         $entity = $this->tankGateway->findOneById($id);
 
         if (!$entity) {
@@ -206,6 +224,8 @@ class TankController extends AbstractController
 
     public function invalidate(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_TANK_VALIDATE', null, 'Cannot access this page');
+
         $entity = $this->tankGateway->findOneById($id);
 
         if (!$entity) {

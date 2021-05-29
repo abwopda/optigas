@@ -39,6 +39,7 @@ class PosController extends AbstractController
 
     public function index()
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_LIST', null, 'Cannot access this page');
         $entities = $this->posGateway->findAll();
         return $this->render("ui/pos/index.html.twig", [
             "entities"  => $entities,
@@ -47,6 +48,8 @@ class PosController extends AbstractController
 
     public function new()
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_ADD', null, 'Cannot access this page');
+
         $entity = new Pos();
         $form = $this->createForm($this->posGateway->getTypeClass(), $entity);
 
@@ -62,6 +65,8 @@ class PosController extends AbstractController
      */
     public function create(Request $request): Response
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_ADD', null, 'Cannot access this page');
+
         $entity = new Pos();
 
         $form = $this->createForm($this->posGateway->getTypeClass(), $entity)->handleRequest($request);
@@ -85,6 +90,8 @@ class PosController extends AbstractController
 
     public function edit(int $id)
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_EDIT', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($id);
 
         if (!$entity) {
@@ -101,6 +108,8 @@ class PosController extends AbstractController
 
     public function update(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_EDIT', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($id);
 
         if (!$entity) {
@@ -126,6 +135,8 @@ class PosController extends AbstractController
 
     public function show(int $id)
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_VIEW', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($id);
 
         if (!$entity) {
@@ -139,6 +150,8 @@ class PosController extends AbstractController
 
     public function activate(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_ACTIVATE', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($id);
 
         if (!$entity) {
@@ -153,6 +166,8 @@ class PosController extends AbstractController
 
     public function disable(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_ACTIVATE', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($id);
 
         if (!$entity) {
@@ -167,6 +182,8 @@ class PosController extends AbstractController
 
     public function validate(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_VALIDATE', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($id);
 
         if (!$entity) {
@@ -181,6 +198,8 @@ class PosController extends AbstractController
 
     public function invalidate(int $id, Request $request)
     {
+        //$this->denyAccessUnlessGranted('ROLE_POS_VALIDATE', null, 'Cannot access this page');
+
         $entity = $this->posGateway->findOneById($id);
 
         if (!$entity) {

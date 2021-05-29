@@ -33,3 +33,86 @@ security:
          - { path: ^/employee/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/contact/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_BASE:
+          - ROLE_USER
+          - ROLE_POS_LIST
+          - ROLE_TANK_LIST
+          - ROLE_PUMP_LIST
+          - ROLE_TYPEPRODUCT_LIST
+          - ROLE_PRODUCTFAMILY_LIST
+          - ROLE_PRODUCT_LIST
+        ROLE_POS:
+          - ROLE_BASE
+          - ROLE_POS_EDITOR
+          - ROLE_POS_READER
+        ROLE_POS_EDITOR:
+          - ROLE_POS_ADD
+          - ROLE_POS_EDIT
+          - ROLE_POS_VALIDATE
+          - ROLE_POS_ACTIVATE
+        ROLE_POS_READER:
+          - ROLE_POS_LIST
+          - ROLE_POS_VIEW
+        ROLE_TANK:
+          - ROLE_BASE
+          - ROLE_TANK_EDITOR
+          - ROLE_TANK_READER
+        ROLE_TANK_EDITOR:
+          - ROLE_TANK_ADD
+          - ROLE_TANK_EDIT
+          - ROLE_TANK_VALIDATE
+          - ROLE_TANK_ACTIVATE
+        ROLE_TANK_READER:
+          - ROLE_TANK_LIST
+          - ROLE_TANK_VIEW
+        ROLE_PUMP:
+          - ROLE_BASE
+          - ROLE_PUMP_EDITOR
+          - ROLE_PUMP_READER
+        ROLE_PUMP_EDITOR:
+          - ROLE_PUMP_ADD
+          - ROLE_PUMP_EDIT
+          - ROLE_PUMP_VALIDATE
+          - ROLE_PUMP_ACTIVATE
+        ROLE_PUMP_READER:
+          - ROLE_PUMP_LIST
+          - ROLE_PUMP_VIEW
+        ROLE_TYPEPRODUCT:
+          - ROLE_BASE
+          - ROLE_TYPEPRODUCT_EDITOR
+          - ROLE_TYPEPRODUCT_READER
+        ROLE_TYPEPRODUCT_EDITOR:
+          - ROLE_TYPEPRODUCT_ADD
+          - ROLE_TYPEPRODUCT_EDIT
+          - ROLE_TYPEPRODUCT_VALIDATE
+          - ROLE_TYPEPRODUCT_ACTIVATE
+        ROLE_TYPEPRODUCT_READER:
+          - ROLE_TYPEPRODUCT_LIST
+          - ROLE_TYPEPRODUCT_VIEW
+        ROLE_PRODUCTFAMILY:
+          - ROLE_BASE
+          - ROLE_PRODUCTFAMILY_EDITOR
+          - ROLE_PRODUCTFAMILY_READER
+        ROLE_PRODUCTFAMILY_EDITOR:
+          - ROLE_PRODUCTFAMILY_ADD
+          - ROLE_PRODUCTFAMILY_EDIT
+          - ROLE_PRODUCTFAMILY_VALIDATE
+          - ROLE_PRODUCTFAMILY_ACTIVATE
+        ROLE_PRODUCTFAMILY_READER:
+          - ROLE_PRODUCTFAMILY_LIST
+          - ROLE_PRODUCTFAMILY_VIEW
+        ROLE_PRODUCT:
+          - ROLE_BASE
+          - ROLE_PRODUCT_EDITOR
+          - ROLE_PRODUCT_READER
+        ROLE_PRODUCT_EDITOR:
+          - ROLE_PRODUCT_ADD
+          - ROLE_PRODUCT_EDIT
+          - ROLE_PRODUCT_VALIDATE
+          - ROLE_PRODUCT_ACTIVATE
+        ROLE_PRODUCT_READER:
+          - ROLE_PRODUCT_LIST
+          - ROLE_PRODUCT_VIEW
+

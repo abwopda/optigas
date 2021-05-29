@@ -1,0 +1,7 @@
+dashboard:
+  path:  /
+  controller: App\Controller\DefaultController::index
+
+stats:
+  path:  /stats
+  controller: App\Controller\DefaultController::stats

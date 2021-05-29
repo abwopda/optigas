@@ -1,3 +1,6 @@
+default:
+  resource: "routing/default.yaml"
+
 employee:
   resource: "routing/employee.yaml"
   prefix:   /employee
