@@ -62,6 +62,7 @@ class UserProvider implements UserProviderInterface
     public function supportsClass(string $class)
     {
         //return $class === User::class;
-        return $class === Employee::class || $class === Contact::class;
+        return $class === User::class || is_subclass_of($class, User::class);
+        //return $class === Employee::class || $class === Contact::class;
     }
 }

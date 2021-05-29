@@ -113,6 +113,14 @@ abstract class User implements UserInterface, \Serializable, EquatableInterface
     /**
      * @return string|null
      */
+    public function getFullName(): ?string
+    {
+        return $this->firstName . " " . $this->lastName;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
