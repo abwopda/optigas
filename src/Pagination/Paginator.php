@@ -6,9 +6,9 @@ use IteratorAggregate;
 
 class Paginator implements IteratorAggregate
 {
-    const VERSION = "2.0.*";
+    private const VERSION = "2.0.*";
 
-    const NUM = "(:num)";
+    private const NUM = "(:num)";
 
     private $templateUrl;
     private $page = 0;
