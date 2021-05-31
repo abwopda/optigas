@@ -2,18 +2,27 @@ pump:
   path:     /
   controller: App\Controller\PumpController::index
 
+pump.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\PumpController::ajaxList
+  requirements: { _method: post }
+
 pump.new:
   path:     /{tank}/new
   controller: App\Controller\PumpController::new
+  requirements:
+    tank: \d+
 
 pump.create:
   path: /{tank}/create
   controller: App\Controller\PumpController::create
-  requirements: { _method: post }
+  requirements: { _method: post , tank: \d+}
 
 pump.show:
   path: /{id}
   controller: App\Controller\PumpController::show
+  requirements:
+    id: \d+
   
 pump.edit:
   path:     /{id}/edit
@@ -22,24 +31,54 @@ pump.edit:
 pump.update:
   path: /{id}/update
   controller: App\Controller\PumpController::update
-  requirements: { _method: post|put }
+  requirements: { _method: post|put , id: \d+}
+
+pump.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\PumpController::activateOne
+  requirements: { _method: post|put , id: \d+}
 
 pump.activate:
-  path: /{id}/activate
+  path: /activate
   controller: App\Controller\PumpController::activate
   requirements: { _method: post|put }
 
-pump.disable:
+pump.disable.one:
   path: /{id}/disable
+  controller: App\Controller\PumpController::disableOne
+  requirements: { _method: post|put , id: \d+}
+
+pump.disable:
+  path: /disable
   controller: App\Controller\PumpController::disable
   requirements: { _method: post|put }
 
 pump.validate:
-  path: /{id}/validate
+  path: /validate
   controller: App\Controller\PumpController::validate
   requirements: { _method: post|put }
 
+pump.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\PumpController::validateOne
+  requirements: { _method: post|put , id: \d+}
+
 pump.invalidate:
-  path: /{id}/invalidate
+  path: /invalidate
   controller: App\Controller\PumpController::invalidate
   requirements: { _method: post|put }
+
+pump.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\PumpController::invalidateOne
+  requirements: { _method: post|put , id: \d+}
+
+pump.remove:
+  path:     /remove
+  controller: App\Controller\PumpController::remove
+  requirements: { _method: post|delete }
+
+pump.delete:
+  path:     /{id}/delete
+  controller: App\Controller\PumpController::delete
+  requirements: { _method: post|delete ,id: \d+}

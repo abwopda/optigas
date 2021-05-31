@@ -125,6 +125,25 @@ class TankRepository implements TankGateway
         return $this->tank;
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $data = $this->tank;
+        if (!empty($perPage)) {
+            $data = array_slice($this->tank, ($page - 1) * $perPage, $perPage);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return int|mixed|void
+     */
+    public function counter()
+    {
+        return count($this->tank);
+    }
+
     /**
      * @return string
      */
@@ -144,6 +163,13 @@ class TankRepository implements TankGateway
      * @param Tank $tank
      */
     public function update(Tank $tank): void
+    {
+    }
+
+    /**
+     * @param Tank $tank
+     */
+    public function remove(Tank $tank): void
     {
     }
 

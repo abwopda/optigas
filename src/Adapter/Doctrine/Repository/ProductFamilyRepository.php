@@ -6,6 +6,7 @@ use App\Entity\ProductFamily;
 use App\Form\Doctrine\ProductFamilyType;
 use App\Gateway\ProductFamilyGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
 
@@ -35,6 +36,62 @@ class ProductFamilyRepository extends ServiceEntityRepository implements Product
         return parent::findAll();
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $qb = parent::createQueryBuilder('p')
+            ->leftJoin('p.typeproduct', 't');
+
+        if (!empty($entity)) {
+            if ($entity === "typeproduct") {
+                if (!empty($id)) {
+                                $qb->Where('t.id= :id')->setParameter('id', $id);
+                }
+            }
+        }
+
+        if (!empty($ids)) {
+            $qb->andWhere('p.id in (:ids)')->setParameter('ids', $ids);
+        }
+
+        if (!empty($keyword)) {
+            $qb->andWhere('p.name like :keyword or p.description like :keyword')
+                ->setParameter('keyword', '%' . $keyword . '%');
+        }
+
+        if (!empty($active)) {
+            if (in_array("0", $active)) {
+                $qb->andWhere('p.active is null or p.active in (:active)')->setParameter('active', $active);
+            } else {
+                $qb->andWhere('p.active in (:active)')->setParameter('active', $active);
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $qb->andWhere('p.valid is null or p.valid in (:valid)')->setParameter('valid', $valid);
+            } else {
+                $qb->andWhere('p.valid in (:valid)')->setParameter('valid', $valid);
+            }
+        }
+
+
+        $qb->getQuery();
+
+        if (!empty($perPage)) {
+            $qb->setFirstResult(($page - 1) * $perPage)->setMaxResults($perPage);
+        }
+
+
+        return new Paginator($qb, true);
+    }
+
+    public function counter()
+    {
+        $qb = parent::createQueryBuilder('p')->select('COUNT(p)');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function create(ProductFamily $productfamily): void
     {
         $user =  $this->security->getUser();
@@ -61,6 +118,12 @@ class ProductFamilyRepository extends ServiceEntityRepository implements Product
             ->setUpdateAt(new \DateTimeImmutable())
         ;
         $this->_em->persist($productfamily);
+        $this->_em->flush();
+    }
+
+    public function remove(ProductFamily $productFamily): void
+    {
+        $this->_em->remove($productFamily);
         $this->_em->flush();
     }
 

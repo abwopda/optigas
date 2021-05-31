@@ -53,6 +53,25 @@ class PumpRepository implements PumpGateway
         return $this->pump;
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $data = $this->pump;
+        if (!empty($perPage)) {
+            $data = array_slice($this->pump, ($page - 1) * $perPage, $perPage);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return int|mixed|void
+     */
+    public function counter()
+    {
+        return count($this->pump);
+    }
+
     /**
      * TankRepository constructor.
      */
@@ -130,6 +149,13 @@ class PumpRepository implements PumpGateway
      * @param Pump $pump
      */
     public function update(Pump $pump): void
+    {
+    }
+
+    /**
+     * @param Pump $pump
+     */
+    public function remove(Pump $pump): void
     {
     }
 

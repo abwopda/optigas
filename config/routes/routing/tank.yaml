@@ -2,44 +2,137 @@ tank:
   path:     /
   controller: App\Controller\TankController::index
 
+tank.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\TankController::ajaxList
+  requirements: { _method: post }
+
+tank.pumps.ajax:
+  path:     /{id}/pumps.ajaxlist
+  controller: App\Controller\TankController::ajaxpumpsList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+
 tank.new:
   path:     /{pos}/new
   controller: App\Controller\TankController::new
+  requirements:
+    pos: \d+
 
 tank.create:
   path: /{pos}/create
   controller: App\Controller\TankController::create
-  requirements: { _method: post }
+  requirements: { _method: post , pos: \d+}
 
 tank.show:
   path: /{id}
   controller: App\Controller\TankController::show
+  requirements:
+    id: \d+
 
 tank.edit:
   path:     /{id}/edit
   controller: App\Controller\TankController::edit
+  requirements:
+    id: \d+
 
 tank.update:
   path: /{id}/update
   controller: App\Controller\TankController::update
-  requirements: { _method: post|put }
+  requirements: { _method: post|put , id: \d+}
 
 tank.activate:
-  path: /{id}/activate
+  path: /activate
   controller: App\Controller\TankController::activate
   requirements: { _method: post|put }
 
+tank.pump.activate:
+  path:     /{id}/pump.activate
+  controller: App\Controller\TankController::activatepump
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+tank.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\TankController::activateOne
+  requirements: { _method: post|put , id: \d+}
+
 tank.disable:
-  path: /{id}/disable
+  path: /disable
   controller: App\Controller\TankController::disable
   requirements: { _method: post|put }
 
+tank.pump.disable:
+  path:     /{id}/pump.disable
+  controller: App\Controller\TankController::disablepump
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+tank.disable.one:
+  path: /{id}/disable
+  controller: App\Controller\TankController::disableOne
+  requirements: { _method: post|put , id: \d+}
+
 tank.validate:
-  path: /{id}/validate
+  path: /validate
   controller: App\Controller\TankController::validate
   requirements: { _method: post|put }
 
+tank.pump.validate:
+  path:     /{id}/pump.validate
+  controller: App\Controller\TankController::validatepump
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+tank.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\TankController::validateOne
+  requirements: { _method: post|put , id: \d+}
+
 tank.invalidate:
-  path: /{id}/invalidate
+  path: /invalidate
   controller: App\Controller\TankController::invalidate
   requirements: { _method: post|put }
+
+tank.pump.invalidate:
+  path:     /{id}/pump.invalidate
+  controller: App\Controller\TankController::invalidatepump
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+tank.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\TankController::invalidateOne
+  requirements: { _method: post|put , id: \d+}
+  
+tank.remove:
+  path:     /remove
+  controller: App\Controller\TankController::remove
+  requirements: { _method: post|delete }
+
+tank.pump.remove:
+  path:     /{id}/pump.remove
+  controller: App\Controller\TankController::removepump
+  requirements:
+    _method: post|delete
+    id: \d+
+  options:
+    expose: true
+
+tank.delete:
+  path:     /{id}/delete
+  controller: App\Controller\TankController::delete
+  requirements: { _method: post|delete , id: \d+}

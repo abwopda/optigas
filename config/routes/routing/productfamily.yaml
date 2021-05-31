@@ -2,44 +2,137 @@ productfamily:
   path:     /
   controller: App\Controller\ProductFamilyController::index
 
+productfamily.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\ProductFamilyController::ajaxList
+  requirements: { _method: post }
+
+productfamily.products.ajax:
+  path:     /{id}/products.ajaxlist
+  controller: App\Controller\ProductFamilyController::ajaxproductsList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+
 productfamily.new:
   path:     /{typeproduct}/new
   controller: App\Controller\ProductFamilyController::new
+  requirements:
+    typeproduct: \d+
 
 productfamily.create:
   path: /{typeproduct}/create
   controller: App\Controller\ProductFamilyController::create
-  requirements: { _method: post }
+  requirements: { _method: post , typeproduct: \d+ }
 
 productfamily.show:
   path: /{id}
   controller: App\Controller\ProductFamilyController::show
+  requirements:
+    id: \d+
 
 productfamily.edit:
   path:     /{id}/edit
   controller: App\Controller\ProductFamilyController::edit
+  requirements:
+    id: \d+
 
 productfamily.update:
   path: /{id}/update
   controller: App\Controller\ProductFamilyController::update
-  requirements: { _method: post|put }
+  requirements: { _method: post|put ,id: \d+}
 
 productfamily.activate:
-  path: /{id}/activate
+  path: /activate
   controller: App\Controller\ProductFamilyController::activate
   requirements: { _method: post|put }
 
+productfamily.product.activate:
+  path:     /{id}/product.activate
+  controller: App\Controller\ProductFamilyController::activateproduct
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+productfamily.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\ProductFamilyController::activateOne
+  requirements: { _method: post|put ,id: \d+ }
+
 productfamily.disable:
-  path: /{id}/disable
+  path: /disable
   controller: App\Controller\ProductFamilyController::disable
   requirements: { _method: post|put }
 
+productfamily.product.disable:
+  path:     /{id}/product.disable
+  controller: App\Controller\ProductFamilyController::disableproduct
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+productfamily.disable.one:
+  path: /{id}/disable
+  controller: App\Controller\ProductFamilyController::disableOne
+  requirements: { _method: post|put ,id: \d+ }
+
 productfamily.validate:
-  path: /{id}/validate
+  path: /validate
   controller: App\Controller\ProductFamilyController::validate
   requirements: { _method: post|put }
 
+productfamily.product.validate:
+  path:     /{id}/product.validate
+  controller: App\Controller\ProductFamilyController::validateproduct
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+productfamily.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\ProductFamilyController::validateOne
+  requirements: { _method: post|put ,id: \d+ }
+
 productfamily.invalidate:
-  path: /{id}/invalidate
+  path: /invalidate
   controller: App\Controller\ProductFamilyController::invalidate
   requirements: { _method: post|put }
+
+productfamily.product.invalidate:
+  path:     /{id}/product.invalidate
+  controller: App\Controller\ProductFamilyController::invalidateproduct
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+productfamily.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\ProductFamilyController::invalidateOne
+  requirements: { _method: post|put ,id: \d+ }
+
+productfamily.remove:
+  path:     /remove
+  controller: App\Controller\ProductFamilyController::remove
+  requirements: { _method: post|delete }
+
+productfamily.product.remove:
+  path:     /{id}/product.remove
+  controller: App\Controller\ProductFamilyController::removeproduct
+  requirements:
+    _method: post|delete
+    id: \d+
+  options:
+    expose: true
+
+productfamily.delete:
+  path:     /{id}/delete
+  controller: App\Controller\ProductFamilyController::delete
+  requirements: { _method: post|delete ,id: \d+ }

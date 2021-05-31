@@ -6,6 +6,7 @@ use App\Entity\TypeProduct;
 use App\Form\Doctrine\TypeProductType;
 use App\Gateway\TypeProductGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
 
@@ -35,6 +36,52 @@ class TypeProductRepository extends ServiceEntityRepository implements TypeProdu
         return parent::findAll();
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $qb = parent::createQueryBuilder('t');
+
+        if (!empty($ids)) {
+            $qb->andWhere('t.id in (:ids)')->setParameter('ids', $ids);
+        }
+
+        if (!empty($keyword)) {
+            $qb->andWhere('t.name like :keyword or t.description like :keyword')
+                ->setParameter('keyword', '%' . $keyword . '%');
+        }
+
+        if (!empty($active)) {
+            if (in_array("0", $active)) {
+                $qb->andWhere('t.active is null or t.active in (:active)')->setParameter('active', $active);
+            } else {
+                $qb->andWhere('t.active in (:active)')->setParameter('active', $active);
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $qb->andWhere('t.valid is null or t.valid in (:valid)')->setParameter('valid', $valid);
+            } else {
+                $qb->andWhere('t.valid in (:valid)')->setParameter('valid', $valid);
+            }
+        }
+
+        $qb->getQuery();
+
+        if (!empty($perPage)) {
+            $qb->setFirstResult(($page - 1) * $perPage)->setMaxResults($perPage);
+        }
+
+
+        return new Paginator($qb, true);
+    }
+
+    public function counter()
+    {
+        $qb = parent::createQueryBuilder('t')->select('COUNT(t)');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function create(TypeProduct $typeproduct): void
     {
         $user =  $this->security->getUser();
@@ -61,6 +108,12 @@ class TypeProductRepository extends ServiceEntityRepository implements TypeProdu
             ->setUpdateAt(new \DateTimeImmutable())
         ;
         $this->_em->persist($typeproduct);
+        $this->_em->flush();
+    }
+
+    public function remove(TypeProduct $typeProduct): void
+    {
+        $this->_em->remove($typeProduct);
         $this->_em->flush();
     }
 

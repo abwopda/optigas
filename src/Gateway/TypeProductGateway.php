@@ -27,6 +27,11 @@ interface TypeProductGateway
 
     /**
      * @param TypeProduct $typeproduct
+     */
+    public function remove(TypeProduct $typeproduct): void;
+
+    /**
+     * @param TypeProduct $typeproduct
      * @param bool $status
      */
     public function activate(TypeProduct $typeproduct, bool $status): void;
@@ -47,4 +52,14 @@ interface TypeProductGateway
      * @return TypeProduct[]|null
      */
     public function findAll(): ?array;
+
+    /**
+     * @param $searchParam
+     */
+    public function search($searchParam);
+
+    /**
+     * @return mixed
+     */
+    public function counter();
 }

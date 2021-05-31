@@ -27,14 +27,14 @@ class ActivatePosTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("pos.activate", ["id" => 5])
+            $router->generate("pos.activate.one", ["id" => 5])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("pos.disable", ["id" => 5])
+            $router->generate("pos.disable.one", ["id" => 5])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -42,7 +42,7 @@ class ActivatePosTest extends WebTestCase
         for ($i = 3; $i <= 3; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("pos.activate", ["id" => $i])
+                $router->generate("pos.activate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -50,7 +50,7 @@ class ActivatePosTest extends WebTestCase
 
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("pos.disable", ["id" => $i])
+                $router->generate("pos.disable.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

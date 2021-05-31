@@ -27,6 +27,11 @@ interface PosGateway
 
     /**
      * @param Pos $pos
+     */
+    public function remove(Pos $pos): void;
+
+    /**
+     * @param Pos $pos
      * @param bool $status
      */
     public function activate(Pos $pos, bool $status): void;
@@ -47,4 +52,14 @@ interface PosGateway
      * @return Pos[]|null
      */
     public function findAll(): ?array;
+
+    /**
+     * @param $searchParam
+     */
+    public function search($searchParam);
+
+    /**
+     * @return mixed
+     */
+    public function counter();
 }

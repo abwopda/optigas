@@ -6,7 +6,6 @@ use App\Entity\Employee;
 use App\Entity\Pos;
 use App\Form\InMemory\PosType;
 use App\Gateway\PosGateway;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * Class PosRepository
@@ -111,6 +110,26 @@ class PosRepository implements PosGateway
         return $this->pos;
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $data = $this->pos;
+
+        if (!empty($perPage)) {
+            $data = array_slice($this->pos, ($page - 1) * $perPage, $perPage);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return int|mixed|void
+     */
+    public function counter()
+    {
+        return count($this->pos);
+    }
+
     /**
      * @param Pos $pos
      */
@@ -130,6 +149,13 @@ class PosRepository implements PosGateway
      * @param Pos $pos
      */
     public function update(Pos $pos): void
+    {
+    }
+
+    /**
+     * @param Pos $pos
+     */
+    public function remove(Pos $pos): void
     {
     }
 
@@ -157,12 +183,5 @@ class PosRepository implements PosGateway
             ->setValidateAt(new \DateTimeImmutable())
             ->setValidateBy($this->pos[1]->getCreateBy())
         ;
-    }
-    public function search($searchParam): Paginator
-    {
-    }
-
-    public function counter()
-    {
     }
 }

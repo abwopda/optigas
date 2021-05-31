@@ -2,44 +2,86 @@ product:
   path:     /
   controller: App\Controller\ProductController::index
 
+product.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\ProductController::ajaxList
+  requirements: { _method: post }
+
 product.new:
   path:     /{productfamily}/new
   controller: App\Controller\ProductController::new
+  requirements:
+    productfamily: \d+
 
 product.create:
   path: /{productfamily}/create
   controller: App\Controller\ProductController::create
-  requirements: { _method: post }
+  requirements: { _method: post ,productfamily: \d+ }
 
 product.show:
   path: /{id}
   controller: App\Controller\ProductController::show
+  requirements:
+    id: \d+
+
 
 product.edit:
   path:     /{id}/edit
   controller: App\Controller\ProductController::edit
+  requirements:
+    id: \d+
 
 product.update:
   path: /{id}/update
   controller: App\Controller\ProductController::update
-  requirements: { _method: post|put }
+  requirements: { _method: post|put , id: \d+ }
 
 product.activate:
-  path: /{id}/activate
+  path: /activate
   controller: App\Controller\ProductController::activate
   requirements: { _method: post|put }
 
+product.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\ProductController::activateOne
+  requirements: { _method: post|put , id: \d+ }
+
 product.disable:
-  path: /{id}/disable
+  path: /disable
   controller: App\Controller\ProductController::disable
   requirements: { _method: post|put }
 
+product.disable.one:
+  path: /{id}/disable
+  controller: App\Controller\ProductController::disableOne
+  requirements: { _method: post|put , id: \d+ }
+
 product.validate:
-  path: /{id}/validate
+  path: /validate
   controller: App\Controller\ProductController::validate
   requirements: { _method: post|put }
 
+product.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\ProductController::validateOne
+  requirements: { _method: post|put , id: \d+ }
+
 product.invalidate:
-  path: /{id}/invalidate
+  path: /invalidate
   controller: App\Controller\ProductController::invalidate
   requirements: { _method: post|put }
+
+product.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\ProductController::invalidateOne
+  requirements: { _method: post|put , id: \d+ }
+
+product.remove:
+  path:     /remove
+  controller: App\Controller\ProductController::remove
+  requirements: { _method: post|delete }
+
+product.delete:
+  path:     /{id}/delete
+  controller: App\Controller\ProductController::delete
+  requirements: { _method: post|delete , id: \d+ }

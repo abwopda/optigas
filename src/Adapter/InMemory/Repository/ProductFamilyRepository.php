@@ -139,6 +139,25 @@ class ProductFamilyRepository implements ProductFamilyGateway
         return $this->productfamily;
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $data = $this->productfamily;
+        if (!empty($perPage)) {
+            $data = array_slice($this->productfamily, ($page - 1) * $perPage, $perPage);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return int|mixed|void
+     */
+    public function counter()
+    {
+        return count($this->productfamily);
+    }
+
     /**
      * @param ProductFamily $productfamily
      */
@@ -158,6 +177,13 @@ class ProductFamilyRepository implements ProductFamilyGateway
      * @param ProductFamily $productfamily
      */
     public function update(ProductFamily $productfamily): void
+    {
+    }
+
+    /**
+     * @param ProductFamily $productfamily
+     */
+    public function remove(ProductFamily $productfamily): void
     {
     }
 
