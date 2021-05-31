@@ -28,14 +28,14 @@ class ActivateProductFamilyTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("productfamily.activate", ["id" => 10])
+            $router->generate("productfamily.activate.one", ["id" => 10])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("productfamily.disable", ["id" => 10])
+            $router->generate("productfamily.disable.one", ["id" => 10])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -43,7 +43,7 @@ class ActivateProductFamilyTest extends WebTestCase
         for ($i = 5; $i <= 5; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("productfamily.activate", ["id" => $i])
+                $router->generate("productfamily.activate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -51,7 +51,7 @@ class ActivateProductFamilyTest extends WebTestCase
 
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("productfamily.disable", ["id" => $i])
+                $router->generate("productfamily.disable.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

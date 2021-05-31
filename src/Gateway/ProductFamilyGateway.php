@@ -32,9 +32,24 @@ interface ProductFamilyGateway
     public function findAll(): ?array;
 
     /**
+     * @param $searchParam
+     */
+    public function search($searchParam);
+
+    /**
+     * @return mixed
+     */
+    public function counter();
+
+    /**
      * @param ProductFamily $productfamily
      */
     public function update(ProductFamily $productfamily): void;
+
+    /**
+     * @param ProductFamily $productfamily
+     */
+    public function remove(ProductFamily $productfamily): void;
 
     /**
      * @param ProductFamily $productfamily

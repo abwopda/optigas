@@ -32,9 +32,24 @@ interface TankGateway
     public function findAll(): ?array;
 
     /**
+     * @param $searchParam
+     */
+    public function search($searchParam);
+
+    /**
+     * @return mixed
+     */
+    public function counter();
+
+    /**
      * @param Tank $tank
      */
     public function update(Tank $tank): void;
+
+    /**
+     * @param Tank $tank
+     */
+    public function remove(Tank $tank): void;
 
     /**
      * @param Tank $tank

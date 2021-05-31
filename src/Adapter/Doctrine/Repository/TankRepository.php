@@ -6,6 +6,7 @@ use App\Entity\Tank;
 use App\Form\Doctrine\TankType;
 use App\Gateway\TankGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
 
@@ -36,6 +37,62 @@ class TankRepository extends ServiceEntityRepository implements TankGateway
         return parent::findAll();
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $qb = parent::createQueryBuilder('t')
+            ->leftJoin('t.pos', 'p');
+
+        if (!empty($entity)) {
+            if ($entity === "pos") {
+                if (!empty($id)) {
+                                $qb->Where('p.id= :id')->setParameter('id', $id);
+                }
+            }
+        }
+
+        if (!empty($ids)) {
+            $qb->andWhere('t.id in (:ids)')->setParameter('ids', $ids);
+        }
+
+        if (!empty($keyword)) {
+            $qb->andWhere('t.name like :keyword or t.description like :keyword')
+                ->setParameter('keyword', '%' . $keyword . '%');
+        }
+
+        if (!empty($active)) {
+            if (in_array("0", $active)) {
+                $qb->andWhere('t.active is null or t.active in (:active)')->setParameter('active', $active);
+            } else {
+                $qb->andWhere('t.active in (:active)')->setParameter('active', $active);
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $qb->andWhere('t.valid is null or t.valid in (:valid)')->setParameter('valid', $valid);
+            } else {
+                $qb->andWhere('t.valid in (:valid)')->setParameter('valid', $valid);
+            }
+        }
+
+
+        $qb->getQuery();
+
+        if (!empty($perPage)) {
+            $qb->setFirstResult(($page - 1) * $perPage)->setMaxResults($perPage);
+        }
+
+
+        return new Paginator($qb, true);
+    }
+
+    public function counter()
+    {
+        $qb = parent::createQueryBuilder('t')->select('COUNT(t)');
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     /**
      * @return string
      */
@@ -62,6 +119,12 @@ class TankRepository extends ServiceEntityRepository implements TankGateway
             ->setUpdateAt(new \DateTimeImmutable())
         ;
         $this->_em->persist($tank);
+        $this->_em->flush();
+    }
+
+    public function remove(Tank $tank): void
+    {
+        $this->_em->remove($tank);
         $this->_em->flush();
     }
 

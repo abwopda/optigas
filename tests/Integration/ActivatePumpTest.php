@@ -27,14 +27,14 @@ class ActivatePumpTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("pump.activate", ["id" => 50])
+            $router->generate("pump.activate.one", ["id" => 50])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("pump.disable", ["id" => 50])
+            $router->generate("pump.disable.one", ["id" => 50])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -42,7 +42,7 @@ class ActivatePumpTest extends WebTestCase
         for ($i = 11; $i <= 11; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("pump.activate", ["id" => $i])
+                $router->generate("pump.activate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -50,7 +50,7 @@ class ActivatePumpTest extends WebTestCase
 
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("pump.disable", ["id" => $i])
+                $router->generate("pump.disable.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

@@ -24,7 +24,7 @@ class ConfigRepository implements ConfigGateway
     {
         $config_array = [
             ['name' => 'app_logo','value' => ""],
-            ['name' => 'app_name','value' => ""],
+            ['name' => 'app_name','value' => "optigas"],
             ['name' => 'app_description','value' => "description :)"],
             ['name' => 'app_address','value' => ""],
             ['name' => 'app_cp','value' => 11060],

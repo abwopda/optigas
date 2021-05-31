@@ -27,14 +27,14 @@ class ActivateTypeProductTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("typeproduct.activate", ["id" => 10])
+            $router->generate("typeproduct.activate.one", ["id" => 10])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("typeproduct.disable", ["id" => 10])
+            $router->generate("typeproduct.disable.one", ["id" => 10])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -42,7 +42,7 @@ class ActivateTypeProductTest extends WebTestCase
         for ($i = 3; $i <= 3; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("typeproduct.activate", ["id" => $i])
+                $router->generate("typeproduct.activate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -50,7 +50,7 @@ class ActivateTypeProductTest extends WebTestCase
 
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("typeproduct.disable", ["id" => $i])
+                $router->generate("typeproduct.disable.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

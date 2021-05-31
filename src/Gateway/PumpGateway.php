@@ -33,9 +33,24 @@ interface PumpGateway
     public function findAll(): ?array;
 
     /**
+     * @param $searchParam
+     */
+    public function search($searchParam);
+
+    /**
+     * @return mixed
+     */
+    public function counter();
+
+    /**
      * @param Pump $pump
      */
     public function update(Pump $pump): void;
+
+    /**
+     * @param Pump $pump
+     */
+    public function remove(Pump $pump): void;
 
     /**
      * @param Pump $pump

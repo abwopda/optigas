@@ -5,8 +5,11 @@ namespace App\Controller;
 use App\Entity\Tank;
 use App\Form\TankType;
 use App\Gateway\PosGateway;
+use App\Gateway\PumpGateway;
 use App\Gateway\TankGateway;
+use App\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
@@ -20,21 +23,25 @@ class TankController extends AbstractController
     private Security $security;
     private PosGateway $posGateway;
     private TankGateway $tankGateway;
+    private PumpGateway $pumpGateway;
 
     /**
      * TankController constructor.
      * @param Security $security
      * @param PosGateway $posGateway
      * @param TankGateway $tankGateway
+     * @param PumpGateway $pumpGateway
      */
     public function __construct(
         Security $security,
         PosGateway $posGateway,
-        TankGateway $tankGateway
+        TankGateway $tankGateway,
+        PumpGateway $pumpGateway
     ) {
         $this->security = $security;
         $this->posGateway = $posGateway;
         $this->tankGateway = $tankGateway;
+        $this->pumpGateway = $pumpGateway;
     }
 
     public function index()
@@ -45,6 +52,51 @@ class TankController extends AbstractController
         return $this->render("ui/tank/index.html.twig", [
             "entities"  => $entities,
         ]);
+    }
+
+    public function ajaxList(Request $request)
+    {
+        $searchParam = $request->get('searchParam');
+        $active = $request->get('active');
+        $valid = $request->get('valid');
+        $searchParam['active'] = $active;
+        $searchParam['valid'] = $valid;
+
+        $searchParam['entity'] = 'tank';
+
+        //var_export($searchParam);
+        //die(json_encode($valid));
+
+        $entities = $this->tankGateway->search($searchParam);
+        $pagination = (new Paginator())
+            ->setItems(count($entities), $searchParam['perPage'])
+            ->setPage($searchParam['page'])->toArray();
+
+        return $this->render('ui/tank/ajax_list.html.twig', [
+            'entities' => $entities,
+            'pagination' => $pagination,
+        ]);
+    }
+
+    public function ajaxpumpsList(Request $request, $id)
+    {
+        $searchParam = $request->get('searchParam');
+        $active = $request->get('active');
+        $valid = $request->get('valid');
+        $searchParam['active'] = $active;
+        $searchParam['valid'] = $valid;
+        $searchParam['entity'] = 'tank';
+        $searchParam['id'] = $id;
+        //die(json_encode($searchParam));
+        $entities = $this->pumpGateway->search($searchParam);
+        $pagination = (new Paginator())
+            ->setItems(count($entities), $searchParam['perPage'])
+            ->setPage($searchParam['page'])->toArray();
+        return $this->render('ui/tank/ajax_pumps_list.html.twig', array(
+            'entities' => $entities,
+            'pagination' => $pagination,
+            'id' => 'pump' . $id,
+        ));
     }
 
     /**
@@ -174,7 +226,29 @@ class TankController extends AbstractController
         ]);
     }
 
-    public function activate(int $id, Request $request)
+    public function activate(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->tankGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->tankGateway->activate($entity, true);
+        }
+
+        return new Response('1');
+    }
+
+    public function activatepump(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->pumpGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->pumpGateway->activate($entity, true);
+        }
+
+        return new Response('1');
+    }
+
+    public function activateOne(int $id, Request $request)
     {
         //$this->denyAccessUnlessGranted('ROLE_TANK_ACTIVATE', null, 'Cannot access this page');
 
@@ -190,7 +264,29 @@ class TankController extends AbstractController
         return $this->redirectToRoute("tank.show", ["id" => $id]);
     }
 
-    public function disable(int $id, Request $request)
+    public function disable(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->tankGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->tankGateway->activate($entity, false);
+        }
+
+        return new Response('1');
+    }
+
+    public function disablepump(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->pumpGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->pumpGateway->activate($entity, false);
+        }
+
+        return new Response('1');
+    }
+
+    public function disableOne(int $id, Request $request)
     {
         //$this->denyAccessUnlessGranted('ROLE_TANK_ACTIVATE', null, 'Cannot access this page');
 
@@ -206,7 +302,29 @@ class TankController extends AbstractController
         return $this->redirectToRoute("tank.show", ["id" => $id]);
     }
 
-    public function validate(int $id, Request $request)
+    public function validate(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->tankGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->tankGateway->validate($entity, true);
+        }
+
+        return new Response('1');
+    }
+
+    public function validatepump(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->pumpGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->pumpGateway->validate($entity, true);
+        }
+
+        return new Response('1');
+    }
+
+    public function validateOne(int $id, Request $request)
     {
         //$this->denyAccessUnlessGranted('ROLE_TANK_VALIDATE', null, 'Cannot access this page');
 
@@ -222,7 +340,29 @@ class TankController extends AbstractController
         return $this->redirectToRoute("tank.show", ["id" => $id]);
     }
 
-    public function invalidate(int $id, Request $request)
+    public function invalidate(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->tankGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->tankGateway->validate($entity, false);
+        }
+
+        return new Response('1');
+    }
+
+    public function invalidatepump(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->pumpGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->pumpGateway->validate($entity, false);
+        }
+
+        return new Response('1');
+    }
+
+    public function invalidateOne(int $id, Request $request)
     {
         //$this->denyAccessUnlessGranted('ROLE_TANK_VALIDATE', null, 'Cannot access this page');
 
@@ -236,5 +376,55 @@ class TankController extends AbstractController
 
         $this->addFlash('success', "Cuve invalidée avec succès");
         return $this->redirectToRoute("tank.show", ["id" => $id]);
+    }
+
+    public function remove(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->tankGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->tankGateway->remove($entity);
+        }
+
+        return $this->redirect($this->generateUrl('tank'));
+    }
+
+    public function removepump(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->pumpGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->pumpGateway->remove($entity);
+        }
+
+        return $this->redirect($this->generateUrl('pos'));
+    }
+
+    public function delete(int $id, Request $request)
+    {
+        $entity = $this->tankGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
+        }
+
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->tankGateway->remove($entity);
+
+            $this->addFlash('success', "Cuve supprimée avec succès");
+        }
+
+        return $this->redirect($this->generateUrl('pos'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(['id' => $id])
+            ->add('id', HiddenType::class)
+            ->getForm()
+            ;
     }
 }

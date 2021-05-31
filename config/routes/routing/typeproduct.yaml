@@ -2,6 +2,25 @@ typeproduct:
   path:     /
   controller: App\Controller\TypeProductController::index
 
+typeproduct.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\TypeProductController::ajaxList
+  requirements: { _method: post }
+  
+typeproduct.families.ajax:
+  path:     /{id}/families.ajaxlist
+  controller: App\Controller\TypeProductController::ajaxfamiliesList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+
+typeproduct.products.ajax:
+  path:     /{id}/products.ajaxlist
+  controller: App\Controller\TypeProductController::ajaxproductsList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+
 typeproduct.new:
   path:     /new
   controller: App\Controller\TypeProductController::new
@@ -14,32 +33,156 @@ typeproduct.create:
 typeproduct.show:
   path: /{id}
   controller: App\Controller\TypeProductController::show
+  requirements:
+    id: \d+
 
 typeproduct.edit:
   path:     /{id}/edit
   controller: App\Controller\TypeProductController::edit
+  requirements:
+    id: \d+
 
 typeproduct.update:
   path: /{id}/update
   controller: App\Controller\TypeProductController::update
-  requirements: { _method: post|put }
+  requirements: { _method: post|put ,id: \d+}
 
 typeproduct.activate:
-  path: /{id}/activate
+  path: /activate
   controller: App\Controller\TypeProductController::activate
   requirements: { _method: post|put }
+  
+typeproduct.family.activate:
+  path:     /{id}/family.activate
+  controller: App\Controller\TypeProductController::activatefamily
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.product.activate:
+  path:     /{id}/product.activate
+  controller: App\Controller\TypeProductController::activateproduct
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\TypeProductController::activateOne
+  requirements: { _method: post|put ,id: \d+}
 
 typeproduct.disable:
-  path: /{id}/disable
+  path: /disable
   controller: App\Controller\TypeProductController::disable
   requirements: { _method: post|put }
 
+typeproduct.family.disable:
+  path:     /{id}/family.disable
+  controller: App\Controller\TypeProductController::disablefamily
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.product.disable:
+  path:     /{id}/product.disable
+  controller: App\Controller\TypeProductController::disableproduct
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.disable.one:
+  path: /{id}/disable
+  controller: App\Controller\TypeProductController::disableOne
+  requirements: { _method: post|put ,id: \d+}
+
 typeproduct.validate:
-  path: /{id}/validate
+  path: /validate
   controller: App\Controller\TypeProductController::validate
   requirements: { _method: post|put }
 
+typeproduct.family.validate:
+  path:     /{id}/family.validate
+  controller: App\Controller\TypeProductController::validatefamily
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.product.validate:
+  path:     /{id}/product.validate
+  controller: App\Controller\TypeProductController::validateproduct
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\TypeProductController::validateOne
+  requirements: { _method: post|put ,id: \d+}
+
 typeproduct.invalidate:
-  path: /{id}/invalidate
+  path: /invalidate
   controller: App\Controller\TypeProductController::invalidate
   requirements: { _method: post|put }
+
+typeproduct.family.invalidate:
+  path:     /{id}/family.invalidate
+  controller: App\Controller\TypeProductController::invalidatefamily
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.product.invalidate:
+  path:     /{id}/product.invalidate
+  controller: App\Controller\TypeProductController::invalidateproduct
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\TypeProductController::invalidateOne
+  requirements: { _method: post|put ,id: \d+}
+
+typeproduct.remove:
+  path:     /remove
+  controller: App\Controller\TypeProductController::remove
+  requirements: { _method: post|delete }
+
+typeproduct.family.remove:
+  path:     /{id}/family.remove
+  controller: App\Controller\TypeProductController::removefamily
+  requirements:
+    _method: post|delete
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.product.remove:
+  path:     /{id}/product.remove
+  controller: App\Controller\TypeProductController::removeproduct
+  requirements:
+    _method: post|delete
+    id: \d+
+  options:
+    expose: true
+
+typeproduct.delete:
+  path:     /{id}/delete
+  controller: App\Controller\TypeProductController::delete
+  requirements: { _method: post|delete ,id: \d+}

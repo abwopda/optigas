@@ -2,6 +2,25 @@ pos:
   path:     /
   controller: App\Controller\PosController::index
 
+pos.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\PosController::ajaxList
+  requirements: { _method: post }
+
+pos.tanks.ajax:
+  path:     /{id}/tanks.ajaxlist
+  controller: App\Controller\PosController::ajaxtanksList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+    
+pos.pumps.ajax:
+  path:     /{id}/pumps.ajaxlist
+  controller: App\Controller\PosController::ajaxpumpsList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+
 pos.new:
   path:     /new
   controller: App\Controller\PosController::new
@@ -14,32 +33,157 @@ pos.create:
 pos.show:
   path: /{id}
   controller: App\Controller\PosController::show
+  requirements:
+    id: \d+
 
 pos.edit:
   path:     /{id}/edit
   controller: App\Controller\PosController::edit
+  requirements:
+    id: \d+
 
 pos.update:
   path: /{id}/update
   controller: App\Controller\PosController::update
-  requirements: { _method: post|put }
+  requirements: { _method: post|put , id: \d+}
+
 
 pos.activate:
-  path: /{id}/activate
+  path: /activate
   controller: App\Controller\PosController::activate
   requirements: { _method: post|put }
 
+pos.tank.activate:
+  path:     /{id}/tank.activate
+  controller: App\Controller\PosController::activatetank
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+    
+pos.pump.activate:
+  path:     /{id}/pump.activate
+  controller: App\Controller\PosController::activatepump
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+pos.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\PosController::activateOne
+  requirements: { _method: post|put , id: \d+}
+
 pos.disable:
-  path: /{id}/disable
+  path: /disable
   controller: App\Controller\PosController::disable
   requirements: { _method: post|put }
 
+pos.tank.disable:
+  path:     /{id}/tank.disable
+  controller: App\Controller\PosController::disabletank
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+    
+pos.pump.disable:
+  path:     /{id}/pump.disable
+  controller: App\Controller\PosController::disablepump
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+pos.disable.one:
+  path: /{id}/disable
+  controller: App\Controller\PosController::disableOne
+  requirements: { _method: post|put , id: \d+}
+
 pos.validate:
-  path: /{id}/validate
+  path: /validate
   controller: App\Controller\PosController::validate
   requirements: { _method: post|put }
 
+pos.tank.validate:
+  path:     /{id}/tank.validate
+  controller: App\Controller\PosController::validatetank
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+    
+pos.pump.validate:
+  path:     /{id}/pump.validate
+  controller: App\Controller\PosController::validatepump
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+pos.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\PosController::validateOne
+  requirements: { _method: post|put , id: \d+}
+
 pos.invalidate:
-  path: /{id}/invalidate
+  path: /invalidate
   controller: App\Controller\PosController::invalidate
   requirements: { _method: post|put }
+
+pos.tank.invalidate:
+  path:     /{id}/tank.invalidate
+  controller: App\Controller\PosController::invalidatetank
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+    
+pos.pump.invalidate:
+  path:     /{id}/pump.invalidate
+  controller: App\Controller\PosController::invalidatepump
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+pos.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\PosController::invalidateOne
+  requirements: { _method: post|put , id: \d+}
+
+pos.remove:
+  path:     /remove
+  controller: App\Controller\PosController::remove
+  requirements: { _method: post|delete }
+
+pos.tank.remove:
+  path:     /{id}/tank.remove
+  controller: App\Controller\PosController::removetank
+  requirements:
+    _method: post|delete
+    id: \d+
+  options:
+    expose: true
+    
+pos.pump.remove:
+  path:     /{id}/pump.remove
+  controller: App\Controller\PosController::removepump
+  requirements:
+    _method: post|delete
+    id: \d+
+  options:
+    expose: true
+
+pos.delete:
+  path:     /{id}/delete
+  controller: App\Controller\PosController::delete
+  requirements: { _method: post|delete , id: \d+}

@@ -6,7 +6,9 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Gateway\ProductFamilyGateway;
 use App\Gateway\ProductGateway;
+use App\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
@@ -42,6 +44,23 @@ class ProductController extends AbstractController
         $entities = $this->productGateway->findAll();
         return $this->render("ui/product/index.html.twig", [
             "entities"  => $entities,
+        ]);
+    }
+
+    public function ajaxList(Request $request)
+    {
+        $searchParam = $request->get('searchParam');
+
+        //var_export($searchParam);
+        //die(json_encode($valid));
+        $entities = $this->productGateway->search($searchParam);
+        $pagination = (new Paginator())
+            ->setItems(count($entities), $searchParam['perPage'])
+            ->setPage($searchParam['page'])->toArray();
+
+        return $this->render('ui/product/ajax_list.html.twig', [
+            'entities' => $entities,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -163,7 +182,18 @@ class ProductController extends AbstractController
         ]);
     }
 
-    public function activate(int $id, Request $request)
+    public function activate(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->productGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->productGateway->activate($entity, true);
+        }
+
+        return new Response('1');
+    }
+
+    public function activateOne(int $id, Request $request)
     {
         $entity = $this->productGateway->findOneById($id);
 
@@ -178,7 +208,18 @@ class ProductController extends AbstractController
         return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
-    public function disable(int $id, Request $request)
+    public function disable(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->productGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->productGateway->activate($entity, false);
+        }
+
+        return new Response('1');
+    }
+
+    public function disableOne(int $id, Request $request)
     {
         $entity = $this->productGateway->findOneById($id);
 
@@ -192,7 +233,18 @@ class ProductController extends AbstractController
         return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
-    public function validate(int $id, Request $request)
+    public function validate(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->productGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->productGateway->validate($entity, true);
+        }
+
+        return new Response('1');
+    }
+
+    public function validateOne(int $id, Request $request)
     {
         $entity = $this->productGateway->findOneById($id);
 
@@ -206,7 +258,18 @@ class ProductController extends AbstractController
         return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
-    public function invalidate(int $id, Request $request)
+    public function invalidate(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->productGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->productGateway->validate($entity, false);
+        }
+
+        return new Response('1');
+    }
+
+    public function invalidateOne(int $id, Request $request)
     {
         $entity = $this->productGateway->findOneById($id);
 
@@ -218,5 +281,44 @@ class ProductController extends AbstractController
 
         $this->addFlash('success', "Produit invalidé avec succès");
         return $this->redirectToRoute("product.show", ["id" => $id]);
+    }
+
+    public function remove(Request $request)
+    {
+        $ids = $request->get('entities');
+        $entities = $this->productGateway->search(array('ids' => $ids));
+        foreach ($entities as $entity) {
+            $this->productGateway->remove($entity);
+        }
+
+        return $this->redirect($this->generateUrl('product'));
+    }
+
+    public function delete(int $id, Request $request)
+    {
+        $entity = $this->productGateway->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
+        }
+
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productGateway->remove($entity);
+
+            $this->addFlash('success', "Produit supprimé avec succès");
+        }
+
+        return $this->redirect($this->generateUrl('product'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(['id' => $id])
+            ->add('id', HiddenType::class)
+            ->getForm()
+            ;
     }
 }

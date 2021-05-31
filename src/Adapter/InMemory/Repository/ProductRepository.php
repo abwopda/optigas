@@ -201,6 +201,25 @@ class ProductRepository implements ProductGateway
         return $this->product;
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $data = $this->product;
+        if (!empty($perPage)) {
+            $data = array_slice($this->product, ($page - 1) * $perPage, $perPage);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return int|mixed|void
+     */
+    public function counter()
+    {
+        return count($this->product);
+    }
+
     /**
      * @param Product $product
      */
@@ -220,6 +239,13 @@ class ProductRepository implements ProductGateway
      * @param Product $product
      */
     public function update(Product $product): void
+    {
+    }
+
+    /**
+     * @param Product $product
+     */
+    public function remove(Product $product): void
     {
     }
 

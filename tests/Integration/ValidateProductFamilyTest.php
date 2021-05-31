@@ -27,14 +27,14 @@ class ValidateProductFamilyTest extends WebTestCase
         $router = $client->getContainer()->get("router");
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("productfamily.validate", ["id" => 10])
+            $router->generate("productfamily.validate.one", ["id" => 10])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("productfamily.invalidate", ["id" => 10])
+            $router->generate("productfamily.invalidate.one", ["id" => 10])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -42,7 +42,7 @@ class ValidateProductFamilyTest extends WebTestCase
         for ($i = 5; $i <= 5; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("productfamily.validate", ["id" => $i])
+                $router->generate("productfamily.validate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -50,7 +50,7 @@ class ValidateProductFamilyTest extends WebTestCase
 
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("productfamily.invalidate", ["id" => $i])
+                $router->generate("productfamily.invalidate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

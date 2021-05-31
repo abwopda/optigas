@@ -28,14 +28,14 @@ class ValidatePosTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("pos.validate", ["id" => 5])
+            $router->generate("pos.validate.one", ["id" => 5])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("pos.invalidate", ["id" => 5])
+            $router->generate("pos.invalidate.one", ["id" => 5])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -43,7 +43,7 @@ class ValidatePosTest extends WebTestCase
         for ($i = 3; $i <= 3; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("pos.validate", ["id" => $i])
+                $router->generate("pos.validate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -51,7 +51,7 @@ class ValidatePosTest extends WebTestCase
 
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("pos.invalidate", ["id" => $i])
+                $router->generate("pos.invalidate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

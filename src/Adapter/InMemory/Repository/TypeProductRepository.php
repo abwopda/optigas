@@ -99,6 +99,25 @@ class TypeProductRepository implements TypeProductGateway
         return $this->typeproduct;
     }
 
+    public function search($searchParam)
+    {
+        extract($searchParam);
+        $data = $this->typeproduct;
+        if (!empty($perPage)) {
+            $data = array_slice($this->typeproduct, ($page - 1) * $perPage, $perPage);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return int|mixed|void
+     */
+    public function counter()
+    {
+        return count($this->typeproduct);
+    }
+
     /**
      * @param TypeProduct $typeproduct
      */
@@ -118,6 +137,13 @@ class TypeProductRepository implements TypeProductGateway
      * @param TypeProduct $typeproduct
      */
     public function update(TypeProduct $typeproduct): void
+    {
+    }
+
+    /**
+     * @param TypeProduct $typeproduct
+     */
+    public function remove(TypeProduct $typeproduct): void
     {
     }
 

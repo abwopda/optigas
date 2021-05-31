@@ -32,9 +32,24 @@ interface ProductGateway
     public function findAll(): ?array;
 
     /**
+     * @param $searchParam
+     */
+    public function search($searchParam);
+
+    /**
+     * @return mixed
+     */
+    public function counter();
+
+    /**
      * @param Product $product
      */
     public function update(Product $product): void;
+
+    /**
+     * @param Product $product
+     */
+    public function remove(Product $product): void;
 
     /**
      * @param Product $product

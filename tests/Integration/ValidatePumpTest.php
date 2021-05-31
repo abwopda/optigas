@@ -27,14 +27,14 @@ class ValidatePumpTest extends WebTestCase
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("pump.validate", ["id" => 50])
+            $router->generate("pump.validate.one", ["id" => 50])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         $crawler = $client->request(
             Request::METHOD_POST,
-            $router->generate("pump.invalidate", ["id" => 50])
+            $router->generate("pump.invalidate.one", ["id" => 50])
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -42,7 +42,7 @@ class ValidatePumpTest extends WebTestCase
         for ($i = 11; $i <= 11; $i++) {
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("pump.validate", ["id" => $i])
+                $router->generate("pump.validate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -50,7 +50,7 @@ class ValidatePumpTest extends WebTestCase
 
             $crawler = $client->request(
                 Request::METHOD_POST,
-                $router->generate("pump.invalidate", ["id" => $i])
+                $router->generate("pump.invalidate.one", ["id" => $i])
             );
 
             $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

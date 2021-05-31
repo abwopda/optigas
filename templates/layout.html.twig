@@ -1,57 +1,89 @@
 {% extends 'base.html.twig' %}
+    {% block stylesheets %}
+        {#{{ encore_entry_link_tags('app') }}#}
+
+        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/select2.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/bootstrap-treeview.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/tableexport.min.css') }}" rel="stylesheet">
+    {% endblock %}
     {% block container %}
-    <body class="theme1">
-    {% include "ui/Default/menu.html.twig" %}
+        <body class="theme1">
+        {% include "ui/Default/menu.html.twig" %}
 
-    <div class="visible-print col-md-12 text-left"><img src="{{ asset( 'images/header.png' )}}" alt="logo" /></div>
-    <section class="wrap">
-        <header id="adminbar">
-            <div id="logo"><img src="{{ asset( app_config.app_logo )}}" alt="logo" class="img-small" /> <span>{{ app_config.app_name }}</span></div>
-            <div class="dropdown pull-right user-profile">
-                <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                    <img class="img-small" src="{#{ asset( app.user.image.getwebpath)}#}" alt="{{ app.user.username }}">
-                    {{ app.user.fullName }} <span class="glyphicon glyphicon-chevron-down"></span></a>
+        <div class="visible-print col-md-12 text-left"><img src="{#{ asset( 'images/header.png' )}#}" alt="logo" /></div>
+        <section class="wrap">
+            <header id="adminbar">
+                <div id="logo"><img src="{{ asset( app_config.app_logo )}}" alt="logo" class="img-small" /> <span>{{ app_config.app_name }}</span></div>
+                <div class="dropdown pull-right user-profile">
+                    <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        <img class="img-small" src="{#{ asset( app.user.image.getwebpath)}#}" alt="{{ app.user.username }}">
+                        {{ app.user.fullName }} <span class="glyphicon glyphicon-chevron-down"></span></a>
 
 
-                <ul class="dropdown-menu">
-                    <li>
-                        <div class="navbar-content">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <img src="{#{ asset( app.user.image.getwebpath)}#}" alt="Alternate Text" class="img-responsive" />
-                                    <div class="clearfix"></div>
-                                    <p></p>
-                                </div>
-                                <div class="col-md-7">
-                                    <span>{{ app.user.username }}</span>
-                                    <p class="text-muted small">{{ app.user.email }}</p>
-                                    <div class="divider"></div>
-                                    <a href="{#{ path('profile_edit', { 'name': app.user.username}) }#}" class="btn btn-primary btn-sm">Afficher mon profil</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="navbar-footer">
-                            <div class="navbar-footer-content">
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-content">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <a href="{#{ path('fos_user_profile_edit') }#}" class="btn btn-default btn-sm">Compte</a>
+                                    <div class="col-md-5">
+                                        <img src="{#{ asset( app.user.image.getwebpath)}#}" alt="Alternate Text" class="img-responsive" />
+                                        <div class="clearfix"></div>
+                                        <p></p>
                                     </div>
-                                    <div class="col-md-6">
-                                        <a href="{#{ path('fos_user_security_logout') }#}" class="btn btn-default btn-sm pull-right">Déconnexion</a>
+                                    <div class="col-md-7">
+                                        <span>{{ app.user.username }}</span>
+                                        <p class="text-muted small">{{ app.user.email }}</p>
+                                        <div class="divider"></div>
+                                        <a href="{#{ path('profile_edit', { 'name': app.user.username}) }#}" class="btn btn-primary btn-sm">Afficher mon profil</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </header>
+                            <div class="navbar-footer">
+                                <div class="navbar-footer-content">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="{#{ path('fos_user_profile_edit') }#}" class="btn btn-default btn-sm">Compte</a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="{#{ path('fos_user_security_logout') }#}" class="btn btn-default btn-sm pull-right">Déconnexion</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </header>
 
-        <div class="container">
-            {% include "ui/Default/flashes.html.twig" %}
-            {% block breadcrumb %} {% endblock %}
-            {% block body %}{% endblock %}
-        </div>
-    </section>
+            <div class="container">
+                {% include "ui/Default/flashes.html.twig" %}
+                {% block breadcrumb %} {% endblock %}
+                {% block body %}{% endblock %}
+            </div>
+        </section>
+        {% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.js') }}"></script>
+            <script src="{{ asset('js/jquery.cookie.js') }}"></script>
+            <script src="{{ asset('js/select2.min.js') }}"></script>
+            <script src="{{ asset('js/xlsx.core.min.js') }}"></script>
+            <script src="{{ asset('js/FileSaver.min.js') }}"></script>
+            <script src="{{ asset('js/tableexport.min.js') }}"></script>
+            <script src="{{ asset('js/app.js') }}"></script>
+            <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+            <script>
+                (function($) {
+                    $('select').select2();
+                    /*$('select').select2({
+                        theme: "bootstrap"
+                    });*/
+                })(jQuery);
+            </script>
+        {% endblock %}
     </body>
     {% endblock container %}
