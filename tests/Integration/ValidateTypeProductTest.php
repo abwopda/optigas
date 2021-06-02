@@ -4,7 +4,7 @@ namespace App\Tests\Integration;
 
 use App\Adapter\InMemory\Retypeproductitory\TypeProductRetypeproductitory;
 use App\Entity\TypeProduct;
-use App\UseCase\UpdateTypeProduct;
+use App\UseCase\UseTypeProduct;
 use App\Tests\AuthenticationTrait;
 use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

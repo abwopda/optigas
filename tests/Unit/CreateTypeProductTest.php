@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\TypeProductRepository;
 use App\Entity\TypeProduct;
-use App\UseCase\CreateTypeProduct;
+use App\UseCase\UseTypeProduct;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ class CreateTypeProductTest extends TestCase
 {
     public function testSuccessfulTypeProductCreated()
     {
-        $useCase = new CreateTypeProduct(new TypeProductRepository());
+        $useCase = new UseTypeProduct(new TypeProductRepository());
 
         $typeproduct = (new TypeProduct())
             ->setCode("code")
@@ -24,7 +24,7 @@ class CreateTypeProductTest extends TestCase
             ->setDescription("description")
         ;
 
-        $this->AssertEquals($typeproduct, $useCase->execute($typeproduct));
+        $this->AssertEquals($typeproduct, $useCase->create($typeproduct));
     }
     /**
      * @dataProvider provideBadTypeProduct
@@ -32,11 +32,11 @@ class CreateTypeProductTest extends TestCase
      */
     public function testBadTypeProduct(TypeProduct $typeproduct)
     {
-        $useCase = new CreateTypeProduct(new TypeProductRepository());
+        $useCase = new UseTypeProduct(new TypeProductRepository());
 
         $this->expectException(LazyAssertionException::class);
 
-        $this->assertEquals($typeproduct, $useCase->execute($typeproduct));
+        $this->assertEquals($typeproduct, $useCase->create($typeproduct));
     }
 
     /**

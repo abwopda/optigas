@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\ProductRepository;
 use App\Entity\Product;
-use App\UseCase\showProduct;
+use App\UseCase\UseProduct;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,11 +16,11 @@ class ShowProductTest extends TestCase
 {
     public function testSuccessfulProductShowed()
     {
-        $useCase = new showProduct(new ProductRepository());
+        $useCase = new UseProduct(new ProductRepository());
 
         for ($i = 9; $i <= 9; $i++) {
             $entity = (new ProductRepository())->findOneById($i);
-            $this->assertInstanceOf(Product::class, $useCase->execute($entity));
+            $this->assertInstanceOf(Product::class, $useCase->show($entity));
         }
     }
 
@@ -30,9 +30,9 @@ class ShowProductTest extends TestCase
      */
     public function testBadProduct(?Product $product)
     {
-        $useCase = new showProduct(new ProductRepository());
+        $useCase = new UseProduct(new ProductRepository());
 
-        $this->assertNull($useCase->execute($product));
+        $this->assertNull($useCase->show($product));
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\PumpRepository;
 use App\Entity\Pump;
-use App\UseCase\showPump;
+use App\UseCase\UsePump;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,10 +15,10 @@ class ShowPumpTest extends TestCase
 {
     public function testSuccessfulPumpShowed()
     {
-        $useCase = new showPump(new PumpRepository());
+        $useCase = new UsePump(new PumpRepository());
         for ($i = 11; $i <= 11; $i++) {
             $entity = (new PumpRepository())->findOneById($i);
-            $this->assertInstanceOf(Pump::class, $useCase->execute($entity));
+            $this->assertInstanceOf(Pump::class, $useCase->show($entity));
         }
     }
 
@@ -28,9 +28,9 @@ class ShowPumpTest extends TestCase
      */
     public function testBadPump(?Pump $pump)
     {
-        $useCase = new showPump(new PumpRepository());
+        $useCase = new UsePump(new PumpRepository());
 
-        $this->assertNull($useCase->execute($pump));
+        $this->assertNull($useCase->show($pump));
     }
 
     /**

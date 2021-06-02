@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\TankRepository;
 use App\Entity\Tank;
-use App\UseCase\showTank;
+use App\UseCase\UseTank;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,10 +16,10 @@ class ShowTankTest extends TestCase
 {
     public function testSuccessfulTankShowed()
     {
-        $useCase = new showTank(new TankRepository());
+        $useCase = new UseTank(new TankRepository());
         for ($i = 4; $i <= 4; $i++) {
             $entity = (new TankRepository())->findOneById($i);
-            $this->assertInstanceOf(Tank::class, $useCase->execute($entity));
+            $this->assertInstanceOf(Tank::class, $useCase->show($entity));
         }
     }
 
@@ -29,9 +29,9 @@ class ShowTankTest extends TestCase
      */
     public function testBadTank(?Tank $tank)
     {
-        $useCase = new showTank(new TankRepository());
+        $useCase = new UseTank(new TankRepository());
 
-        $this->assertNull($useCase->execute($tank));
+        $this->assertNull($useCase->show($tank));
     }
 
     /**

@@ -169,11 +169,13 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve  " . $id);
         }
 
+        $deleteForm = $this->addForm($id);
         $form = $this->createForm($this->tankGateway->getTypeClass(), $entity);
 
         return $this->render('ui/tank/edit.html.twig', [
             'entity' => $entity,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -221,8 +223,19 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
+        $deleteForm = $this->addForm($id);
+        $activateForm = $this->addForm($id);
+        $disableForm = $this->addForm($id);
+        $validateForm = $this->addForm($id);
+        $invalidateForm = $this->addForm($id);
+
         return $this->render('ui/tank/show.html.twig', [
-            'entity'      => $entity,
+            "entity"      => $entity,
+            "delete_form" => $deleteForm->createView(),
+            "activate_form" => $activateForm->createView(),
+            "disable_form" => $disableForm->createView(),
+            "validate_form" => $validateForm->createView(),
+            "invalidate_form" => $invalidateForm->createView(),
         ]);
     }
 
@@ -258,9 +271,15 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->tankGateway->activate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Cuve activée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->tankGateway->activate($entity, true);
+
+            $this->addFlash('success', "Cuve activée avec succès");
+        }
+
         return $this->redirectToRoute("tank.show", ["id" => $id]);
     }
 
@@ -296,9 +315,15 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->tankGateway->activate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Cuve désactivée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->tankGateway->activate($entity, false);
+
+            $this->addFlash('success', "Cuve désactivée avec succès");
+        }
+
         return $this->redirectToRoute("tank.show", ["id" => $id]);
     }
 
@@ -334,9 +359,15 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->tankGateway->validate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Cuve validée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->tankGateway->validate($entity, true);
+
+            $this->addFlash('success', "Cuve validée avec succès");
+        }
+
         return $this->redirectToRoute("tank.show", ["id" => $id]);
     }
 
@@ -372,9 +403,15 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $this->tankGateway->validate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Cuve invalidée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->tankGateway->validate($entity, false);
+
+            $this->addFlash('success', "Cuve invalidée avec succès");
+        }
+
         return $this->redirectToRoute("tank.show", ["id" => $id]);
     }
 
@@ -397,7 +434,7 @@ class TankController extends AbstractController
             $this->pumpGateway->remove($entity);
         }
 
-        return $this->redirect($this->generateUrl('pos'));
+        return $this->redirect($this->generateUrl('tank'));
     }
 
     public function delete(int $id, Request $request)
@@ -408,7 +445,7 @@ class TankController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la cuve d'id  " . $id);
         }
 
-        $form = $this->createDeleteForm($id);
+        $form = $this->addForm($id);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -417,10 +454,10 @@ class TankController extends AbstractController
             $this->addFlash('success', "Cuve supprimée avec succès");
         }
 
-        return $this->redirect($this->generateUrl('pos'));
+        return $this->redirect($this->generateUrl('tank'));
     }
 
-    private function createDeleteForm($id)
+    private function addForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)

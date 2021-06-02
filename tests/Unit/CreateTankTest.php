@@ -5,7 +5,7 @@ namespace App\Tests\Unit;
 use App\Adapter\InMemory\Repository\TankRepository;
 use App\Entity\Pos;
 use App\Entity\Tank;
-use App\UseCase\CreateTank;
+use App\UseCase\UseTank;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +17,7 @@ class CreateTankTest extends TestCase
 {
     public function testSuccessfulTankCreated()
     {
-        $useCase = new CreateTank(new TankRepository());
+        $useCase = new UseTank(new TankRepository());
 
         $pos = (new Pos())
             ->setCode("code")
@@ -35,7 +35,7 @@ class CreateTankTest extends TestCase
             ->setCapacity(30000)
         ;
 
-        $this->AssertEquals($tank, $useCase->execute($tank));
+        $this->AssertEquals($tank, $useCase->create($tank));
     }
     /**
      * @dataProvider provideBadTank
@@ -43,11 +43,11 @@ class CreateTankTest extends TestCase
      */
     public function testBadTank(Tank $tank)
     {
-        $useCase = new CreateTank(new TankRepository());
+        $useCase = new UseTank(new TankRepository());
 
         $this->expectException(LazyAssertionException::class);
 
-        $this->assertEquals($tank, $useCase->execute($tank));
+        $this->assertEquals($tank, $useCase->create($tank));
     }
 
     /**

@@ -129,11 +129,13 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit  " . $id);
         }
 
+        $deleteForm = $this->addForm($id);
         $form = $this->createForm($this->productGateway->getTypeClass(), $entity);
 
         return $this->render('ui/product/edit.html.twig', [
             'entity' => $entity,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -177,8 +179,19 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        return $this->render('ui/product/show.html.twig', [
-            'entity'      => $entity,
+        $deleteForm = $this->addForm($id);
+        $activateForm = $this->addForm($id);
+        $disableForm = $this->addForm($id);
+        $validateForm = $this->addForm($id);
+        $invalidateForm = $this->addForm($id);
+
+        return $this->render("ui/product/show.html.twig", [
+            "entity"      => $entity,
+            "delete_form" => $deleteForm->createView(),
+            "activate_form" => $activateForm->createView(),
+            "disable_form" => $disableForm->createView(),
+            "validate_form" => $validateForm->createView(),
+            "invalidate_form" => $invalidateForm->createView(),
         ]);
     }
 
@@ -201,9 +214,14 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->productGateway->activate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Produit activé avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productGateway->activate($entity, true);
+
+            $this->addFlash('success', "Produit activé avec succès");
+        }
 
         return $this->redirectToRoute("product.show", ["id" => $id]);
     }
@@ -227,9 +245,15 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->productGateway->activate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Produit désactivé avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productGateway->activate($entity, false);
+
+            $this->addFlash('success', "Produit désactivé avec succès");
+        }
+
         return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
@@ -252,9 +276,15 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->productGateway->validate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Produit validé avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productGateway->validate($entity, true);
+
+            $this->addFlash('success', "Produit validé avec succès");
+        }
+
         return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
@@ -277,9 +307,15 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $this->productGateway->validate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Produit invalidé avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productGateway->validate($entity, false);
+
+            $this->addFlash('success', "Produit invalidé avec succès");
+        }
+
         return $this->redirectToRoute("product.show", ["id" => $id]);
     }
 
@@ -302,7 +338,7 @@ class ProductController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le produit d'id  " . $id);
         }
 
-        $form = $this->createDeleteForm($id);
+        $form = $this->addForm($id);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -314,7 +350,7 @@ class ProductController extends AbstractController
         return $this->redirect($this->generateUrl('product'));
     }
 
-    private function createDeleteForm($id)
+    private function addForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)

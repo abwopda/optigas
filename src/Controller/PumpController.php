@@ -128,11 +128,13 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe  " . $id);
         }
 
+        $deleteForm = $this->addForm($id);
         $form = $this->createForm($this->pumpGateway->getTypeClass(), $entity);
 
         return $this->render('ui/pump/edit.html.twig', [
             'entity' => $entity,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -176,8 +178,19 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
+        $deleteForm = $this->addForm($id);
+        $activateForm = $this->addForm($id);
+        $disableForm = $this->addForm($id);
+        $validateForm = $this->addForm($id);
+        $invalidateForm = $this->addForm($id);
+
         return $this->render('ui/pump/show.html.twig', [
             'entity'      => $entity,
+            "delete_form" => $deleteForm->createView(),
+            "activate_form" => $activateForm->createView(),
+            "disable_form" => $disableForm->createView(),
+            "validate_form" => $validateForm->createView(),
+            "invalidate_form" => $invalidateForm->createView(),
         ]);
     }
 
@@ -200,9 +213,15 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->pumpGateway->activate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Pompe activée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->pumpGateway->activate($entity, true);
+
+            $this->addFlash('success', "Pompe activée avec succès");
+        }
+
         return $this->redirectToRoute("pump.show", ["id" => $id]);
     }
 
@@ -225,9 +244,15 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->pumpGateway->activate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Pompe désactivée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->pumpGateway->activate($entity, false);
+
+            $this->addFlash('success', "Pompe désactivée avec succès");
+        }
+
         return $this->redirectToRoute("pump.show", ["id" => $id]);
     }
 
@@ -250,9 +275,15 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->pumpGateway->validate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Pompe validée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->pumpGateway->validate($entity, true);
+
+            $this->addFlash('success', "Pompe validée avec succès");
+        }
+
         return $this->redirectToRoute("pump.show", ["id" => $id]);
     }
 
@@ -275,9 +306,15 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $this->pumpGateway->validate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Pompe invalidée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->pumpGateway->validate($entity, false);
+
+            $this->addFlash('success', "Pompe invalidée avec succès");
+        }
+
         return $this->redirectToRoute("pump.show", ["id" => $id]);
     }
 
@@ -300,7 +337,7 @@ class PumpController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la pompe d'id  " . $id);
         }
 
-        $form = $this->createDeleteForm($id);
+        $form = $this->addForm($id);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -312,7 +349,7 @@ class PumpController extends AbstractController
         return $this->redirect($this->generateUrl('pump'));
     }
 
-    private function createDeleteForm($id)
+    private function addForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)

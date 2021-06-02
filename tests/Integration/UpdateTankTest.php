@@ -4,7 +4,7 @@ namespace App\Tests\Integration;
 
 use App\Adapter\InMemory\Repository\TankRepository;
 use App\Entity\Tank;
-use App\UseCase\UpdateTank;
+use App\UseCase\UseTank;
 use App\Tests\AuthenticationTrait;
 use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

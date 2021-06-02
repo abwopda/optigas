@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\ProductFamilyRepository;
 use App\Entity\ProductFamily;
-use App\UseCase\ValidateProductFamily;
+use App\UseCase\UseProductFamily;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,13 +16,13 @@ class ValidateProductFamilyTest extends TestCase
 {
     public function testSuccessfulProductFamilyValidated()
     {
-        $useCase = new validateProductFamily(new ProductFamilyRepository());
+        $useCase = new UseProductFamily(new ProductFamilyRepository());
         for ($i = 5; $i <= 5; $i++) {
             $entity = (new ProductFamilyRepository())->findOneById($i);
 
-            $this->assertInstanceOf(ProductFamily::class, $useCase->execute($entity, true));
+            $this->assertInstanceOf(ProductFamily::class, $useCase->validate($entity, true));
 
-            $this->assertInstanceOf(ProductFamily::class, $useCase->execute($entity, false));
+            $this->assertInstanceOf(ProductFamily::class, $useCase->validate($entity, false));
         }
     }
 }

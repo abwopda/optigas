@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\PosRepository;
 use App\Entity\Pos;
-use App\UseCase\ShowPos;
+use App\UseCase\UsePos;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,10 +16,10 @@ class ShowPosTest extends TestCase
 {
     public function testSuccessfulPosShowed()
     {
-        $useCase = new ShowPos(new PosRepository());
+        $useCase = new UsePos(new PosRepository());
         for ($i = 3; $i <= 3; $i++) {
             $entity = (new PosRepository())->findOneById($i);
-            $this->assertInstanceOf(Pos::class, $useCase->execute($entity));
+            $this->assertInstanceOf(Pos::class, $useCase->show($entity));
         }
     }
 
@@ -29,9 +29,9 @@ class ShowPosTest extends TestCase
      */
     public function testBadPos(?Pos $pos)
     {
-        $useCase = new showPos(new PosRepository());
+        $useCase = new UsePos(new PosRepository());
 
-        $this->assertNull($useCase->execute($pos));
+        $this->assertNull($useCase->show($pos));
     }
 
     /**

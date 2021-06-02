@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\PosRepository;
 use App\Entity\Pos;
-use App\UseCase\CreatePos;
+use App\UseCase\UsePos;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ class CreatePosTest extends TestCase
 {
     public function testSuccessfulPosCreated()
     {
-        $useCase = new createPos(new PosRepository());
+        $useCase = new UsePos(new PosRepository());
 
         $pos = (new Pos())
             ->setCode("code")
@@ -27,7 +27,7 @@ class CreatePosTest extends TestCase
             ->setCapacity(60000)
         ;
 
-        $this->AssertEquals($pos, $useCase->execute($pos));
+        $this->AssertEquals($pos, $useCase->create($pos));
     }
     /**
      * @dataProvider provideBadPos
@@ -35,11 +35,11 @@ class CreatePosTest extends TestCase
      */
     public function testBadPos(Pos $pos)
     {
-        $useCase = new CreatePos(new PosRepository());
+        $useCase = new UsePos(new PosRepository());
 
         $this->expectException(LazyAssertionException::class);
 
-        $this->assertEquals($pos, $useCase->execute($pos));
+        $this->assertEquals($pos, $useCase->create($pos));
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\TypeProductRepository;
 use App\Entity\TypeProduct;
-use App\UseCase\ValidateTypeProduct;
+use App\UseCase\UseTypeProduct;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,13 +15,13 @@ class ValidateTypeProductTest extends TestCase
 {
     public function testSuccessfulTypeProductValidated()
     {
-        $useCase = new ValidateTypeProduct(new TypeProductRepository());
+        $useCase = new UseTypeProduct(new TypeProductRepository());
         for ($i = 3; $i <= 3; $i++) {
             $entity = (new TypeProductRepository())->findOneById($i);
 
-            $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, true));
+            $this->assertInstanceOf(TypeProduct::class, $useCase->validate($entity, true));
 
-            $this->assertInstanceOf(TypeProduct::class, $useCase->execute($entity, false));
+            $this->assertInstanceOf(TypeProduct::class, $useCase->validate($entity, false));
         }
     }
 }

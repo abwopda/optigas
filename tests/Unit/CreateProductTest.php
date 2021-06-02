@@ -7,7 +7,7 @@ use App\Adapter\InMemory\Repository\ProductRepository;
 use App\Entity\ProductFamily;
 use App\Entity\Product;
 use App\Entity\TypeProduct;
-use App\UseCase\CreateProduct;
+use App\UseCase\UseProduct;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +19,7 @@ class CreateProductTest extends TestCase
 {
     public function testSuccessfulProductCreated()
     {
-        $useCase = new CreateProduct(new ProductRepository());
+        $useCase = new UseProduct(new ProductRepository());
 
         $typeproduct = (new TypeProduct())
             ->setCode("code")
@@ -39,7 +39,7 @@ class CreateProductTest extends TestCase
             ->setDescription("description")
         ;
 
-        $this->AssertEquals($product, $useCase->execute($product));
+        $this->AssertEquals($product, $useCase->create($product));
     }
     /**
      * @dataProvider provideBadProduct
@@ -47,11 +47,11 @@ class CreateProductTest extends TestCase
      */
     public function testBadProduct(Product $product)
     {
-        $useCase = new CreateProduct(new ProductRepository());
+        $useCase = new UseProduct(new ProductRepository());
 
         $this->expectException(LazyAssertionException::class);
 
-        $this->assertEquals($product, $useCase->execute($product));
+        $this->assertEquals($product, $useCase->create($product));
     }
 
     /**
