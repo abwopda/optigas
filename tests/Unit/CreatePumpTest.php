@@ -7,7 +7,7 @@ use App\Adapter\InMemory\Repository\PumpRepository;
 use App\Entity\Pos;
 use App\Entity\Tank;
 use App\Entity\Pump;
-use App\UseCase\CreatePump;
+use App\UseCase\UsePump;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +19,7 @@ class CreatePumpTest extends TestCase
 {
     public function testSuccessfulPumpCreated()
     {
-        $useCase = new CreatePump(new PumpRepository());
+        $useCase = new UsePump(new PumpRepository());
 
         $pos = (new Pos())
             ->setCode("code")
@@ -44,7 +44,7 @@ class CreatePumpTest extends TestCase
             ->setCounter(4578952)
         ;
 
-        $this->AssertEquals($pump, $useCase->execute($pump));
+        $this->AssertEquals($pump, $useCase->create($pump));
     }
     /**
      * @dataProvider provideBadPump
@@ -52,11 +52,11 @@ class CreatePumpTest extends TestCase
      */
     public function testBadPump(Pump $pump)
     {
-        $useCase = new CreatePump(new PumpRepository());
+        $useCase = new UsePump(new PumpRepository());
 
         $this->expectException(LazyAssertionException::class);
 
-        $this->assertEquals($pump, $useCase->execute($pump));
+        $this->assertEquals($pump, $useCase->create($pump));
     }
 
     /**

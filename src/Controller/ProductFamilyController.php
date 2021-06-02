@@ -162,11 +162,13 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille  " . $id);
         }
 
+        $deleteForm = $this->addForm($id);
         $form = $this->createForm($this->productfamilyGateway->getTypeClass(), $entity);
 
         return $this->render('ui/productfamily/edit.html.twig', [
             'entity' => $entity,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -210,8 +212,19 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        return $this->render('ui/productfamily/show.html.twig', [
-            'entity'      => $entity,
+        $deleteForm = $this->addForm($id);
+        $activateForm = $this->addForm($id);
+        $disableForm = $this->addForm($id);
+        $validateForm = $this->addForm($id);
+        $invalidateForm = $this->addForm($id);
+
+        return $this->render("ui/productfamily/show.html.twig", [
+            "entity"      => $entity,
+            "delete_form" => $deleteForm->createView(),
+            "activate_form" => $activateForm->createView(),
+            "disable_form" => $disableForm->createView(),
+            "validate_form" => $validateForm->createView(),
+            "invalidate_form" => $invalidateForm->createView(),
         ]);
     }
 
@@ -245,9 +258,15 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->productfamilyGateway->activate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Famille activée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productfamilyGateway->activate($entity, true);
+
+            $this->addFlash('success', "Famille activée avec succès");
+        }
+
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
     }
 
@@ -281,9 +300,15 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->productfamilyGateway->activate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Famille désactivée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productfamilyGateway->activate($entity, false);
+
+            $this->addFlash('success', "Famille désactivée avec succès");
+        }
+
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
     }
 
@@ -317,9 +342,15 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->productfamilyGateway->validate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Famille validée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productfamilyGateway->validate($entity, true);
+
+            $this->addFlash('success', "Famille validée avec succès");
+        }
+
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
     }
 
@@ -353,9 +384,15 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille d'id  " . $id);
         }
 
-        $this->productfamilyGateway->validate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Famille invalidée avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->productfamilyGateway->validate($entity, false);
+
+            $this->addFlash('success', "Famille invalidée avec succès");
+        }
+
         return $this->redirectToRoute("productfamily.show", ["id" => $id]);
     }
 
@@ -389,7 +426,7 @@ class ProductFamilyController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver la famille produit d'id  " . $id);
         }
 
-        $form = $this->createDeleteForm($id);
+        $form = $this->addForm($id);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -398,10 +435,10 @@ class ProductFamilyController extends AbstractController
             $this->addFlash('success', "Famille produit supprimée avec succès");
         }
 
-        return $this->redirect($this->generateUrl('pos'));
+        return $this->redirect($this->generateUrl('productfamily'));
     }
 
-    private function createDeleteForm($id)
+    private function addForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)

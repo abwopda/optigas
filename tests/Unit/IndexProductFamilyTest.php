@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\ProductFamilyRepository;
 use App\Entity\ProductFamily;
-use App\UseCase\IndexProductFamily;
+use App\UseCase\UseProductFamily;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ class IndexProductFamilyTest extends TestCase
 {
     public function testSuccessfulProductFamilyIndexed()
     {
-        $useCase = new IndexProductFamily(new ProductFamilyRepository());
-        $this->assertContainsOnlyInstancesOf(ProductFamily::class, $useCase->execute());
+        $useCase = new UseProductFamily(new ProductFamilyRepository());
+        $this->assertContainsOnlyInstancesOf(ProductFamily::class, $useCase->findAll());
     }
 }

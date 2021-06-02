@@ -5,7 +5,7 @@ namespace App\Tests\Integration;
 use App\Adapter\InMemory\Repository\ProductFamilyRepository;
 use App\Entity\TypeProduct;
 use App\Entity\ProductFamily;
-use App\UseCase\CreateProductFamily;
+use App\UseCase\UseProductFamily;
 use App\Tests\AuthenticationTrait;
 use Assert\LazyAssertionException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

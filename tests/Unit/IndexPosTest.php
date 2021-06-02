@@ -4,7 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Adapter\InMemory\Repository\PosRepository;
 use App\Entity\Pos;
-use App\UseCase\IndexPos;
+use App\UseCase\UsePos;
 use Assert\LazyAssertionException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ class IndexPosTest extends TestCase
 {
     public function testSuccessfulPosIndexed()
     {
-        $useCase = new IndexPos(new PosRepository());
-        $this->assertContainsOnlyInstancesOf(Pos::class, $useCase->execute());
+        $useCase = new UsePos(new PosRepository());
+        $this->assertContainsOnlyInstancesOf(Pos::class, $useCase->findAll());
     }
 }

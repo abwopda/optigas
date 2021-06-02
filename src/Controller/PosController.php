@@ -168,11 +168,13 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
+        $deleteForm = $this->addForm($id);
         $form = $this->createForm($this->posGateway->getTypeClass(), $entity);
 
         return $this->render('ui/pos/edit.html.twig', [
             'entity' => $entity,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -186,7 +188,10 @@ class PosController extends AbstractController
             throw $this->createNotFoundException('Impossible de trouver le point de vente d"id' . $id);
         }
 
-        $form = $this->createForm($this->posGateway->getTypeClass(), $entity)->handleRequest($request);
+        $deleteForm = $this->addForm($id);
+        $form = $this->createForm($this->posGateway->getTypeClass(), $entity)
+            ->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->posGateway->update($entity);
@@ -198,8 +203,9 @@ class PosController extends AbstractController
         $this->addFlash('danger', "Il y a des erreurs dans le formulaire soumis !");
 
         return $this->render("ui/pos/update.html.twig", [
-            "entity" => $entity,
-            "form" => $form->createView()
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 
@@ -213,8 +219,19 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
+        $deleteForm = $this->addForm($id);
+        $activateForm = $this->addForm($id);
+        $disableForm = $this->addForm($id);
+        $validateForm = $this->addForm($id);
+        $invalidateForm = $this->addForm($id);
+
         return $this->render("ui/pos/show.html.twig", [
             "entity"      => $entity,
+            "delete_form" => $deleteForm->createView(),
+            "activate_form" => $activateForm->createView(),
+            "disable_form" => $disableForm->createView(),
+            "validate_form" => $validateForm->createView(),
+            "invalidate_form" => $invalidateForm->createView(),
         ]);
     }
 
@@ -261,9 +278,15 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->posGateway->activate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Point de vente activé avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->posGateway->activate($entity, true);
+
+            $this->addFlash('success', "Point de vente activé avec succès");
+        }
+
         return $this->redirectToRoute("pos.show", ["id" => $id]);
     }
 
@@ -310,9 +333,15 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->posGateway->activate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Point de vente désactivé avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->posGateway->activate($entity, false);
+
+            $this->addFlash('success', "Point de vente désactivé avec succès");
+        }
+
         return $this->redirectToRoute("pos.show", ["id" => $id]);
     }
 
@@ -359,9 +388,15 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->posGateway->validate($entity, true);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Point de vente validé avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->posGateway->validate($entity, true);
+
+            $this->addFlash('success', "Point de vente validé avec succès");
+        }
+
         return $this->redirectToRoute("pos.show", ["id" => $id]);
     }
 
@@ -408,9 +443,15 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $this->posGateway->validate($entity, false);
+        $form = $this->addForm($id);
+        $form->handleRequest($request);
 
-        $this->addFlash('success', "Point de vente invalidé avec succès");
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->posGateway->validate($entity, false);
+
+            $this->addFlash('success', "Point de vente invalidé avec succès");
+        }
+
         return $this->redirectToRoute("pos.show", ["id" => $id]);
     }
 
@@ -455,7 +496,7 @@ class PosController extends AbstractController
             throw $this->createNotFoundException("Impossible de trouver le point de vente d'id  " . $id);
         }
 
-        $form = $this->createDeleteForm($id);
+        $form = $this->addForm($id);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -466,8 +507,7 @@ class PosController extends AbstractController
 
         return $this->redirect($this->generateUrl('pos'));
     }
-
-    private function createDeleteForm($id)
+    private function addForm($id)
     {
         return $this->createFormBuilder(['id' => $id])
             ->add('id', HiddenType::class)

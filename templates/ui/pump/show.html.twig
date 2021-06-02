@@ -9,18 +9,20 @@
         <ul class="dropdown-menu" role="menu">
             <li><a href="{{ path('pump.edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-edit"></span> modifier</a></li>
             {% if entity.active %}
-                <li><a href="{{ path('pump.disable', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-thumbs-down"></span> Desactiver </a></li>
+                <li><a href="#" id="js-disable"><span class="glyphicon glyphicon-thumbs-down"></span> Desactiver </a></li>
             {% else %}
-                <li><a href="{{ path('pump.activate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-thumbs-up"></span> Activer </a></li>
+                <li><a href="#" id="js-activate"><span class="glyphicon glyphicon-thumbs-up"></span> Activer </a></li>
             {% endif %}
             {% if entity.valid %}
-                <li><a href="{{ path('pump.invalidate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-remove-sign"></span> Invalider </a></li>
+                <li><a href="#" id="js-invalidate"><span class="glyphicon glyphicon-minus-sign"></span> Invalider </a></li>
             {% else %}
-                <li><a href="{{ path('pump.validate', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-ok-sign"></span> Valider </a></li>
+                <li><a href="#" id="js-validate"><span class="glyphicon glyphicon-ok-sign"></span> Valider </a></li>
             {% endif %}
+            <li><a id="btnPrint"><span class="glyphicon glyphicon-print"></span> imprimer</a></li>
+            <li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>
         </ul>
     </div>
-    <h3>{{ entity.name }}</h3>
+    <h3><span class="glyphicon glyphicon-send"></span>{{ entity.name }}{% if entity.valid %}<span class="glyphicon glyphicon-ok-sign">{% endif %}</h3>
     <div class="row">
         <div class="col-md-4">
             <div class="box">
@@ -46,6 +48,52 @@
                     {% if entity.active is not null %}<li class="list-group-item"><strong>{% if entity.active %} Activé {% else %} Désactivé {% endif %} par :</strong> {{ entity.activateBy  is null ? "" :entity.activateBy.username }}</li>{% endif %}
                 </ul>
             </div>
+            <form id="deleteForm" action="{{ path('pump.delete', { 'id': entity.id }) }}" method="POST">
+                {{ form_widget(delete_form) }}
+            </form>
+            <form id="activateForm" action="{{ path('pump.activate.one', { 'id': entity.id }) }}" method="POST">
+                {{ form_widget(activate_form) }}
+            </form>
+            <form id="disableForm" action="{{ path('pump.disable.one', { 'id': entity.id }) }}" method="POST">
+                {{ form_widget(disable_form) }}
+            </form>
+            <form id="validateForm" action="{{ path('pump.validate.one', { 'id': entity.id }) }}" method="POST">
+                {{ form_widget(validate_form) }}
+            </form>
+            <form id="invalidateForm" action="{{ path('pump.invalidate.one', { 'id': entity.id }) }}" method="POST">
+                {{ form_widget(invalidate_form) }}
+            </form>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+<script>
+    (function($) {
+        $('#js-delete').on('click', function(){
+            $('#deleteForm').submit();
+            return false;
+        });
+
+        $('#js-activate').on('click', function(){
+            $('#activateForm').submit();
+            return false;
+        });
+
+        $('#js-disable').on('click', function(){
+            $('#disableForm').submit();
+            return false;
+        });
+
+        $('#js-validate').on('click', function(){
+            $('#validateForm').submit();
+            return false;
+        });
+
+        $('#js-invalidate').on('click', function(){
+            $('#invalidateForm').submit();
+            return false;
+        });
+    })(jQuery);
+</script>
 {% endblock %}
