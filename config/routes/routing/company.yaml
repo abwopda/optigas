@@ -1,0 +1,86 @@
+company:
+  path:     /
+  controller: App\Controller\CompanyController::index
+
+company.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\CompanyController::ajaxList
+  requirements: { _method: post }
+
+company.new:
+  path:     /new
+  controller: App\Controller\CompanyController::new
+
+
+company.create:
+  path: /create
+  controller: App\Controller\CompanyController::create
+  requirements: { _method: post  }
+
+company.show:
+  path: /{id}
+  controller: App\Controller\CompanyController::show
+  requirements:
+    id: \d+
+
+
+company.edit:
+  path:     /{id}/edit
+  controller: App\Controller\CompanyController::edit
+  requirements:
+    id: \d+
+
+company.update:
+  path: /{id}/update
+  controller: App\Controller\CompanyController::update
+  requirements: { _method: post|put , id: \d+ }
+
+company.activate:
+  path: /activate
+  controller: App\Controller\CompanyController::activate
+  requirements: { _method: post|put }
+
+company.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\CompanyController::activateOne
+  requirements: { _method: post|put , id: \d+ }
+
+company.disable:
+  path: /disable
+  controller: App\Controller\CompanyController::disable
+  requirements: { _method: post|put }
+
+company.disable.one:
+  path: /{id}/disable
+  controller: App\Controller\CompanyController::disableOne
+  requirements: { _method: post|put , id: \d+ }
+
+company.validate:
+  path: /validate
+  controller: App\Controller\CompanyController::validate
+  requirements: { _method: post|put }
+
+company.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\CompanyController::validateOne
+  requirements: { _method: post|put , id: \d+ }
+
+company.invalidate:
+  path: /invalidate
+  controller: App\Controller\CompanyController::invalidate
+  requirements: { _method: post|put }
+
+company.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\CompanyController::invalidateOne
+  requirements: { _method: post|put , id: \d+ }
+
+company.remove:
+  path:     /remove
+  controller: App\Controller\CompanyController::remove
+  requirements: { _method: post|delete }
+
+company.delete:
+  path:     /{id}/delete
+  controller: App\Controller\CompanyController::delete
+  requirements: { _method: post|delete , id: \d+ }

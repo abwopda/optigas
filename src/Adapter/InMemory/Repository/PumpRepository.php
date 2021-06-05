@@ -57,8 +57,107 @@ class PumpRepository implements PumpGateway
     {
         extract($searchParam);
         $data = $this->pump;
+        if (!empty($entity)) {
+            if ($entity === "pos") {
+                if (!empty($id)) {
+                    $pumps = [];
+                    $i = 1;
+                    foreach ($data as $p) {
+                        if ($p->getTank()->getPos()->getId() == $id) {
+                            $pumps[$i++] = $p;
+                        }
+                    }
+                    $data = $pumps;
+                }
+            }
+        }
+
+        if (!empty($entity)) {
+            if ($entity === "tank") {
+                if (!empty($id)) {
+                    $pumps = [];
+                    $i = 1;
+                    foreach ($data as $p) {
+                        if ($p->getTank()->getId() == $id) {
+                            $pumps[$i++] = $p;
+                        }
+                    }
+                    $data = $pumps;
+                    //var_export($pumps);die;
+                }
+            }
+        }
+
+        $i = 1;
+        if (!empty($ids)) {
+            $pumps = [];
+            $i = 1;
+            foreach ($data as $p) {
+                if ($ids->contains($p)) {
+                    $pumps[$i++] = $p;
+                }
+            }
+            $data = $pumps;
+        }
+
+        if (!empty($keyword)) {
+            $pumps = [];
+            $i = 1;
+            foreach ($data as $p) {
+                if (stripos($p->getName(), $keyword) !== false or stripos($p->getDescription(), $keyword) !== false) {
+                    $pumps[$i++] = $p;
+                }
+            }
+            $data = $pumps;
+        }
+
+        if (!empty($active)) {
+            //var_export($active);die;
+            if (in_array("0", $active)) {
+                $pumps = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getActive()) {
+                        $pumps[$i++] = $p;
+                    }
+                }
+                $data = $pumps;
+            } else {
+                $pumps = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if ($p->getActive()) {
+                        $pumps[$i++] = $p;
+                    }
+                }
+                $data = $pumps;
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $pumps = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getValid()) {
+                        $pumps[$i++] = $p;
+                    }
+                }
+                $data = $pumps;
+            } else {
+                $pumps = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getValid()) {
+                        $pumps[$i++] = $p;
+                    }
+                }
+                $data = $pumps;
+            }
+        }
+
         if (!empty($perPage)) {
-            $data = array_slice($this->pump, ($page - 1) * $perPage, $perPage);
+            $data = array_slice($data, ($page - 1) * $perPage, $perPage);
         }
 
         return $data;

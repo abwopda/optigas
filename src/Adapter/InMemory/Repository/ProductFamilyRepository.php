@@ -143,8 +143,82 @@ class ProductFamilyRepository implements ProductFamilyGateway
     {
         extract($searchParam);
         $data = $this->productfamily;
+
+        if (!empty($entity)) {
+            if ($entity === "typeproduct") {
+                if (!empty($id)) {
+                    $families = [];
+                    $i = 1;
+                    foreach ($data as $f) {
+                        if ($f->getTypeProduct()->getId() == $id) {
+                            //var_export($f);die;
+                            $families[$i++] = $f;
+                        }
+                    }
+                    $data = $families;
+                    //var_export($families);die;
+                }
+            }
+        }
+
+        if (!empty($keyword)) {
+            $families = [];
+            $i = 1;
+            foreach ($data as $f) {
+                if (stripos($f->getName(), $keyword) !== false or stripos($f->getDescription(), $keyword) !== false) {
+                    $families[$i++] = $f;
+                }
+            }
+            $data = $families;
+        }
+
+        if (!empty($active)) {
+            //var_export($active);die;
+            if (in_array("0", $active)) {
+                $families = [];
+                $i = 1;
+                foreach ($data as $f) {
+                    if (!$f->getActive()) {
+                        $families[$i++] = $f;
+                    }
+                }
+                $data = $families;
+            } else {
+                $families = [];
+                $i = 1;
+                foreach ($data as $f) {
+                    if ($f->getActive()) {
+                        $families[$i++] = $f;
+                    }
+                }
+                $data = $families;
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $families = [];
+                $i = 1;
+                foreach ($data as $f) {
+                    if (!$f->getValid()) {
+                        $families[$i++] = $f;
+                    }
+                }
+                $data = $families;
+            } else {
+                $families = [];
+                $i = 1;
+                foreach ($data as $f) {
+                    if (!$f->getValid()) {
+                        $families[$i++] = $f;
+                    }
+                }
+                $data = $families;
+            }
+        }
+
         if (!empty($perPage)) {
-            $data = array_slice($this->productfamily, ($page - 1) * $perPage, $perPage);
+            $data = array_slice($data, ($page - 1) * $perPage, $perPage);
         }
 
         return $data;

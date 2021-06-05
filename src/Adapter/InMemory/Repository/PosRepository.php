@@ -114,9 +114,79 @@ class PosRepository implements PosGateway
     {
         extract($searchParam);
         $data = $this->pos;
+        $i = 1;
+        if (!empty($ids)) {
+            $poss = [];
+            $i = 1;
+            foreach ($data as $p) {
+                if ($ids->contains($p)) {
+                    $poss[$i++] = $p;
+                }
+            }
+            $data = $poss;
+        }
+
+        if (!empty($keyword)) {
+            //var_export($keyword);die;
+            $poss = [];
+            $i = 1;
+            foreach ($data as $p) {
+                //var_export(stripos($p->getName(),$keyword));
+                if (stripos($p->getName(), $keyword) !== false or stripos($p->getDescription(), $keyword) !== false) {
+                    $poss[$i++] = $p;
+                }
+            }
+            //die;
+            $data = $poss;
+        }
+
+        if (!empty($active)) {
+            //var_export($active);die;
+            if (in_array("0", $active)) {
+                $poss = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getActive()) {
+                        $poss[$i++] = $p;
+                    }
+                }
+                $data = $poss;
+            } else {
+                $poss = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if ($p->getActive()) {
+                        $poss[$i++] = $p;
+                    }
+                }
+                $data = $poss;
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $poss = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getValid()) {
+                        $poss[$i++] = $p;
+                    }
+                }
+                $data = $poss;
+            } else {
+                $poss = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getValid()) {
+                        $poss[$i++] = $p;
+                    }
+                }
+                $data = $poss;
+            }
+        }
 
         if (!empty($perPage)) {
-            $data = array_slice($this->pos, ($page - 1) * $perPage, $perPage);
+            $data = array_slice($data, ($page - 1) * $perPage, $perPage);
         }
 
         return $data;

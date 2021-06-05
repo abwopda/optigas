@@ -1,0 +1,188 @@
+typecompany:
+  path:     /
+  controller: App\Controller\TypeCompanyController::index
+
+typecompany.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\TypeCompanyController::ajaxList
+  requirements: { _method: post }
+  
+typecompany.families.ajax:
+  path:     /{id}/families.ajaxlist
+  controller: App\Controller\TypeCompanyController::ajaxfamiliesList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+
+typecompany.companies.ajax:
+  path:     /{id}/companies.ajaxlist
+  controller: App\Controller\TypeCompanyController::ajaxcompaniesList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+
+typecompany.new:
+  path:     /new
+  controller: App\Controller\TypeCompanyController::new
+
+typecompany.create:
+  path: /create
+  controller: App\Controller\TypeCompanyController::create
+  requirements: { _method: post }
+
+typecompany.show:
+  path: /{id}
+  controller: App\Controller\TypeCompanyController::show
+  requirements:
+    id: \d+
+
+typecompany.edit:
+  path:     /{id}/edit
+  controller: App\Controller\TypeCompanyController::edit
+  requirements:
+    id: \d+
+
+typecompany.update:
+  path: /{id}/update
+  controller: App\Controller\TypeCompanyController::update
+  requirements: { _method: post|put ,id: \d+}
+
+typecompany.activate:
+  path: /activate
+  controller: App\Controller\TypeCompanyController::activate
+  requirements: { _method: post|put }
+  
+typecompany.family.activate:
+  path:     /{id}/family.activate
+  controller: App\Controller\TypeCompanyController::activatefamily
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typecompany.company.activate:
+  path:     /{id}/company.activate
+  controller: App\Controller\TypeCompanyController::activatecompany
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typecompany.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\TypeCompanyController::activateOne
+  requirements: { _method: post|put ,id: \d+}
+
+typecompany.disable:
+  path: /disable
+  controller: App\Controller\TypeCompanyController::disable
+  requirements: { _method: post|put }
+
+typecompany.family.disable:
+  path:     /{id}/family.disable
+  controller: App\Controller\TypeCompanyController::disablefamily
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typecompany.company.disable:
+  path:     /{id}/company.disable
+  controller: App\Controller\TypeCompanyController::disablecompany
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typecompany.disable.one:
+  path: /{id}/disable
+  controller: App\Controller\TypeCompanyController::disableOne
+  requirements: { _method: post|put ,id: \d+}
+
+typecompany.validate:
+  path: /validate
+  controller: App\Controller\TypeCompanyController::validate
+  requirements: { _method: post|put }
+
+typecompany.family.validate:
+  path:     /{id}/family.validate
+  controller: App\Controller\TypeCompanyController::validatefamily
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typecompany.company.validate:
+  path:     /{id}/company.validate
+  controller: App\Controller\TypeCompanyController::validatecompany
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typecompany.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\TypeCompanyController::validateOne
+  requirements: { _method: post|put ,id: \d+}
+
+typecompany.invalidate:
+  path: /invalidate
+  controller: App\Controller\TypeCompanyController::invalidate
+  requirements: { _method: post|put }
+
+typecompany.family.invalidate:
+  path:     /{id}/family.invalidate
+  controller: App\Controller\TypeCompanyController::invalidatefamily
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typecompany.company.invalidate:
+  path:     /{id}/company.invalidate
+  controller: App\Controller\TypeCompanyController::invalidatecompany
+  requirements:
+    _method: post|put
+    id: \d+
+  options:
+    expose: true
+
+typecompany.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\TypeCompanyController::invalidateOne
+  requirements: { _method: post|put ,id: \d+}
+
+typecompany.remove:
+  path:     /remove
+  controller: App\Controller\TypeCompanyController::remove
+  requirements: { _method: post|delete }
+
+typecompany.family.remove:
+  path:     /{id}/family.remove
+  controller: App\Controller\TypeCompanyController::removefamily
+  requirements:
+    _method: post|delete
+    id: \d+
+  options:
+    expose: true
+
+typecompany.company.remove:
+  path:     /{id}/company.remove
+  controller: App\Controller\TypeCompanyController::removecompany
+  requirements:
+    _method: post|delete
+    id: \d+
+  options:
+    expose: true
+
+typecompany.delete:
+  path:     /{id}/delete
+  controller: App\Controller\TypeCompanyController::delete
+  requirements: { _method: post|delete ,id: \d+}

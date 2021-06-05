@@ -32,6 +32,7 @@
                             {#% if is_granted('typeproduct.validate') %#}<li><a href="#" id="js-validate"><span class="glyphicon glyphicon-ok-circle"></span> Valider</a></li>{#% endif %#}
                             {#% if is_granted('typeproduct.validate') %#}<li><a href="#" id="js-invalidate"><span class="glyphicon glyphicon-ban-circle"></span> Invalider</a></li>{#% endif %#}
                             <li><a href="#{#{ path('typeproduct.stats',{'id':t.id}) }#}"><span class="glyphicon glyphicon-stats"></span> Statistiques</a></li>
+                            <li><a id="btnPrint"><span class="glyphicon glyphicon-print"></span> imprimer</a></li>
                         </ul>
                     </div>
                 </div>

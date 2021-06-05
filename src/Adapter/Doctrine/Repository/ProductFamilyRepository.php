@@ -39,8 +39,8 @@ class ProductFamilyRepository extends ServiceEntityRepository implements Product
     public function search($searchParam)
     {
         extract($searchParam);
-        $qb = parent::createQueryBuilder('p')
-            ->leftJoin('p.typeproduct', 't');
+        $qb = parent::createQueryBuilder('f')
+            ->leftJoin('f.typeproduct', 't');
 
         if (!empty($entity)) {
             if ($entity === "typeproduct") {
@@ -51,27 +51,27 @@ class ProductFamilyRepository extends ServiceEntityRepository implements Product
         }
 
         if (!empty($ids)) {
-            $qb->andWhere('p.id in (:ids)')->setParameter('ids', $ids);
+            $qb->andWhere('f.id in (:ids)')->setParameter('ids', $ids);
         }
 
         if (!empty($keyword)) {
-            $qb->andWhere('p.name like :keyword or p.description like :keyword')
+            $qb->andWhere('f.name like :keyword or f.description like :keyword')
                 ->setParameter('keyword', '%' . $keyword . '%');
         }
 
         if (!empty($active)) {
             if (in_array("0", $active)) {
-                $qb->andWhere('p.active is null or p.active in (:active)')->setParameter('active', $active);
+                $qb->andWhere('f.active is null or f.active in (:active)')->setParameter('active', $active);
             } else {
-                $qb->andWhere('p.active in (:active)')->setParameter('active', $active);
+                $qb->andWhere('f.active in (:active)')->setParameter('active', $active);
             }
         }
 
         if (!empty($valid)) {
             if (in_array("0", $valid)) {
-                $qb->andWhere('p.valid is null or p.valid in (:valid)')->setParameter('valid', $valid);
+                $qb->andWhere('f.valid is null or f.valid in (:valid)')->setParameter('valid', $valid);
             } else {
-                $qb->andWhere('p.valid in (:valid)')->setParameter('valid', $valid);
+                $qb->andWhere('f.valid in (:valid)')->setParameter('valid', $valid);
             }
         }
 

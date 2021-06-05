@@ -39,4 +39,7 @@ services:
     App\Gateway\TypeProductGateway: '@App\Adapter\InMemory\Repository\TypeProductRepository'
     App\Gateway\ProductFamilyGateway: '@App\Adapter\InMemory\Repository\ProductFamilyRepository'
     App\Gateway\ProductGateway: '@App\Adapter\InMemory\Repository\ProductRepository'
+    App\Gateway\TypeCompanyGateway: '@App\Adapter\InMemory\Repository\TypeCompanyRepository'
+    App\Gateway\CompanyFamilyGateway: '@App\Adapter\InMemory\Repository\CompanyFamilyRepository'
+    App\Gateway\CompanyGateway: '@App\Adapter\InMemory\Repository\CompanyRepository'
 

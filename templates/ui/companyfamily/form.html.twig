@@ -1,0 +1,8 @@
+<legend>Données de la famille</legend>
+    {{ form_row(form.typecompany, { 'label': 'Type'}) }}
+    {{ form_row(form.code, { 'label': 'Famille'}) }}
+    {{ form_row(form.name, { 'label': 'Designation'}) }}
+    {{ form_row(form.description, { 'label': 'Description'}) }}
+<legend>Informations générale</legend>
+    {{ form_rest(form) }}
+    {{ form_errors(form) }}
