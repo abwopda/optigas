@@ -22,6 +22,11 @@
                         {#% if is_granted('ROLE_PRODUCTFAMILY_LIST')  %#} <li><a href="{{ path('productfamily') }}">Familles Produit</a></li> {#% endif %#}
                         {#% if is_granted('ROLE_PRODUCT_LIST')  %#} <li><a href="{{ path('product') }}">Produits</a></li> {#% endif %#}
 
+                        <li class="divider"></li>
+                        {#% if is_granted('ROLE_TYPECOMPANY_LIST')  %#} <li><a href="{{ path('typecompany') }}">Types Entreprise</a></li> {#% endif %#}
+                        {#% if is_granted('ROLE_COMPANYFAMILY_LIST')  %#} <li><a href="{{ path('companyfamily') }}">Familles Entreprise</a></li> {#% endif %#}
+                        {#% if is_granted('ROLE_COMPANY_LIST')  %#} <li><a href="{{ path('company') }}">Entreprise</a></li> {#% endif %#}
+
                     </ul>
                 {#% endif %#}
           </li>

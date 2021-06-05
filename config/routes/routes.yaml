@@ -37,6 +37,18 @@ product:
   resource: "routing/product.yaml"
   prefix:   /product
 
+typecompany:
+  resource: "routing/typecompany.yaml"
+  prefix:   /typecompany
+
+companyfamily:
+  resource: "routing/companyfamily.yaml"
+  prefix:   /companyfamily
+
+company:
+  resource: "routing/company.yaml"
+  prefix:   /company
+
 index:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

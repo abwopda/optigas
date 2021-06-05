@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Company;
+use App\Entity\CompanyFamily;
 use App\Entity\Contact;
 use App\Entity\Employee;
 use App\Entity\Pos;
@@ -9,6 +11,7 @@ use App\Entity\Product;
 use App\Entity\ProductFamily;
 use App\Entity\Pump;
 use App\Entity\Tank;
+use App\Entity\TypeCompany;
 use App\Entity\TypeProduct;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -411,6 +414,202 @@ class UserFixtures extends Fixture
         ;
 
         $manager->persist($pos);
+
+        $typecompany[1] = (new TypeCompany())
+            ->setCode("01")
+            ->setName("Fournisseur")
+            ->setDescription("Fournisseurs")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($typecompany[1]);
+
+        $typecompany[2] = (new TypeCompany())
+            ->setCode("02")
+            ->setName("Clients")
+            ->setDescription("Clients")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($typecompany[2]);
+
+        $typecompany[3] = (new TypeCompany())
+            ->setCode("03")
+            ->setName("Sous-traitants")
+            ->setDescription("Autres")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($typecompany[3]);
+
+        $companyfamily[1] = (new CompanyFamily($typecompany[1]))
+            ->setCode("CAR01")
+            ->setName("Fournisseur Carburant")
+            ->setDescription("Fournisseurs de carburant")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($companyfamily[1]);
+
+        $companyfamily[2] = (new CompanyFamily($typecompany[1]))
+            ->setCode("LUB01")
+            ->setName("Fournisseur de lubrifiants")
+            ->setDescription("Fournisseurs de lubes")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($companyfamily[2]);
+
+        $companyfamily[3] = (new CompanyFamily($typecompany[1]))
+            ->setCode("DIV01")
+            ->setName("Autre Fournisseur")
+            ->setDescription("Fournisseurs XXXX")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($companyfamily[3]);
+
+        $companyfamily[4] = (new CompanyFamily($typecompany[2]))
+            ->setCode("CAR02")
+            ->setName("Clients Carburant")
+            ->setDescription("Clients de carburant")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($companyfamily[4]);
+
+        $companyfamily[5] = (new CompanyFamily($typecompany[2]))
+            ->setCode("LUB02")
+            ->setName("Client Lubes")
+            ->setDescription("Clients de lubrifiants")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($companyfamily[5]);
+
+        $companyfamily[6] = (new CompanyFamily($typecompany[2]))
+            ->setCode("DIV02")
+            ->setName("Autre Client")
+            ->setDescription("Clients YYYY")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($companyfamily[6]);
+
+        $companyfamily[7] = (new CompanyFamily($typecompany[3]))
+            ->setCode("DIV03")
+            ->setName("Sous-traitant")
+            ->setDescription("Autres partenaires")
+            ->setCreateBy($employee)
+        ;
+
+        $manager->persist($companyfamily[7]);
+
+        $company = (new Company())
+            ->setCode("FOU01")
+            ->setName("SONARA")
+            ->setDescription("Societe Nationale de Rafinage")
+            ->setCreateBy($employee)
+            ->addFamily($companyfamily[1])
+        ;
+
+        $manager->persist($company);
+
+        $company = (new Company())
+            ->setCode("FOU02")
+            ->setName("Green Oil Sarl")
+            ->setDescription("Societe de distribution des produits pétroliers")
+            ->setCreateBy($employee)
+            ->addFamily($companyfamily[1])
+            ->addFamily($companyfamily[3])
+        ;
+
+        $manager->persist($company);
+
+        $company = (new Company())
+            ->setCode("FOU03")
+            ->setName("Confex Oil")
+            ->setDescription("Societe de distribution des produits pétroliers")
+            ->setCreateBy($employee)
+            ->addFamily($companyfamily[1])
+            ->addFamily($companyfamily[3])
+        ;
+
+        $manager->persist($company);
+
+        $company = (new Company())
+            ->setCode("CLI001")
+            ->setName("SOTRACOM")
+            ->setDescription("Societe de transport")
+            ->setCreateBy($employee)
+            ->setActive(true)
+            ->setActivateBy($employee)
+            ->setActivateAt(new \DateTimeImmutable())
+            ->addFamily($companyfamily[3])
+        ;
+
+        $manager->persist($company);
+
+        $company = (new Company())
+            ->setCode("CLI002")
+            ->setName("STE NDZOMOU & BWAJ")
+            ->setDescription("Societe de transport")
+            ->setCreateBy($employee)
+            ->setActive(true)
+            ->setActivateBy($employee)
+            ->setActivateAt(new \DateTimeImmutable())
+            ->addFamily($companyfamily[1])
+            ->addFamily($companyfamily[3])
+            ->addFamily($companyfamily[4])
+            ->addFamily($companyfamily[7])
+        ;
+
+        $manager->persist($company);
+
+        $company = (new Company())
+            ->setCode("CLI003")
+            ->setName("Carriere Chinois")
+            ->setDescription("Societe de Carriere")
+            ->setCreateBy($employee)
+            ->setActive(true)
+            ->setActivateBy($employee)
+            ->setActivateAt(new \DateTimeImmutable())
+            ->addFamily($companyfamily[3])
+            ->addFamily($companyfamily[4])
+        ;
+
+        $manager->persist($company);
+
+        $company = (new Company())
+            ->setCode("FOU04")
+            ->setName("ELOI SERVICES")
+            ->setDescription("Societe de MOUAMOUA")
+            ->setCreateBy($employee)
+            ->setValid(true)
+            ->setValidateBy($employee)
+            ->setValidateAt(new \DateTimeImmutable())
+            ->addFamily($companyfamily[1])
+            ->addFamily($companyfamily[3])
+        ;
+
+        $manager->persist($company);
+
+        $company = (new Company())
+            ->setCode("DIV01")
+            ->setName("BANKOL SERVICES")
+            ->setDescription("Entreprise de maintenance")
+            ->setCreateBy($employee)
+            ->setActive(true)
+            ->setActivateBy($employee)
+            ->setActivateAt(new \DateTimeImmutable())
+            ->setValid(true)
+            ->setValidateBy($employee)
+            ->setValidateAt(new \DateTimeImmutable())
+            ->addFamily($companyfamily[7])
+        ;
+
+        $manager->persist($company);
+
         $manager->flush();
     }
 }

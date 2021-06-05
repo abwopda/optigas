@@ -103,8 +103,79 @@ class TypeProductRepository implements TypeProductGateway
     {
         extract($searchParam);
         $data = $this->typeproduct;
+        $i = 1;
+        if (!empty($ids)) {
+            $types = [];
+            $i = 1;
+            foreach ($data as $t) {
+                if ($ids->contains($t)) {
+                    $types[$i++] = $t;
+                }
+            }
+            $data = $types;
+        }
+
+        if (!empty($keyword)) {
+            //var_export($keyword);die;
+            $types = [];
+            $i = 1;
+            foreach ($data as $t) {
+                //var_export(stripos($t->getName(),$keyword));
+                if (stripos($t->getName(), $keyword) !== false or stripos($t->getDescription(), $keyword) !== false) {
+                    $types[$i++] = $t;
+                }
+            }
+            //die;
+            $data = $types;
+        }
+
+        if (!empty($active)) {
+            //var_export($active);die;
+            if (in_array("0", $active)) {
+                $types = [];
+                $i = 1;
+                foreach ($data as $t) {
+                    if (!$t->getActive()) {
+                        $types[$i++] = $t;
+                    }
+                }
+                $data = $types;
+            } else {
+                $types = [];
+                $i = 1;
+                foreach ($data as $t) {
+                    if ($t->getActive()) {
+                        $types[$i++] = $t;
+                    }
+                }
+                $data = $types;
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $types = [];
+                $i = 1;
+                foreach ($data as $t) {
+                    if (!$t->getValid()) {
+                        $types[$i++] = $t;
+                    }
+                }
+                $data = $types;
+            } else {
+                $types = [];
+                $i = 1;
+                foreach ($data as $t) {
+                    if (!$t->getValid()) {
+                        $types[$i++] = $t;
+                    }
+                }
+                $data = $types;
+            }
+        }
+
         if (!empty($perPage)) {
-            $data = array_slice($this->typeproduct, ($page - 1) * $perPage, $perPage);
+            $data = array_slice($data, ($page - 1) * $perPage, $perPage);
         }
 
         return $data;

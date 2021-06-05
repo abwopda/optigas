@@ -129,8 +129,79 @@ class TankRepository implements TankGateway
     {
         extract($searchParam);
         $data = $this->tank;
+
+        if (!empty($entity)) {
+            if ($entity === "pos") {
+                if (!empty($id)) {
+                    $tanks = [];
+                    $i = 1;
+                    foreach ($data as $t) {
+                        if ($t->getPos()->getId() == $id) {
+                            $tanks[$i++] = $t;
+                        }
+                    }
+                    $data = $tanks;
+                }
+            }
+        }
+
+        if (!empty($keyword)) {
+            $tanks = [];
+            $i = 1;
+            foreach ($data as $t) {
+                if (stripos($t->getName(), $keyword) !== false or stripos($t->getDescription(), $keyword) !== false) {
+                    $tanks[$i++] = $t;
+                }
+            }
+            $data = $tanks;
+        }
+
+        if (!empty($active)) {
+            if (in_array("0", $active)) {
+                $tanks = [];
+                $i = 1;
+                foreach ($data as $t) {
+                    if (!$t->getActive()) {
+                        $tanks[$i++] = $t;
+                    }
+                }
+                $data = $tanks;
+            } else {
+                $tanks = [];
+                $i = 1;
+                foreach ($data as $t) {
+                    if ($t->getActive()) {
+                        $tanks[$i++] = $t;
+                    }
+                }
+                $data = $tanks;
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $tanks = [];
+                $i = 1;
+                foreach ($data as $t) {
+                    if (!$t->getValid()) {
+                        $tanks[$i++] = $t;
+                    }
+                }
+                $data = $tanks;
+            } else {
+                $tanks = [];
+                $i = 1;
+                foreach ($data as $t) {
+                    if (!$t->getValid()) {
+                        $tanks[$i++] = $t;
+                    }
+                }
+                $data = $tanks;
+            }
+        }
+
         if (!empty($perPage)) {
-            $data = array_slice($this->tank, ($page - 1) * $perPage, $perPage);
+            $data = array_slice($data, ($page - 1) * $perPage, $perPage);
         }
 
         return $data;

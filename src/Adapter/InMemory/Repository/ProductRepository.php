@@ -205,10 +205,100 @@ class ProductRepository implements ProductGateway
     {
         extract($searchParam);
         $data = $this->product;
-        if (!empty($perPage)) {
-            $data = array_slice($this->product, ($page - 1) * $perPage, $perPage);
+
+        if (!empty($entity)) {
+            if ($entity === "typeproduct") {
+                if (!empty($id)) {
+                    $products = [];
+                    $i = 1;
+                    foreach ($data as $p) {
+                        if ($p->getProductFamily()->getTypeProduct()->getId() == $id) {
+                            //var_export($p);die;
+                            $products[$i++] = $p;
+                        }
+                    }
+                    $data = $products;
+                    //var_export($products);die;
+                }
+            }
         }
 
+        if (!empty($entity)) {
+            if ($entity === "productfamily") {
+                if (!empty($id)) {
+                    $products = [];
+                    $i = 1;
+                    foreach ($data as $p) {
+                        if ($p->getProductFamily()->getId() == $id) {
+                            //var_export($p);die;
+                            $products[$i++] = $p;
+                        }
+                    }
+                    $data = $products;
+                    //var_export($products);die;
+                }
+            }
+        }
+
+        if (!empty($keyword)) {
+            $products = [];
+            $i = 1;
+            foreach ($data as $p) {
+                if (stripos($p->getName(), $keyword) !== false or stripos($p->getDescription(), $keyword) !== false) {
+                    $products[$i++] = $p;
+                }
+            }
+            $data = $products;
+        }
+
+        if (!empty($active)) {
+            //var_export($active);die;
+            if (in_array("0", $active)) {
+                $products = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getActive()) {
+                        $products[$i++] = $p;
+                    }
+                }
+                $data = $products;
+            } else {
+                $products = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if ($p->getActive()) {
+                        $products[$i++] = $p;
+                    }
+                }
+                $data = $products;
+            }
+        }
+
+        if (!empty($valid)) {
+            if (in_array("0", $valid)) {
+                $products = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getValid()) {
+                        $products[$i++] = $p;
+                    }
+                }
+                $data = $products;
+            } else {
+                $products = [];
+                $i = 1;
+                foreach ($data as $p) {
+                    if (!$p->getValid()) {
+                        $products[$i++] = $p;
+                    }
+                }
+                $data = $products;
+            }
+        }
+
+        if (!empty($perPage)) {
+            $data = array_slice($data, ($page - 1) * $perPage, $perPage);
+        }
         return $data;
     }
 
