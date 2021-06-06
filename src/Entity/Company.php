@@ -40,9 +40,9 @@ class Company
     private ?string $description = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity="CompanyFamily", mappedBy="companies")
+     * @ORM\ManyToMany(targetEntity="CompanyFamily", mappedBy="companies" )
      */
-    private ?Collection $families;
+    private $families;
 
     /**
      * @var bool|null

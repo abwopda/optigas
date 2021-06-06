@@ -108,7 +108,7 @@ class CompanyFamily
     /**
      * @ORM\ManyToMany(targetEntity="Company", inversedBy="types")
      */
-    private ?Collection $companies;
+    private $companies;
 
 
     /**
@@ -384,6 +384,8 @@ class CompanyFamily
     {
         if (!$this->companies->contains($company)) {
             $this->companies[] = $company;
+            // not needed for persistence, just keeping both sides in sync
+            $company->addFamily($this);
         }
 
         return $this;
@@ -393,6 +395,8 @@ class CompanyFamily
     {
         if ($this->companies->contains($company)) {
             $this->companies->removeElement($company);
+            // not needed for persistence, just keeping both sides in sync
+            $company->removeFamily($this);
         }
 
         return $this;
