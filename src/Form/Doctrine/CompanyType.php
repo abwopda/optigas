@@ -4,6 +4,7 @@ namespace App\Form\Doctrine;
 
 use App\Entity\Company;
 use App\Entity\CompanyFamily;
+use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -43,11 +44,20 @@ class CompanyType extends AbstractType
                     new NotBlank()
                 ]
             ])
-            ->add('families', EntityType::class, [
-                'class' => CompanyFamily::class,
-                'choice_label' => 'name',
-                'multiple' => true
+            ->add("families", EntityType::class, [
+                "by_reference" => false,
+                "class" => CompanyFamily::class,
+                "choice_label" => "name",
+                "multiple" => true
             ])
+            /*->add("families",Collection::class, [
+                "label" =>"Familles",
+                "type" => CompanyFamilyType::class,
+                "allow_add" => true,
+                "by_reference" => false,
+                "allow_delete" => true,
+                "prototype" => true
+            ])*/
         ;
     }
 
