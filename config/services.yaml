@@ -42,4 +42,5 @@ services:
     App\Gateway\TypeCompanyGateway: '@App\Adapter\InMemory\Repository\TypeCompanyRepository'
     App\Gateway\CompanyFamilyGateway: '@App\Adapter\InMemory\Repository\CompanyFamilyRepository'
     App\Gateway\CompanyGateway: '@App\Adapter\InMemory\Repository\CompanyRepository'
+    App\Gateway\StoreGateway: '@App\Adapter\InMemory\Repository\StoreRepository'
 

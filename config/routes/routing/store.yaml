@@ -1,0 +1,99 @@
+store:
+  path:     /
+  controller: App\Controller\StoreController::index
+
+store.ajax:
+  path:     /ajaxlist
+  controller: App\Controller\StoreController::ajaxList
+  requirements: { _method: post }
+
+store.products.ajax:
+  path:     /{id}/products.ajaxlist
+  controller: App\Controller\StoreController::ajaxproductsList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+
+store.poss.ajax:
+  path:     /{id}/poss.ajaxlist
+  controller: App\Controller\StoreController::ajaxpossList
+  requirements: { _method: post , id: \d+}
+  options:
+    expose: true
+    
+store.new:
+  path:     /new
+  controller: App\Controller\StoreController::new
+
+store.create:
+  path: /create
+  controller: App\Controller\StoreController::create
+  requirements: { _method: post }
+
+store.show:
+  path: /{id}
+  controller: App\Controller\StoreController::show
+  requirements:
+    id: \d+
+
+store.edit:
+  path:     /{id}/edit
+  controller: App\Controller\StoreController::edit
+  requirements:
+    id: \d+
+
+store.update:
+  path: /{id}/update
+  controller: App\Controller\StoreController::update
+  requirements: { _method: post|put , id: \d+}
+
+
+store.activate:
+  path: /activate
+  controller: App\Controller\StoreController::activate
+  requirements: { _method: post|put }
+
+store.activate.one:
+  path: /{id}/activate
+  controller: App\Controller\StoreController::activateOne
+  requirements: { _method: post|put , id: \d+}
+
+store.disable:
+  path: /disable
+  controller: App\Controller\StoreController::disable
+  requirements: { _method: post|put }
+
+store.disable.one:
+  path: /{id}/disable
+  controller: App\Controller\StoreController::disableOne
+  requirements: { _method: post|put , id: \d+}
+
+store.validate:
+  path: /validate
+  controller: App\Controller\StoreController::validate
+  requirements: { _method: post|put }
+    
+store.validate.one:
+  path: /{id}/validate
+  controller: App\Controller\StoreController::validateOne
+  requirements: { _method: post|put , id: \d+}
+
+store.invalidate:
+  path: /invalidate
+  controller: App\Controller\StoreController::invalidate
+  requirements: { _method: post|put }
+
+store.invalidate.one:
+  path: /{id}/invalidate
+  controller: App\Controller\StoreController::invalidateOne
+  requirements: { _method: post|put , id: \d+}
+
+store.remove:
+  path:     /remove
+  controller: App\Controller\StoreController::remove
+  requirements: { _method: post|delete }
+
+store.delete:
+  path:     /{id}/delete
+  controller: App\Controller\StoreController::delete
+  requirements: { _method: post|delete , id: \d+}

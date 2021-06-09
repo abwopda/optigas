@@ -7,11 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Product
+ * Class Store
  * @package App\Entity
  * @ORM\Entity
  */
-class Product
+class Store
 {
     /**
      * @var int|null
@@ -40,15 +40,27 @@ class Product
     private ?string $description = null;
 
     /**
-     * @var ProductFamily
-     * @ORM\ManyToOne(targetEntity="ProductFamily")
+     * @var string|null
+     * @ORM\Column(type="string")
      */
-    private ProductFamily $family;
+    private ?string $town = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Store", inversedBy="products")
+     * @var string|null
+     * @ORM\Column(type="string")
      */
-    private Collection $stores;
+    private ?string $address = null;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Pos", mappedBy="stores" )
+     */
+    private ?Collection $poss;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="stores" )
+     */
+    private ?Collection $products;
+
 
     /**
      * @var bool|null
@@ -112,14 +124,13 @@ class Product
 
 
     /**
-     * Product constructor.
-     * @param ProductFamily $family
+     * Store constructor.
      */
-    public function __construct(ProductFamily $family)
+    public function __construct()
     {
         $this->createAt = new \DateTimeImmutable();
-        $this->family = $family;
-        $this->stores = new ArrayCollection();
+        $this->poss = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     /**
@@ -140,9 +151,9 @@ class Product
 
     /**
      * @param string|null $code
-     * @return Product
+     * @return Store
      */
-    public function setCode(?string $code): Product
+    public function setCode(?string $code): Store
     {
         $this->code = $code;
         return $this;
@@ -158,9 +169,9 @@ class Product
 
     /**
      * @param string|null $name
-     * @return Product
+     * @return Store
      */
-    public function setName(?string $name): Product
+    public function setName(?string $name): Store
     {
         $this->name = $name;
         return $this;
@@ -176,11 +187,47 @@ class Product
 
     /**
      * @param string|null $description
-     * @return Product
+     * @return Store
      */
-    public function setDescription(?string $description): Product
+    public function setDescription(?string $description): Store
     {
         $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTown(): ?string
+    {
+        return $this->town;
+    }
+
+    /**
+     * @param string|null $town
+     * @return Store
+     */
+    public function setTown(?string $town): Store
+    {
+        $this->town = $town;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string|null $address
+     * @return Store
+     */
+    public function setAddress(?string $address): Store
+    {
+        $this->address = $address;
         return $this;
     }
 
@@ -194,9 +241,9 @@ class Product
 
     /**
      * @param bool|null $active
-     * @return Product
+     * @return Store
      */
-    public function setActive(?bool $active): Product
+    public function setActive(?bool $active): Store
     {
         $this->active = $active;
         return $this;
@@ -212,9 +259,9 @@ class Product
 
     /**
      * @param bool|null $valid
-     * @return Product
+     * @return Store
      */
-    public function setValid(?bool $valid): Product
+    public function setValid(?bool $valid): Store
     {
         $this->valid = $valid;
         return $this;
@@ -238,9 +285,9 @@ class Product
 
     /**
      * @param \DateTimeInterface|null $updateAt
-     * @return Product
+     * @return Store
      */
-    public function setUpdateAt(?\DateTimeInterface $updateAt): Product
+    public function setUpdateAt(?\DateTimeInterface $updateAt): Store
     {
         $this->updateAt = $updateAt;
         return $this;
@@ -256,9 +303,9 @@ class Product
 
     /**
      * @param \DateTimeInterface|null $activateAt
-     * @return Product
+     * @return Store
      */
-    public function setActivateAt(?\DateTimeInterface $activateAt): Product
+    public function setActivateAt(?\DateTimeInterface $activateAt): Store
     {
         $this->activateAt = $activateAt;
         return $this;
@@ -274,9 +321,9 @@ class Product
 
     /**
      * @param \DateTimeInterface|null $validateAt
-     * @return Product
+     * @return Store
      */
-    public function setValidateAt(?\DateTimeInterface $validateAt): Product
+    public function setValidateAt(?\DateTimeInterface $validateAt): Store
     {
         $this->validateAt = $validateAt;
         return $this;
@@ -292,9 +339,9 @@ class Product
 
     /**
      * @param Employee $createBy
-     * @return Product
+     * @return Store
      */
-    public function setCreateBy(Employee $createBy): Product
+    public function setCreateBy(Employee $createBy): Store
     {
         $this->createBy = $createBy;
         return $this;
@@ -310,9 +357,9 @@ class Product
 
     /**
      * @param Employee|null $updateBy
-     * @return Product
+     * @return Store
      */
-    public function setUpdateBy(?Employee $updateBy): Product
+    public function setUpdateBy(?Employee $updateBy): Store
     {
         $this->updateBy = $updateBy;
         return $this;
@@ -328,9 +375,9 @@ class Product
 
     /**
      * @param Employee|null $activateBy
-     * @return Product
+     * @return Store
      */
-    public function setActivateBy(?Employee $activateBy): Product
+    public function setActivateBy(?Employee $activateBy): Store
     {
         $this->activateBy = $activateBy;
         return $this;
@@ -346,57 +393,65 @@ class Product
 
     /**
      * @param Employee|null $validateBy
-     * @return Product
+     * @return Store
      */
-    public function setValidateBy(?Employee $validateBy): Product
+    public function setValidateBy(?Employee $validateBy): Store
     {
         $this->validateBy = $validateBy;
         return $this;
     }
 
     /**
-     * @return ProductFamily
+     * @return Collection|Pos[]
      */
-    public function getProductfamily(): ProductFamily
+    public function getPoss(): ?Collection
     {
-        return $this->family;
+        return $this->poss;
     }
 
-    /**
-     * @param ProductFamily $family
-     * @return Product
-     */
-    public function setProductfamily(ProductFamily $family): Product
+    public function addPos(Pos $pos): self
     {
-        $this->family = $family;
-        return $this;
-    }
-
-    /**
-     * @return Collection|Store[]
-     */
-    public function getStores(): Collection
-    {
-        return $this->stores;
-    }
-
-    public function addStore(Store $store): self
-    {
-        if (!$this->stores->contains($store)) {
-            $this->stores[] = $store;
-            // not needed for persistence, just keeping both sides in sync
-            $store->addProduct($this);
+        if (!$this->poss->contains($pos)) {
+            $this->poss[] = $pos;
+            $pos->addStore($this);
         }
 
         return $this;
     }
 
-    public function removeStore(Store $store): self
+    public function removePos(Pos $pos): self
     {
-        if ($this->stores->contains($store)) {
-            $this->stores->removeElement($store);
-            // not needed for persistence, just keeping both sides in sync
-            $store->removeProduct($this);
+        if ($this->poss->contains($pos)) {
+            $this->poss->removeElement($pos);
+            $pos->removeStore($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): ?Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addStore($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            $product->removeStore($this);
         }
 
         return $this;

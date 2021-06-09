@@ -2,19 +2,19 @@
 
 namespace App\Adapter\Doctrine\Repository;
 
-use App\Entity\Pos;
-use App\Form\Doctrine\PosType;
-use App\Gateway\PosGateway;
+use App\Entity\Store;
+use App\Form\Doctrine\StoreType;
+use App\Gateway\StoreGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
 
 /**
- * Class PosRepository
+ * Class StoreRepository
  * @package App\Adapter\Doctrine\Repository
  */
-class PosRepository extends ServiceEntityRepository implements PosGateway
+class StoreRepository extends ServiceEntityRepository implements StoreGateway
 {
     private Security $security;
 
@@ -22,11 +22,11 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
         ManagerRegistry $registry,
         Security $security
     ) {
-        parent::__construct($registry, Pos::class);
+        parent::__construct($registry, Store::class);
         $this->security = $security;
     }
 
-    public function findOneById(int $id): ?Pos
+    public function findOneById(int $id): ?Store
     {
         return parent::find(["id" => $id]);
     }
@@ -39,38 +39,30 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
     public function search($searchParam)
     {
         extract($searchParam);
-        $qb = parent::createQueryBuilder('p');
-
-        if (!empty($entity)) {
-            if ($entity === "store") {
-                if (!empty($id)) {
-                    $qb->Where(':id member of p.stores')->setParameter('id', $id);
-                }
-            }
-        }
+        $qb = parent::createQueryBuilder('s');
 
         if (!empty($ids)) {
-            $qb->andWhere('p.id in (:ids)')->setParameter('ids', $ids);
+            $qb->andWhere('s.id in (:ids)')->setParameter('ids', $ids);
         }
 
         if (!empty($keyword)) {
-            $qb->andWhere('p.name like :keyword or p.description like :keyword')
+            $qb->andWhere('s.name like :keyword or s.description like :keyword')
                 ->setParameter('keyword', '%' . $keyword . '%');
         }
 
         if (!empty($active)) {
             if (in_array("0", $active)) {
-                $qb->andWhere('p.active is null or p.active in (:active)')->setParameter('active', $active);
+                $qb->andWhere('s.active is null or s.active in (:active)')->setParameter('active', $active);
             } else {
-                $qb->andWhere('p.active in (:active)')->setParameter('active', $active);
+                $qb->andWhere('s.active in (:active)')->setParameter('active', $active);
             }
         }
 
         if (!empty($valid)) {
             if (in_array("0", $valid)) {
-                $qb->andWhere('p.valid is null or p.valid in (:valid)')->setParameter('valid', $valid);
+                $qb->andWhere('s.valid is null or s.valid in (:valid)')->setParameter('valid', $valid);
             } else {
-                $qb->andWhere('p.valid in (:valid)')->setParameter('valid', $valid);
+                $qb->andWhere('s.valid in (:valid)')->setParameter('valid', $valid);
             }
         }
 
@@ -86,7 +78,7 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
 
     public function counter()
     {
-        $qb = parent::createQueryBuilder('p')->select('COUNT(p)');
+        $qb = parent::createQueryBuilder('s')->select('COUNT(s)');
         return $qb->getQuery()->getSingleScalarResult();
     }
 
@@ -95,55 +87,55 @@ class PosRepository extends ServiceEntityRepository implements PosGateway
      */
     public function getTypeClass(): string
     {
-        return PosType::class;
+        return StoreType::class;
     }
 
-    public function create(Pos $pos): void
+    public function create(Store $store): void
     {
         $user =  $this->security->getUser();
 
-        $pos->setCreateBy($user);
-        $this->_em->persist($pos);
+        $store->setCreateBy($user);
+        $this->_em->persist($store);
         $this->_em->flush();
     }
 
-    public function update(Pos $pos): void
+    public function update(Store $store): void
     {
         $user =  $this->security->getUser();
 
-        $pos
+        $store
             ->setUpdateBy($user)
             ->setUpdateAt(new \DateTimeImmutable())
         ;
-        $this->_em->persist($pos);
+        $this->_em->persist($store);
         $this->_em->flush();
     }
 
-    public function remove(Pos $pos): void
+    public function remove(Store $store): void
     {
-        $this->_em->remove($pos);
+        $this->_em->remove($store);
         $this->_em->flush();
     }
 
-    public function activate(Pos $pos, bool $status): void
+    public function activate(Store $store, bool $status): void
     {
-        $pos->setActive($status);
+        $store->setActive($status);
         $user =  $this->security->getUser();
-        $pos->setActivateBy($user);
-        $pos->setActivateAt(new \DateTimeImmutable());
+        $store->setActivateBy($user);
+        $store->setActivateAt(new \DateTimeImmutable());
 
-        $this->_em->persist($pos);
+        $this->_em->persist($store);
         $this->_em->flush();
     }
 
-    public function validate(Pos $pos, bool $status): void
+    public function validate(Store $store, bool $status): void
     {
-        $pos->setValid($status);
+        $store->setValid($status);
         $user =  $this->security->getUser();
-        $pos->setValidateBy($user);
-        $pos->setValidateAt(new \DateTimeImmutable());
+        $store->setValidateBy($user);
+        $store->setValidateAt(new \DateTimeImmutable());
 
-        $this->_em->persist($pos);
+        $this->_em->persist($store);
         $this->_em->flush();
     }
 }

@@ -106,7 +106,7 @@ class CompanyFamily
     private ?Employee $validateBy = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Company", inversedBy="types")
+     * @ORM\ManyToMany(targetEntity="Company", inversedBy="families")
      */
     private $companies;
 

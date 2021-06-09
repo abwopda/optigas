@@ -40,8 +40,10 @@ class ProductRepository extends ServiceEntityRepository implements ProductGatewa
     {
         extract($searchParam);
         $qb = parent::createQueryBuilder('p')
-            ->leftJoin('p.productfamily', 'f')
-            ->leftJoin('f.typeproduct', 't');
+            ->leftJoin('p.family', 'f')
+            ->leftJoin('f.typeproduct', 't')
+            ->leftJoin('p.stores', 's')
+        ;
 
         if (!empty($entity)) {
             if ($entity === "typeproduct") {
@@ -55,6 +57,14 @@ class ProductRepository extends ServiceEntityRepository implements ProductGatewa
             if ($entity === "productfamily") {
                 if (!empty($id)) {
                                 $qb->Where('f.id= :id')->setParameter('id', $id);
+                }
+            }
+        }
+
+        if (!empty($entity)) {
+            if ($entity === "store") {
+                if (!empty($id)) {
+                    $qb->Where(':id member of p.stores')->setParameter('id', $id);
                 }
             }
         }

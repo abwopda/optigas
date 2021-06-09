@@ -212,10 +212,12 @@ class CompanyRepository implements CompanyGateway
                     $companies = [];
                     $i = 1;
                     foreach ($data as $c) {
+                        //var_export($c->getFamilies());
                         if ($c->getFamilies()->contains($f)) {
                             $companies[$i++] = $c;
                         }
                     }
+                    //die();
                     $data = $companies;
                     //var_export($companies);die;
                 }

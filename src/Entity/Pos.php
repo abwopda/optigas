@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,6 +56,11 @@ class Pos
      * @ORM\Column(type="integer")
      */
     private ?int $capacity = null;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Store", inversedBy="poss")
+     */
+    private Collection $stores;
 
     /**
      * @var bool|null
@@ -122,6 +129,7 @@ class Pos
     public function __construct()
     {
         $this->createAt = new \DateTimeImmutable();
+        $this->stores = new ArrayCollection();
     }
 
     /**
@@ -407,6 +415,36 @@ class Pos
     public function setValidateBy(?Employee $validateBy): Pos
     {
         $this->validateBy = $validateBy;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Store[]
+     */
+    public function getStores(): Collection
+    {
+        return $this->stores;
+    }
+
+    public function addStore(Store $store): self
+    {
+        if (!$this->stores->contains($store)) {
+            $this->stores[] = $store;
+            // not needed for persistence, just keeping both sides in sync
+            $store->addPos($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStore(Store $store): self
+    {
+        if ($this->stores->contains($store)) {
+            $this->stores->removeElement($store);
+            // not needed for persistence, just keeping both sides in sync
+            $store->removePos($this);
+        }
+
         return $this;
     }
 }

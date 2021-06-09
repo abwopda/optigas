@@ -49,6 +49,10 @@ company:
   resource: "routing/company.yaml"
   prefix:   /company
 
+store:
+  resource: "routing/store.yaml"
+  prefix:   /store
+
 index:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
