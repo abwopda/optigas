@@ -26,13 +26,13 @@ class ProductRepository implements ProductGateway
      */
     public function __construct()
     {
+        $this->productfamily = new ProductFamilyRepository();
+
         $employee = (new Employee())
             ->setFirstName("John")
             ->setLastName("Doe")
             ->setEmail("employee@email.com")
         ;
-
-        $this->productfamily = new ProductFamilyRepository();
 
         $entity = (new Product($this->productfamily->findOneById(1)))
             ->setCode("CAR01")
@@ -232,6 +232,26 @@ class ProductRepository implements ProductGateway
                         if ($p->getProductFamily()->getId() == $id) {
                             //var_export($p);die;
                             $products[$i++] = $p;
+                        }
+                    }
+                    $data = $products;
+                    //var_export($products);die;
+                }
+            }
+        }
+
+        if (!empty($entity)) {
+            if ($entity === "store") {
+                if (!empty($id)) {
+                    $s = (new StoreRepository())->findOneById($id);
+                    //var_export($s);die;
+                    $products = [];
+                    $i = 1;
+                    foreach ($data as $p) {
+                        //var_export($p->getStores());
+                        if ($p->getStores()->contains($s)) {
+                            $products[$i++] = $p;
+                            //var_export($p);die;
                         }
                     }
                     $data = $products;

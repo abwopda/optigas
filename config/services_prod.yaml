@@ -16,4 +16,5 @@ services:
   App\Gateway\TypeCompanyGateway: '@App\Adapter\Doctrine\Repository\TypeCompanyRepository'
   App\Gateway\CompanyFamilyGateway: '@App\Adapter\Doctrine\Repository\CompanyFamilyRepository'
   App\Gateway\CompanyGateway: '@App\Adapter\Doctrine\Repository\CompanyRepository'
+  App\Gateway\StoreGateway: '@App\Adapter\Doctrine\Repository\StoreRepository'
 

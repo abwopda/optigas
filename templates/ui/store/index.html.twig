@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 {% block body %}
-    <h3><span class="glyphicon glyphicon-company"></span>Liste des points de vente</h3>
-    <div id="pos">
+    <h3><span class="glyphicon glyphicon-company"></span>Liste des depots</h3>
+    <div id="store">
         <form  id="jsForm" role="form" method="post" action="">
             <input id="pagenumber" type="hidden" name="searchParam[page]" value="1">
             <input id="sortBy" type="hidden" name="searchParam[sortBy]" value="all">
@@ -24,13 +24,13 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" data-toggle="modal" data-target="#searchModal"><span class="glyphicon glyphicon-search"></span> Recherche avancée</a></li>
-                            {#% if is_granted('pos.add') %#}<li><a href="{{ path('pos.new') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>{#% endif %#}
-                            {#% if is_granted('pos.delete') %#}<li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>{#% endif %#}
-                            {#% if is_granted('pos.activate') %#}<li><a href="#" id="js-activate"><span class="glyphicon glyphicon-thumbs-up"></span> Activer</a></li>{#% endif %#}
-                            {#% if is_granted('pos.activate') %#}<li><a href="#" id="js-disable"><span class=" glyphicon glyphicon-thumbs-down "></span> Desactiver</a></li>{#% endif %#}
-                            {#% if is_granted('pos.validate') %#}<li><a href="#" id="js-validate"><span class="glyphicon glyphicon-ok-circle"></span> Valider</a></li>{#% endif %#}
-                            {#% if is_granted('pos.validate') %#}<li><a href="#" id="js-invalidate"><span class="glyphicon glyphicon-ban-circle"></span> Invalider</a></li>{#% endif %#}
-                            <li><a href="#{#{ path('pos.stats',{'id':t.id}) }#}"><span class="glyphicon glyphicon-stats"></span> Statistiques</a></li>
+                            {#% if is_granted('store.add') %#}<li><a href="{{ path('store.new') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>{#% endif %#}
+                            {#% if is_granted('store.delete') %#}<li><a href="#" id="js-delete"><span class="glyphicon glyphicon-trash"></span> Supprimer</a></li>{#% endif %#}
+                            {#% if is_granted('store.activate') %#}<li><a href="#" id="js-activate"><span class="glyphicon glyphicon-thumbs-up"></span> Activer</a></li>{#% endif %#}
+                            {#% if is_granted('store.activate') %#}<li><a href="#" id="js-disable"><span class=" glyphicon glyphicon-thumbs-down "></span> Desactiver</a></li>{#% endif %#}
+                            {#% if is_granted('store.validate') %#}<li><a href="#" id="js-validate"><span class="glyphicon glyphicon-ok-circle"></span> Valider</a></li>{#% endif %#}
+                            {#% if is_granted('store.validate') %#}<li><a href="#" id="js-invalidate"><span class="glyphicon glyphicon-ban-circle"></span> Invalider</a></li>{#% endif %#}
+                            <li><a href="#{#{ path('store.stats',{'id':t.id}) }#}"><span class="glyphicon glyphicon-stats"></span> Statistiques</a></li>
                             <li><a id="btnPrint"><span class="glyphicon glyphicon-print"></span> imprimer</a></li>
                         </ul>
                     </div>
@@ -45,7 +45,6 @@
                     <th class="sortable"><a href="#" class="js-sort" data-order="desc">Description<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
                     <th class="sortable"><a href="#" class="js-sort" data-order="desc">Adresse<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
                     <th class="sortable"><a href="#" class="js-sort" data-order="desc">Ville<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
-                    <th class="sortable"><a href="#" class="js-sort" data-order="desc">Capacité<span class="glyphicon glyphicon-sort pull-right"></span></a></th>
                     <th class="hidden-print">Actions</th>
                 </tr>
                 </thead>
@@ -128,15 +127,15 @@
         (function($) {
             /* helper functions */
             function getCheckedRows () {
-                var pos = [];
+                var store = [];
                 dataContainer.find('input:checkbox:checked').each(function() {
-                    pos.push($(this).val());
+                    store.push($(this).val());
                 });
-                return pos.join(',');
+                return store.join(',');
             }
             function isSelected () {
                 if (!getCheckedRows()) {
-                    alert('vous devez selectionner au moins un point de vente');
+                    alert('vous devez selectionner au moins un depot');
                     return false;
                 };
                 return true;
@@ -144,7 +143,7 @@
             function init(){
                 pageInput.val('1');
                 checkboxBtn.prop("checked",false);
-                jsFormUrl = '{{ path('pos.ajax') }}';
+                jsFormUrl = '{{ path('store.ajax') }}';
             }
             function ajaxPost(action, callback) {
                 form.addClass('working');
@@ -201,38 +200,38 @@
                 return false;
             });
 
-            /* delete a pos */
+            /* delete a store */
             deleteBtn.on('click', function(){
-                if (!isSelected() || !confirmation('voulez-vous vraiment supprimer les points de vente sélectionnés')) return false;
-                jsFormUrl='{{ path('pos.remove') }}';
-                console.log('delete selected pos');
+                if (!isSelected() || !confirmation('voulez-vous vraiment supprimer les depots sélectionnés')) return false;
+                jsFormUrl='{{ path('store.remove') }}';
+                console.log('delete selected store');
                 ajaxPost('delete');
             });
-            /* validate a pos */
+            /* validate a store */
             validateBtn.on('click', function(){
-                if (!isSelected() || !confirmation('voulez-vous vraiment valider les points de vente sélectionnés')) return false;
-                jsFormUrl='{{ path('pos.validate') }}';
+                if (!isSelected() || !confirmation('voulez-vous vraiment valider les depots sélectionnés')) return false;
+                jsFormUrl='{{ path('store.validate') }}';
                 ajaxPost('validate');
             });
 
-            /* invalidate a pos */
+            /* invalidate a store */
             invalidateBtn.on('click', function(){
-                if (!isSelected() || !confirmation('voulez-vous vraiment invalider les points de vente sélectionnés')) return false;
-                jsFormUrl='{{ path('pos.invalidate') }}';
+                if (!isSelected() || !confirmation('voulez-vous vraiment invalider les depots sélectionnés')) return false;
+                jsFormUrl='{{ path('store.invalidate') }}';
                 ajaxPost('invalidate');
             });
 
-            /* activate a pos */
+            /* activate a store */
             activateBtn.on('click', function(){
-                if (!isSelected() || !confirmation('voulez-vous vraiment activer les points de vente sélectionnés')) return false;
-                jsFormUrl='{{ path('pos.activate') }}';
+                if (!isSelected() || !confirmation('voulez-vous vraiment activer les depots sélectionnés')) return false;
+                jsFormUrl='{{ path('store.activate') }}';
                 ajaxPost('activate');
             });
 
-            /* disable a pos */
+            /* disable a store */
             disableBtn.on('click', function(){
-                if (!isSelected() || !confirmation('voulez-vous vraiment desactiver les points de vente sélectionnés')) return false;
-                jsFormUrl='{{ path('pos.disable') }}';
+                if (!isSelected() || !confirmation('voulez-vous vraiment desactiver les depots sélectionnés')) return false;
+                jsFormUrl='{{ path('store.disable') }}';
                 ajaxPost('disable');
             });
             form.on('submit', ajaxPost);

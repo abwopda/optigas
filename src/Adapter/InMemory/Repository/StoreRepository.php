@@ -3,40 +3,43 @@
 namespace App\Adapter\InMemory\Repository;
 
 use App\Entity\Employee;
-use App\Entity\Pos;
-use App\Form\InMemory\PosType;
-use App\Gateway\PosGateway;
+use App\Entity\Store;
+use App\Entity\User;
+use App\Form\InMemory\StoreType;
+use App\Gateway\StoreGateway;
 
 /**
- * Class PosRepository
+ * Class StoreRepository
  * @package App\Adapter\InMemory\Repository
  */
-class PosRepository implements PosGateway
+class StoreRepository implements StoreGateway
 {
     /**
      * @var array
      */
-    public array $pos = [];
+    public array $store = [];
+
+    private ProductRepository $product;
 
     /**
-     * PosRepository constructor.
+     * StoreRepository constructor.
      */
     public function __construct()
     {
+        $this->product = new ProductRepository();
+
         $employee = (new Employee())
             ->setFirstName("John")
             ->setLastName("Doe")
             ->setEmail("employee@email.com")
         ;
-        $entity = (new Pos())
+        $entity = (new Store())
             ->setCode("01")
-            ->setName("TAWAAL OIL AKAK")
-            ->setDescription("Station Service")
-            ->setTown("Yaounde")
-            ->setAddress("BP 12570")
-            ->setCapacity(90000)
+            ->setName("SONARA")
+            ->setDescription("PCCC Limbe")
+            ->setTown("Limbe")
+            ->setAddress("BP AAAA")
             ->setCreateBy($employee)
-
         ;
 
         $reflectionClass = new \ReflectionClass($entity);
@@ -44,15 +47,14 @@ class PosRepository implements PosGateway
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, 1);
 
-        $this->pos[1] = $entity;
+        $this->store[1] = $entity;
 
-        $entity = (new Pos())
+        $entity = (new Store())
             ->setCode("02")
-            ->setName("TAWAAL OIL SANGMELIMA")
-            ->setDescription("Station Service")
-            ->setTown("Sangmelima")
+            ->setName("SCDP DOUALA")
+            ->setDescription("Depot SCDP Douala")
+            ->setTown("Douala")
             ->setAddress("BP YYYY")
-            ->setCapacity(80000)
             ->setCreateBy($employee)
             ->setActive(true)
             ->setActivateBy($employee)
@@ -64,15 +66,14 @@ class PosRepository implements PosGateway
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, 2);
 
-        $this->pos[2] =  $entity;
+        $this->store[2] =  $entity;
 
-        $entity = (new Pos())
+        $entity = (new Store())
             ->setCode("03")
-            ->setName("TAWAAL OIL NGOYA 1")
-            ->setDescription("Station Service")
-            ->setTown("Ngoya")
+            ->setName("SCDP Yaounde")
+            ->setDescription("Depot SCDP Nsam")
+            ->setTown("Yaoundé")
             ->setAddress("BP YYYY")
-            ->setCapacity(70000)
             ->setCreateBy($employee)
             ->setUpdateBy($employee)
             ->setUpdateAt(new \DateTimeImmutable())
@@ -86,15 +87,14 @@ class PosRepository implements PosGateway
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, 3);
 
-        $this->pos[3] =  $entity;
+        $this->store[3] =  $entity;
 
-        $entity = (new Pos())
+        $entity = (new Store())
             ->setCode("04")
-            ->setName("TAWAAL OIL KRIBI")
-            ->setDescription("Station Service")
-            ->setTown("Kribi")
+            ->setName("SCDP Bafoussam")
+            ->setDescription("Depot de Bafoussam")
+            ->setTown("Bafoussam")
             ->setAddress("BP YYYY")
-            ->setCapacity(53000)
             ->setCreateBy($employee)
             ->setUpdateBy($employee)
             ->setUpdateAt(new \DateTimeImmutable())
@@ -108,102 +108,102 @@ class PosRepository implements PosGateway
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, 4);
 
-        $this->pos[4] =  $entity;
+        $this->store[4] =  $entity;
     }
 
     /**
      * @param int $id
-     * @return Pos|null
+     * @return Store|null
      */
-    public function findOneById(int $id): ?Pos
+    public function findOneById(int $id): ?Store
     {
-        if (!array_key_exists($id, $this->pos)) {
+        if (!array_key_exists($id, $this->store)) {
             //throw new Exception("Notice: Undefined offset: ".$id);
             return null;
         }
-        return $this->pos[$id];
+        return $this->store[$id];
     }
 
     /**
-     * @return Pos[]|null
+     * @return Store[]|null
      */
     public function findAll(): ?array
     {
-        return $this->pos;
+        return $this->store;
     }
 
     public function search($searchParam)
     {
         extract($searchParam);
-        $data = $this->pos;
+        $data = $this->store;
         $i = 1;
         if (!empty($ids)) {
-            $poss = [];
+            $stores = [];
             $i = 1;
             foreach ($data as $p) {
                 if ($ids->contains($p)) {
-                    $poss[$i++] = $p;
+                    $stores[$i++] = $p;
                 }
             }
-            $data = $poss;
+            $data = $stores;
         }
 
         if (!empty($keyword)) {
             //var_export($keyword);die;
-            $poss = [];
+            $stores = [];
             $i = 1;
             foreach ($data as $p) {
                 //var_export(stripos($p->getName(),$keyword));
                 if (stripos($p->getName(), $keyword) !== false or stripos($p->getDescription(), $keyword) !== false) {
-                    $poss[$i++] = $p;
+                    $stores[$i++] = $p;
                 }
             }
             //die;
-            $data = $poss;
+            $data = $stores;
         }
 
         if (!empty($active)) {
             //var_export($active);die;
             if (in_array("0", $active)) {
-                $poss = [];
+                $stores = [];
                 $i = 1;
                 foreach ($data as $p) {
                     if (!$p->getActive()) {
-                        $poss[$i++] = $p;
+                        $stores[$i++] = $p;
                     }
                 }
-                $data = $poss;
+                $data = $stores;
             } else {
-                $poss = [];
+                $stores = [];
                 $i = 1;
                 foreach ($data as $p) {
                     if ($p->getActive()) {
-                        $poss[$i++] = $p;
+                        $stores[$i++] = $p;
                     }
                 }
-                $data = $poss;
+                $data = $stores;
             }
         }
 
         if (!empty($valid)) {
             if (in_array("0", $valid)) {
-                $poss = [];
+                $stores = [];
                 $i = 1;
                 foreach ($data as $p) {
                     if (!$p->getValid()) {
-                        $poss[$i++] = $p;
+                        $stores[$i++] = $p;
                     }
                 }
-                $data = $poss;
+                $data = $stores;
             } else {
-                $poss = [];
+                $stores = [];
                 $i = 1;
                 foreach ($data as $p) {
                     if (!$p->getValid()) {
-                        $poss[$i++] = $p;
+                        $stores[$i++] = $p;
                     }
                 }
-                $data = $poss;
+                $data = $stores;
             }
         }
 
@@ -219,13 +219,13 @@ class PosRepository implements PosGateway
      */
     public function counter()
     {
-        return count($this->pos);
+        return count($this->store);
     }
 
     /**
-     * @param Pos $pos
+     * @param Store $store
      */
-    public function create(Pos $pos): void
+    public function create(Store $store): void
     {
     }
 
@@ -234,46 +234,46 @@ class PosRepository implements PosGateway
      */
     public function getTypeClass(): string
     {
-        return PosType::class;
+        return StoreType::class;
     }
 
     /**
-     * @param Pos $pos
+     * @param Store $store
      */
-    public function update(Pos $pos): void
+    public function update(Store $store): void
     {
     }
 
     /**
-     * @param Pos $pos
+     * @param Store $store
      */
-    public function remove(Pos $pos): void
+    public function remove(Store $store): void
     {
     }
 
     /**
-     * @param Pos $pos
+     * @param Store $store
      * @param bool $status
      */
-    public function activate(Pos $pos, bool $status): void
+    public function activate(Store $store, bool $status): void
     {
-        $pos
+        $store
             ->setActive($status)
             ->setActivateAt(new \DateTimeImmutable())
-            ->setActivateBy($pos->getCreateBy())
+            ->setActivateBy($store->getCreateBy())
         ;
     }
 
     /**
-     * @param Pos $pos
+     * @param Store $store
      * @param bool $status
      */
-    public function validate(Pos $pos, bool $status): void
+    public function validate(Store $store, bool $status): void
     {
-        $pos
+        $store
             ->setValid($status)
             ->setValidateAt(new \DateTimeImmutable())
-            ->setValidateBy($this->pos[1]->getCreateBy())
+            ->setValidateBy($this->store[1]->getCreateBy())
         ;
     }
 }

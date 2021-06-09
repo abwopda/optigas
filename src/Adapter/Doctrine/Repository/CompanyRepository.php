@@ -54,7 +54,8 @@ class CompanyRepository extends ServiceEntityRepository implements CompanyGatewa
         if (!empty($entity)) {
             if ($entity === "companyfamily") {
                 if (!empty($id)) {
-                                $qb->Where(':id member of f')->setParameter('id', $id);
+                    //$qb->where($qb->expr()->isMemberOf(':id', 'c.families'))->setParameter('id', $id);
+                    $qb->Where(':id member of c.families')->setParameter('id', $id);
                 }
             }
         }
